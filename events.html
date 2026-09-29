@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Events Calendar | VDRSA Visakhapatnam Roller Sports</title>
+<meta name="description" content="Browse all VDRSA district events in Visakhapatnam — championships, inter-club meets, selection trials and workshops. Filter by discipline, month and status.">
+<link rel="canonical" href="https://vdrsa.in/events.html">
+<meta name="robots" content="index,follow">
+<meta name="theme-color" content="#14150F">
+<meta name="keywords" content="VDRSA, Visakhapatnam District Roller Sports Association, roller skating Visakhapatnam, district roller sports, speed skating, artistic skating, inline hockey, rink hockey, skateboarding, roller derby, APRSA, RSFI, skater ID, events calendar, district championship 2026, roller sports events Visakhapatnam">
+<meta name="author" content="VDRSA">
+<meta name="publisher" content="VDRSA">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="VDRSA">
+<meta property="og:title" content="Events Calendar | VDRSA Visakhapatnam Roller Sports">
+<meta property="og:description" content="Browse all VDRSA district events in Visakhapatnam — championships, inter-club meets, selection trials and workshops. Filter by discipline, month and status.">
+<meta property="og:url" content="https://vdrsa.in/events.html">
+<meta property="og:image" content="https://images.pexels.com/photos/30756235/pexels-photo-30756235.jpeg?auto=compress&cs=tinysrgb&w=1200">
+<meta property="og:locale" content="en_IN">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Events Calendar | VDRSA Visakhapatnam Roller Sports">
+<meta name="twitter:description" content="Browse all VDRSA district events in Visakhapatnam — championships, inter-club meets, selection trials and workshops. Filter by discipline, month and status.">
+<meta name="twitter:image" content="https://images.pexels.com/photos/30756235/pexels-photo-30756235.jpeg?auto=compress&cs=tinysrgb&w=1200">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"SportsOrganization","name":"Visakhapatnam District Roller Sports Association","alternateName":"VDRSA","url":"https://vdrsa.in/","logo":"https://vdrsa.in/assets/vdrsa-logo.png","sport":["Speed Skating","Artistic Skating","Inline Hockey","Rink Hockey","Inline Freestyle","Skateboarding","Roller Derby","Inline Alpine/Downhill"],"areaServed":{"@type":"City","name":"Visakhapatnam"},"address":{"@type":"PostalAddress","addressRegion":"Andhra Pradesh","addressCountry":"IN"},"memberOf":[{"@type":"SportsOrganization","name":"Andhra Pradesh Roller Sports Association","alternateName":"APRSA"},{"@type":"SportsOrganization","name":"Roller Sports Federation of India","alternateName":"RSFI"}],"sameAs":["https://instagram.com/vdrsa_official","https://wa.me/919848012345"]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://vdrsa.in/"},{"@type":"ListItem","position":2,"name":"Events","item":"https://vdrsa.in/events.html"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"SportsEvent","name":"VDRSA District Championship 2026","sport":"Roller Skating","startDate":"2026-10-26","endDate":"2026-10-27","eventStatus":"https://schema.org/EventScheduled","eventAttendanceMode":"https://schema.org/OfflineEventAttendanceMode","location":{"@type":"Place","name":"Port Stadium Rink","address":{"@type":"PostalAddress","streetAddress":"Port Area","addressLocality":"Visakhapatnam","addressRegion":"Andhra Pradesh","addressCountry":"IN"}},"organizer":{"@type":"SportsOrganization","name":"Visakhapatnam District Roller Sports Association","url":"https://vdrsa.in/"},"offers":{"@type":"Offer","price":"300","priceCurrency":"INR","availability":"https://schema.org/InStock","url":"https://vdrsa.in/event-detail.html?id=dist-champ-2026","validFrom":"2026-09-01"}}</script>
+<link rel="icon" href="assets/vdrsa-logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&family=Noto+Sans+Telugu:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/site.css">
+<script src="https://cdn.jsdelivr.net/npm/lucide@0.469.0/dist/umd/lucide.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
+<style>
+.ev-list{display:grid;gap:16px}
+.empty[hidden]{display:none}
+.viewbar{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:18px}
+.mgrid{display:grid;grid-template-columns:repeat(7,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:var(--r-lg);overflow:hidden}
+.mgrid .dow{background:var(--bg-soft);padding:8px;text-align:center;font:700 11.5px var(--body);color:var(--muted)}
+.mgrid .cell{background:var(--surface);min-height:92px;padding:6px;display:flex;flex-direction:column;gap:4px}
+.mgrid .cell.pad{background:var(--bg-soft)}
+.mgrid .cell .dn{font:700 12.5px var(--display);color:var(--muted)}
+.mgrid .chip{font-size:11px;font-weight:600;padding:3px 6px;border-radius:6px;background:var(--primary-50);color:var(--primary-strong);text-align:left;cursor:pointer;border:0;line-height:1.3}
+.mswitch{display:flex;align-items:center;gap:10px}
+.mswitch button{width:34px;height:34px;border-radius:8px;border:1px solid var(--border);background:var(--surface);cursor:pointer;display:grid;place-items:center}
+/* REVISION_V3 §6 — under 640px the month grid becomes an agenda list of
+   just the days that have events, not a squeezed 42-cell grid. */
+.mgrid.agenda{display:grid;grid-template-columns:1fr;gap:10px;background:none;border:0;border-radius:0;overflow:visible}
+.agenda-day{display:flex;gap:14px;padding:14px;border:1px solid var(--border);border-radius:var(--r-lg);background:var(--surface)}
+.agenda-day .ad-date{flex:none;width:48px;text-align:center}
+.agenda-day .ad-date b{display:block;font:800 20px var(--display)}
+.agenda-day .ad-date small{display:block;color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.06em}
+.agenda-day .ad-events{display:flex;flex-direction:column;gap:6px;flex:1;min-width:0}
+.agenda-day .chip{white-space:normal;text-align:left}
+@media (max-width:760px){.mgrid:not(.agenda){grid-template-columns:1fr}.mgrid:not(.agenda) .dow{display:none}.mgrid:not(.agenda) .cell{min-height:auto;flex-direction:row;align-items:center;gap:8px;padding:10px}.mgrid:not(.agenda) .cell.pad{display:none}.mgrid:not(.agenda) .dn{width:26px}}
+</style>
+</head>
+<body data-page="events">
+
+<div id="page-loader" role="status" aria-live="polite">
+  <div class="ring-loader">
+    <img src="assets/vdrsa-logo.png" alt="">
+    <svg viewBox="0 0 132 132" aria-hidden="true"><circle class="track" cx="66" cy="66" r="62"/><circle class="arc" cx="66" cy="66" r="62"/></svg>
+  </div>
+  <span class="sr-only">Loading VDRSA</span>
+</div>
+
+<div id="site-header"></div>
+
+<main id="top">
+
+<section class="page-hero">
+  <div class="hero-photo" id="bannerPhoto" role="img" aria-label="Racers in a pack during an event" data-parallax="0.12" data-cursor="view" data-cursor-label="Explore"></div>
+  <div class="wrap">
+    <nav class="crumbs" aria-label="Breadcrumb" data-anim="left">
+      <a href="index.html">Home</a><span class="sep">&rsaquo;</span><span class="cur">Events</span>
+    </nav>
+    <div class="page-hero-top">
+      <div>
+        <span class="kicker" data-index="01">District calendar</span>
+        <h1 data-anim="up">Events <span class="accent-word">calendar</span></h1>
+        <p class="lead" data-anim="up" data-delay="0.2">Championships, inter-club meets, selection trials and workshops across Visakhapatnam district.</p>
+      </div>
+      <div class="actions"><button class="btn btn-line-white" data-magnetic id="dlCal"><i data-lucide="download"></i>Download calendar (PDF)</button></div>
+    </div>
+  </div>
+</section>
+
+<section aria-labelledby="ev-title">
+  <div class="wrap">
+    <div class="sec-head" style="margin-bottom:16px"><div><span class="kicker" data-index="02">District calendar</span><h2 id="ev-title" class="sr-only" data-anim="words">Events</h2></div></div>
+
+    <div class="card filterbar" data-anim="up">
+      <div class="search"><i data-lucide="search"></i><input id="fSearch" type="search" placeholder="Search events or venue" aria-label="Search events"></div>
+      <select class="sel" id="fDisc" aria-label="Filter by discipline">
+        <option value="">All disciplines</option>
+      </select>
+      <select class="sel" id="fMonth" aria-label="Filter by month">
+        <option value="">All months</option>
+        <option value="2026-09">September 2026</option><option value="2026-10">October 2026</option><option value="2026-11">November 2026</option><option value="2026-12">December 2026</option>
+      </select>
+      <select class="sel" id="fStatus" aria-label="Filter by status">
+        <option value="">All statuses</option>
+        <option value="open">Registration open</option><option value="soon">Opens soon</option><option value="closed">Registration closed</option><option value="completed">Completed</option>
+      </select>
+      <button class="fb-reset" id="fReset"><i data-lucide="rotate-ccw"></i>Reset</button>
+    </div>
+
+    <div class="viewbar">
+      <p style="color:var(--muted);font-size:14px" id="resultCount"></p>
+      <div class="seg" role="tablist" aria-label="View">
+        <button type="button" id="vList" role="tab" aria-selected="true">List</button>
+        <button type="button" id="vMonth" role="tab" aria-selected="false">Month</button>
+      </div>
+    </div>
+
+    <div class="ev-list" id="evList"></div>
+    <div class="empty" id="evEmpty" hidden><span class="ic"><i data-lucide="calendar-x"></i></span><p>No events match your filters.</p><a href="#" id="emptyReset">Reset filters</a></div>
+
+    <div id="monthView" hidden>
+      <div class="mswitch" style="margin-bottom:14px">
+        <button type="button" id="mPrev" aria-label="Previous month"><i data-lucide="chevron-left"></i></button>
+        <b id="mLabel" style="font:700 16px var(--display)"></b>
+        <button type="button" id="mNext" aria-label="Next month"><i data-lucide="chevron-right"></i></button>
+      </div>
+      <div class="mgrid" id="mGrid" role="grid" aria-label="Month view"></div>
+    </div>
+  </div>
+</section>
+
+<section class="soft" aria-labelledby="past-title">
+  <div class="wrap">
+    <div class="sec-head"><div><span class="kicker" data-index="03">Archive</span><h2 id="past-title" data-anim="up">Past <span class="accent-word">events</span></h2><p data-anim="up">Completed events link through to their official results.</p></div></div>
+    <div class="card tbl" data-anim="up">
+      <div class="scroll"><table>
+        <thead><tr><th>Event</th><th>Date</th><th>Venue</th><th>Disciplines</th><th></th></tr></thead>
+        <tbody id="pastBody" data-anim="stagger"></tbody>
+      </table></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= VELOCITY MARQUEE ================= -->
+</main>
+
+<div id="site-footer"></div>
+<div class="toast" id="toast" role="status"></div>
+
+<script src="assets/site.js"></script>
+<script>
+(function(){
+  const V=window.VDRSA, d=V.data;
+  document.getElementById("bannerPhoto").style.backgroundImage=`url('${V.photo("pack",1600)}')`;
+
+  /* Revision v4 §1 — all 8 RSFI disciplines in the filter, whether or not
+     VDRSA.disciplines has landed yet. */
+  const DISC_FALLBACK=[
+    {name:"Speed",slug:"Speed"},{name:"Artistic",slug:"Artistic"},{name:"Inline Hockey",slug:"Inline Hockey"},
+    {name:"Rink Hockey",slug:"Rink Hockey"},{name:"Freestyle",slug:"Freestyle"},{name:"Skateboarding",slug:"Skateboarding"},
+    {name:"Roller Derby",slug:"Roller Derby"},{name:"Downhill",slug:"Downhill"}
+  ];
+  const DISC=(V.disciplines&&V.disciplines.length)?V.disciplines:DISC_FALLBACK;
+  document.getElementById("fDisc").insertAdjacentHTML("beforeend",DISC.map(x=>`<option value="${V.esc(x.slug||x.name)}">${V.esc(x.name)}</option>`).join(""));
+
+  const ST={open:["b-green","Registration open"],soon:["b-blue","Opens soon"],closed:["b-grey","Registration closed"],completed:["b-grey","Completed"]};
+  const fmt=iso=>new Date(iso).toLocaleDateString("en-GB",{day:"2-digit",month:"short",year:"numeric"});
+
+  const fSearch=document.getElementById("fSearch"), fDisc=document.getElementById("fDisc"), fMonth=document.getElementById("fMonth"), fStatus=document.getElementById("fStatus");
+  const preD=V.param("d"); if(preD){[...fDisc.options].forEach(o=>{if(o.value===preD)fDisc.value=preD});}
+
+  function filtered(){
+    const q=fSearch.value.trim().toLowerCase(), disc=fDisc.value, month=fMonth.value, status=fStatus.value;
+    return d.events.filter(e=>{
+      if(q && !(e.title.toLowerCase().includes(q)||e.venue.toLowerCase().includes(q)))return false;
+      if(disc && !e.discipline.includes(disc))return false;
+      if(month && !e.start.startsWith(month))return false;
+      if(status && e.status!==status)return false;
+      return true;
+    });
+  }
+
+  function renderList(){
+    const anyFilter = fStatus.value || fMonth.value || fSearch.value || fDisc.value;
+    const shown = anyFilter ? filtered() : d.events.filter(e=>e.status!=="completed");
+    document.getElementById("resultCount").textContent=`${shown.length} event${shown.length===1?"":"s"}`;
+    const evList=document.getElementById("evList"), empty=document.getElementById("evEmpty");
+    if(!shown.length){evList.innerHTML="";empty.hidden=false;return}
+    empty.hidden=true;
+    evList.innerHTML=shown.map((e,i)=>{
+      const dt=new Date(e.start);
+      return `
+    <article class="card ev" data-anim="${i%2?"right":"left"}">
+      <div class="ev-date"><small>${dt.toLocaleDateString("en-GB",{month:"short"}).toUpperCase()}</small><b>${dt.getDate()}</b><span>${dt.getFullYear()}</span></div>
+      <div class="ph" style="background-image:url('${V.img(e.img,400)}')" role="img" aria-label="${V.esc(e.discipline.join(', '))} — ${V.esc(e.title)}" data-cursor="view" data-cursor-label="View"></div>
+      <div><span class="badge ${ST[e.status][0]}">${ST[e.status][1]}</span><h3>${V.esc(e.title)}</h3>
+        <div class="meta"><span><i data-lucide="map-pin"></i>${V.esc(e.venue)}</span><span><i data-lucide="layers"></i>${e.discipline.join(" · ")}</span></div></div>
+      <div class="act">${e.status==="completed"?`<a class="btn btn-outline btn-sm" href="results.html">Results</a>`:`<a class="btn btn-outline btn-sm" href="event-detail.html?id=${e.id}">Details</a>${e.status==="open"?`<a class="btn btn-primary btn-sm" data-magnetic href="event-detail.html?id=${e.id}">Register</a>`:""}`}</div>
+    </article>`;
+    }).join("");
+    V.icons();
+    V.animate(evList);
+  }
+
+  function renderPast(){
+    document.getElementById("pastBody").innerHTML=d.events.filter(e=>e.status==="completed").map(e=>`
+      <tr><td><b>${V.esc(e.title)}</b></td><td>${fmt(e.start)}</td><td>${V.esc(e.venue)}</td><td style="color:var(--muted)">${e.discipline.join(" · ")}</td>
+      <td><a class="btn btn-outline btn-sm" href="results.html">Results</a></td></tr>`).join("");
+  }
+
+  [fSearch,fDisc,fMonth,fStatus].forEach(el=>el.addEventListener("input",renderList));
+  document.getElementById("fReset").onclick=()=>{fSearch.value="";fDisc.value="";fMonth.value="";fStatus.value="";renderList()};
+  document.getElementById("emptyReset").onclick=e=>{e.preventDefault();document.getElementById("fReset").click()};
+  document.getElementById("dlCal").onclick=()=>V.toast("Calendar PDF (demo)");
+
+  /* view toggle */
+  const vList=document.getElementById("vList"), vMonth=document.getElementById("vMonth");
+  const evListWrap=document.getElementById("evList"), monthView=document.getElementById("monthView");
+  vList.onclick=()=>{vList.setAttribute("aria-selected","true");vMonth.setAttribute("aria-selected","false");evListWrap.hidden=false;document.getElementById("evEmpty").hidden=!!document.getElementById("evEmpty").dataset.forceHide;monthView.hidden=true;renderList()};
+  vMonth.onclick=()=>{vMonth.setAttribute("aria-selected","true");vList.setAttribute("aria-selected","false");evListWrap.hidden=true;document.getElementById("evEmpty").hidden=true;monthView.hidden=false;renderMonth()};
+
+  /* month view: Oct-Dec 2026 switcher */
+  const months=[{y:2026,m:9,label:"September 2026"},{y:2026,m:10,label:"October 2026"},{y:2026,m:11,label:"November 2026"},{y:2026,m:12,label:"December 2026"}];
+  let mi=1; // default October
+  const mQuery=matchMedia("(max-width:639px)");
+  function renderMonth(){
+    const cur=months[mi];
+    document.getElementById("mLabel").textContent=cur.label;
+    const first=new Date(cur.y,cur.m-1,1), startDow=first.getDay(), days=new Date(cur.y,cur.m,0).getDate();
+    const evByDay={};
+    d.events.forEach(e=>{const dt=new Date(e.start);if(dt.getFullYear()===cur.y&&dt.getMonth()+1===cur.m)( evByDay[dt.getDate()]=evByDay[dt.getDate()]||[] ).push(e)});
+    const mGrid=document.getElementById("mGrid");
+    /* REVISION_V3 §6 — agenda list (days with events only) under 640px,
+       full 7-column grid at tablet/desktop widths. */
+    if(mQuery.matches){
+      mGrid.classList.add("agenda");
+      const dayNums=Object.keys(evByDay).map(Number).sort((a,b)=>a-b);
+      mGrid.innerHTML = dayNums.length ? dayNums.map(day=>{
+        const dt=new Date(cur.y,cur.m-1,day);
+        return `<div class="agenda-day"><div class="ad-date"><b>${day}</b><small>${dt.toLocaleDateString("en-GB",{weekday:"short"})}</small></div><div class="ad-events">${evByDay[day].map(e=>`<button type="button" class="chip" data-id="${e.id}">${V.esc(e.title)}</button>`).join("")}</div></div>`;
+      }).join("") : `<div class="empty" style="padding:32px 16px"><span class="ic"><i data-lucide="calendar-x"></i></span><p>No events in ${cur.label}.</p></div>`;
+    } else {
+      mGrid.classList.remove("agenda");
+      let html=["Sun","Mon","Tue","Wed","Thu","Fri","Sat"].map(x=>`<div class="dow">${x}</div>`).join("");
+      for(let i=0;i<startDow;i++)html+=`<div class="cell pad"></div>`;
+      for(let day=1;day<=days;day++){
+        const evs=evByDay[day]||[];
+        html+=`<div class="cell"><span class="dn">${day}</span>${evs.map(e=>`<button type="button" class="chip" data-id="${e.id}">${V.esc(e.title.split(" ").slice(0,3).join(" "))}</button>`).join("")}</div>`;
+      }
+      mGrid.innerHTML=html;
+    }
+    [...document.querySelectorAll("#mGrid .chip")].forEach(b=>b.onclick=()=>location.href="event-detail.html?id="+b.dataset.id);
+    V.icons();
+  }
+  document.getElementById("mPrev").onclick=()=>{mi=Math.max(0,mi-1);renderMonth()};
+  document.getElementById("mNext").onclick=()=>{mi=Math.min(months.length-1,mi+1);renderMonth()};
+  mQuery.addEventListener?mQuery.addEventListener("change",()=>{if(!monthView.hidden)renderMonth()}):mQuery.addListener(()=>{if(!monthView.hidden)renderMonth()});
+
+  renderList();
+  renderPast();
+  V.icons();
+  V.animate();
+})();
+</script>
+</body>
+</html>
+</content>

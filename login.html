@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sign In | VDRSA Visakhapatnam Roller Sports Portal</title>
+<meta name="description" content="Sign in to the VDRSA Control Room, Club Portal, Parent Hub or Coach Desk to manage registrations, results and communications with the district association.">
+<link rel="canonical" href="https://vdrsa.in/login.html">
+<meta name="robots" content="noindex,follow">
+<meta name="theme-color" content="#14150F">
+<meta name="keywords" content="VDRSA, Visakhapatnam District Roller Sports Association, roller skating Visakhapatnam, district roller sports, speed skating, artistic skating, inline hockey, rink hockey, skateboarding, roller derby, APRSA, RSFI, skater ID, sign in, club portal, coach desk, parent hub">
+<meta name="author" content="VDRSA">
+<meta name="publisher" content="VDRSA">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="VDRSA">
+<meta property="og:title" content="Sign In | VDRSA Visakhapatnam Roller Sports Portal">
+<meta property="og:description" content="Sign in to the VDRSA Control Room, Club Portal, Parent Hub or Coach Desk to manage registrations, results and communications with the district association.">
+<meta property="og:url" content="https://vdrsa.in/login.html">
+<meta property="og:image" content="https://vdrsa.in/assets/vdrsa-logo.png">
+<meta property="og:locale" content="en_IN">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Sign In | VDRSA Visakhapatnam Roller Sports Portal">
+<meta name="twitter:description" content="Sign in to the VDRSA Control Room, Club Portal, Parent Hub or Coach Desk to manage registrations, results and communications with the district association.">
+<meta name="twitter:image" content="https://vdrsa.in/assets/vdrsa-logo.png">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"SportsOrganization","name":"Visakhapatnam District Roller Sports Association","alternateName":"VDRSA","url":"https://vdrsa.in/","logo":"https://vdrsa.in/assets/vdrsa-logo.png","sport":["Speed Skating","Artistic Skating","Inline Hockey","Rink Hockey","Inline Freestyle","Skateboarding","Roller Derby","Inline Alpine/Downhill"],"areaServed":{"@type":"City","name":"Visakhapatnam"},"address":{"@type":"PostalAddress","addressRegion":"Andhra Pradesh","addressCountry":"IN"},"memberOf":[{"@type":"SportsOrganization","name":"Andhra Pradesh Roller Sports Association","alternateName":"APRSA"},{"@type":"SportsOrganization","name":"Roller Sports Federation of India","alternateName":"RSFI"}],"sameAs":["https://instagram.com/vdrsa_official","https://wa.me/919848012345"]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://vdrsa.in/"},{"@type":"ListItem","position":2,"name":"Sign In","item":"https://vdrsa.in/login.html"}]}</script>
+<link rel="icon" href="assets/vdrsa-logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&family=Noto+Sans+Telugu:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/site.css">
+<script src="https://cdn.jsdelivr.net/npm/lucide@0.469.0/dist/umd/lucide.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
+<style>
+.login-shell{margin:24px var(--gutter) 0}
+.login-split{min-height:calc(100vh - 78px - 38px - 24px);display:grid;grid-template-columns:1fr 1fr;border-radius:var(--r-xl);overflow:hidden;box-shadow:var(--shadow-lg);background:var(--surface)}
+.login-photo{position:relative;background:center/cover;color:#fff;display:flex;flex-direction:column;justify-content:flex-end;padding:48px}
+.login-photo::before{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(10,10,14,.80),rgba(10,10,14,.35) 55%,rgba(10,10,14,.15))}
+.login-photo>*{position:relative;z-index:1}
+.login-photo img{width:48px;height:48px;border-radius:50%;background:#fff;margin-bottom:20px}
+.login-photo .kicker{margin-bottom:10px;color:#FF9CC2}
+.login-photo .kicker[data-index]::before{color:rgba(255,255,255,.55)}
+.login-photo h2{font-size:clamp(24px,2.6vw,32px);max-width:420px}
+.login-photo ul{list-style:none;margin:22px 0 0;padding:0;display:grid;gap:12px;max-width:400px}
+.login-photo li{display:flex;gap:10px;align-items:flex-start;color:#D8D8DE;font-size:14.5px}
+.login-photo li .lucide{color:var(--primary);flex:none;margin-top:2px}
+.login-panel{display:flex;align-items:center;justify-content:center;padding:40px 24px}
+.login-box{width:100%;max-width:420px;padding:32px}
+.otp-row{display:flex;gap:8px;justify-content:space-between;margin:16px 0}
+.otp-row input{width:44px;height:52px;text-align:center;border-radius:10px;border:1px solid var(--border);background:var(--bg);color:var(--text);font:700 20px ui-monospace,Consolas,monospace}
+.otp-row input:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 3px color-mix(in srgb,var(--primary) 22%,transparent)}
+.login-compact{display:none;align-items:center;gap:12px;padding:24px 24px 0}
+.login-compact img{width:40px;height:40px;border-radius:50%;background:var(--ink-900)}
+.login-compact b{display:block;font:800 16px var(--display);color:var(--text)}
+.login-compact span{display:block;font-size:12.5px;color:var(--muted)}
+@media (max-width:900px){.login-split{grid-template-columns:1fr}.login-photo{display:none}.login-compact{display:flex}}
+@media (max-width:620px){.login-shell{margin:16px var(--gutter) 0}.login-split{border-radius:20px}}
+.seg{display:flex;width:100%}
+.seg button{flex:1;white-space:nowrap;padding:0 8px;font-size:13px;min-height:44px}
+@media (max-width:480px){
+  .login-panel{padding:24px 16px}
+  .login-box{padding:20px}
+  .otp-row{gap:6px}
+  .otp-row input{width:40px;height:48px;font-size:18px}
+}
+@media (max-width:360px){
+  .otp-row{gap:4px}
+  .otp-row input{width:36px;height:46px}
+}
+</style>
+</head>
+<body data-page="login">
+
+<div id="page-loader" role="status" aria-live="polite">
+  <div class="ring-loader">
+    <img src="assets/vdrsa-logo.png" alt="">
+    <svg viewBox="0 0 132 132" aria-hidden="true"><circle class="track" cx="66" cy="66" r="62"/><circle class="arc" cx="66" cy="66" r="62"/></svg>
+  </div>
+  <span class="sr-only">Loading VDRSA</span>
+</div>
+
+<div id="site-header"></div>
+
+<main id="top">
+<section class="login-shell" style="padding:0">
+  <div class="login-split">
+    <div class="login-photo" id="loginPhoto" role="img" aria-label="Skater performing on an indoor artistic skating rink" data-cursor="view" data-cursor-label="Explore">
+      <img src="assets/vdrsa-logo.png" alt="">
+      <span class="kicker" data-index="01">Sign in</span>
+      <span class="tag" data-anim="left" style="display:inline-flex;align-items:center;gap:10px;font:600 15px var(--body);margin-bottom:10px"><i style="width:28px;height:2px;background:#FF7AAE;display:inline-block"></i>One Skater. One ID. One Journey.</span>
+      <h2 data-anim="up">One sign-in for every <span class="accent-word">role</span> in district roller sports.</h2>
+      <ul data-anim="stagger">
+        <li><i data-lucide="check"></i>Clubs register skaters and submit event entries in one place.</li>
+        <li><i data-lucide="check"></i>Parents track results, certificates and consent from one hub.</li>
+        <li><i data-lucide="check"></i>Coaches manage attendance, notes and selection on the go.</li>
+      </ul>
+    </div>
+
+    <div class="login-compact">
+      <img src="assets/vdrsa-logo.png" alt="">
+      <div><b>VDRSA</b><span>One Skater. One ID. One Journey.</span></div>
+    </div>
+
+    <div class="login-panel">
+      <div class="card login-box" data-anim="zoom">
+        <h1 style="font-size:22px;margin-bottom:4px">Sign in</h1>
+        <p style="color:var(--muted);font-size:14.5px;margin-bottom:18px">Choose your role, then verify with an OTP sent to your registered mobile number.</p>
+
+        <div class="seg" role="tablist" aria-label="Role" id="roleSeg" style="width:100%;margin-bottom:20px">
+          <button role="tab" aria-selected="false" data-role="control" style="flex:1">Control Room</button>
+          <button role="tab" aria-selected="false" data-role="club" style="flex:1">Club</button>
+          <button role="tab" aria-selected="false" data-role="parent" style="flex:1">Parent</button>
+          <button role="tab" aria-selected="false" data-role="coach" style="flex:1">Coach</button>
+        </div>
+
+        <form id="mobileForm" novalidate>
+          <label for="mobile" style="display:block;font:600 14px var(--body);margin-bottom:6px">Mobile number</label>
+          <div style="display:flex;gap:8px">
+            <input class="input" id="mobile" inputmode="numeric" maxlength="10" placeholder="98XXXXXXXX" style="font:500 15px var(--body);letter-spacing:normal" autocomplete="off" aria-describedby="mobileHint">
+            <button class="btn btn-primary" id="sendOtp" type="submit" data-magnetic style="min-width:128px">Send OTP</button>
+          </div>
+          <p class="hint" id="mobileHint" style="font-size:12.5px;color:var(--muted);margin-top:8px">Demo only — no OTP is actually sent.</p>
+        </form>
+
+        <form id="otpForm" novalidate style="display:none">
+          <label style="display:block;font:600 14px var(--body);margin-bottom:6px">Enter the 6-digit OTP</label>
+          <div class="otp-row" id="otpRow">
+            <input maxlength="1" inputmode="numeric" aria-label="OTP digit 1">
+            <input maxlength="1" inputmode="numeric" aria-label="OTP digit 2">
+            <input maxlength="1" inputmode="numeric" aria-label="OTP digit 3">
+            <input maxlength="1" inputmode="numeric" aria-label="OTP digit 4">
+            <input maxlength="1" inputmode="numeric" aria-label="OTP digit 5">
+            <input maxlength="1" inputmode="numeric" aria-label="OTP digit 6">
+          </div>
+          <button class="btn btn-primary" id="verifyOtp" type="submit" data-magnetic style="width:100%">Verify &amp; sign in</button>
+          <button class="btn btn-outline" id="changeNumber" type="button" style="width:100%;margin-top:8px">Use a different number</button>
+        </form>
+
+        <p style="margin-top:18px;font-size:13.5px;color:var(--muted)">Trouble signing in? <a class="link" href="contact.html">Contact the office</a></p>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<div id="site-footer"></div>
+<div class="toast" id="toast" role="status"></div>
+
+<script src="assets/site.js"></script>
+<script>
+(function(){
+  const V=window.VDRSA;
+
+  const lp=document.getElementById("loginPhoto");
+  if(lp)lp.style.backgroundImage=`url('${V.photo("artisticrink",1200)}')`;
+
+  const ROLES=["control","club","parent","coach"];
+  const roleSeg=document.getElementById("roleSeg");
+
+  function setRole(role){
+    [...roleSeg.querySelectorAll("button")].forEach(b=>b.setAttribute("aria-selected",b.dataset.role===role));
+  }
+  roleSeg.addEventListener("click",e=>{const b=e.target.closest("button");if(b)setRole(b.dataset.role)});
+  const qRole=V.param("role");
+  setRole(ROLES.includes(qRole)?qRole:"club");
+
+  document.getElementById("mobileForm").onsubmit=function(e){
+    e.preventDefault();
+    const mobile=document.getElementById("mobile").value.trim();
+    if(!/^\d{10}$/.test(mobile)){V.toast("Enter a valid 10-digit mobile number.");document.getElementById("mobile").focus();return}
+    const btn=document.getElementById("sendOtp");
+    V.busy(btn,"Sending");
+    setTimeout(()=>{
+      V.idle(btn);
+      document.getElementById("mobileForm").style.display="none";
+      document.getElementById("otpForm").style.display="block";
+      V.toast("Demo OTP sent (use any 6 digits).");
+      document.querySelector("#otpRow input").focus();
+    },900);
+  };
+
+  const otpInputs=[...document.querySelectorAll("#otpRow input")];
+  otpInputs.forEach((inp,i)=>{
+    inp.addEventListener("input",()=>{
+      inp.value=inp.value.replace(/\D/g,"").slice(0,1);
+      if(inp.value&&otpInputs[i+1])otpInputs[i+1].focus();
+    });
+    inp.addEventListener("keydown",e=>{
+      if(e.key==="Backspace"&&!inp.value&&otpInputs[i-1])otpInputs[i-1].focus();
+    });
+  });
+
+  document.getElementById("otpForm").onsubmit=function(e){
+    e.preventDefault();
+    const code=otpInputs.map(i=>i.value).join("");
+    if(code.length<6){V.toast("Enter all 6 digits.");return}
+    const btn=document.getElementById("verifyOtp");
+    V.busy(btn,"Verifying");
+    setTimeout(()=>{
+      V.idle(btn);
+      V.toast("Portal screens come in the next round");
+    },900);
+  };
+
+  document.getElementById("changeNumber").onclick=function(){
+    document.getElementById("otpForm").style.display="none";
+    document.getElementById("mobileForm").style.display="block";
+    document.getElementById("mobile").value="";
+    otpInputs.forEach(i=>i.value="");
+    document.getElementById("mobile").focus();
+  };
+
+  V.icons();
+  V.animate();
+})();
+</script>
+</body>
+</html>
