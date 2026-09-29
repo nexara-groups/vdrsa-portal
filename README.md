@@ -2,7 +2,7 @@
 
 Visakhapatnam District Roller Sports Association — clickable website mockup for validation and feedback.
 
-**Live:** https://<your-github-username>.github.io/<repo-name>/
+**Live:** https://nexara-groups.github.io/vdrsa-portal/
 
 ## What to review
 Home, About, Events, Event detail, Results, Circulars, Clubs, Club detail, News, Hall of Fame, Verify Skater ID, Contact, Login.
