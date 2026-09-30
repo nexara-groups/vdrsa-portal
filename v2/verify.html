@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Verify Skater ID | VDRSA Visakhapatnam Roller Sports</title>
+<meta name="description" content="Check whether a VDRSA Skater ID is active, expired or not on record for skaters registered in Visakhapatnam. No personal contact details are ever shown.">
+<link rel="canonical" href="https://vdrsa.in/verify.html">
+<meta name="robots" content="index,follow">
+<meta name="theme-color" content="#14150F">
+<meta name="keywords" content="VDRSA, Visakhapatnam District Roller Sports Association, roller skating Visakhapatnam, district roller sports, speed skating, artistic skating, inline hockey, rink hockey, skateboarding, roller derby, APRSA, RSFI, skater ID, verify skater ID, skater ID lookup, ID card verification">
+<meta name="author" content="VDRSA">
+<meta name="publisher" content="VDRSA">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="VDRSA">
+<meta property="og:title" content="Verify Skater ID | VDRSA Visakhapatnam Roller Sports">
+<meta property="og:description" content="Check whether a VDRSA Skater ID is active, expired or not on record for skaters registered in Visakhapatnam. No personal contact details are ever shown.">
+<meta property="og:url" content="https://vdrsa.in/verify.html">
+<meta property="og:image" content="https://vdrsa.in/assets/vdrsa-logo.png">
+<meta property="og:locale" content="en_IN">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Verify Skater ID | VDRSA Visakhapatnam Roller Sports">
+<meta name="twitter:description" content="Check whether a VDRSA Skater ID is active, expired or not on record for skaters registered in Visakhapatnam. No personal contact details are ever shown.">
+<meta name="twitter:image" content="https://vdrsa.in/assets/vdrsa-logo.png">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"SportsOrganization","name":"Visakhapatnam District Roller Sports Association","alternateName":"VDRSA","url":"https://vdrsa.in/","logo":"https://vdrsa.in/assets/vdrsa-logo.png","sport":["Speed Skating","Artistic Skating","Inline Hockey","Rink Hockey","Inline Freestyle","Skateboarding","Roller Derby","Inline Alpine/Downhill"],"areaServed":{"@type":"City","name":"Visakhapatnam"},"address":{"@type":"PostalAddress","addressRegion":"Andhra Pradesh","addressCountry":"IN"},"memberOf":[{"@type":"SportsOrganization","name":"Andhra Pradesh Roller Sports Association","alternateName":"APRSA"},{"@type":"SportsOrganization","name":"Roller Sports Federation of India","alternateName":"RSFI"}],"sameAs":["https://instagram.com/vdrsa_official","https://wa.me/919848012345"]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://vdrsa.in/"},{"@type":"ListItem","position":2,"name":"Verify Skater ID","item":"https://vdrsa.in/verify.html"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Who can use this verification tool?","acceptedAnswer":{"@type":"Answer","text":"Anyone — clubs, event officials, schools, media and parents — can verify a Skater ID without signing in."}},{"@type":"Question","name":"Why is the athlete's name masked?","acceptedAnswer":{"@type":"Answer","text":"To protect the privacy of skaters, most of whom are minors, only an initial and first letter of the surname are shown."}},{"@type":"Question","name":"What does \"expired\" mean?","acceptedAnswer":{"@type":"Answer","text":"The ID was valid in a previous season but the club has not yet renewed the athlete's registration for the current season."}},{"@type":"Question","name":"I can't find an ID — what should I do?","acceptedAnswer":{"@type":"Answer","text":"Check the format (VDRSA-YY-NNNNN). If it still doesn't verify, contact the athlete's club or the VDRSA office."}},{"@type":"Question","name":"Can I verify an ID on behalf of a club for event entry?","acceptedAnswer":{"@type":"Answer","text":"Yes. Event organizers routinely verify IDs at entry checks; only the fields shown above are needed to confirm eligibility."}}]}</script>
+<link rel="icon" href="assets/vdrsa-logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&family=Caveat:wght@600&family=Noto+Sans+Telugu:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/site.css">
+<script src="https://cdn.jsdelivr.net/npm/lucide@0.469.0/dist/umd/lucide.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
+<style>
+.verify-wrap{max-width:640px;margin:0 auto}
+.verify-card{padding:32px}
+.verify-card .row{display:flex;gap:8px}
+.verify-card .hint{font-size:12.5px;color:var(--muted);margin-top:8px}
+.v-out{margin-top:18px;border-radius:0;padding:16px 18px;font-size:14.5px;display:none}
+.v-out.show{display:block}
+.v-out.ok{background:rgba(15,122,85,.09);border:1px solid rgba(15,122,85,.35);background:color-mix(in srgb,var(--success) 9%,transparent);border:1px solid color-mix(in srgb,var(--success) 35%,transparent)}
+.v-out.warn{background:rgba(176,126,8,.1);border:1px solid rgba(176,126,8,.4);background:color-mix(in srgb,var(--gold) 10%,transparent);border:1px solid color-mix(in srgb,var(--gold) 40%,transparent)}
+.v-out.bad{background:rgba(179,32,47,.08);border:1px solid rgba(179,32,47,.35);background:color-mix(in srgb,var(--danger) 8%,transparent);border:1px solid color-mix(in srgb,var(--danger) 35%,transparent)}
+.idcard{position:relative;overflow:hidden;margin-top:16px;border-radius:0;background:var(--ink-900);box-shadow:6px 6px 0 var(--primary);color:#fff;padding:22px 22px 22px 28px;display:grid;grid-template-columns:1fr auto;gap:16px;align-items:center}
+.idcard::before{content:"";position:absolute;left:0;top:0;bottom:0;width:6px;background:var(--primary)}
+.idcard .hd{display:flex;align-items:center;gap:10px;margin-bottom:14px;grid-column:1/-1}
+.idcard .hd img{width:30px;height:30px;border-radius:50%;background:#fff}
+.idcard .hd b{font:700 14px var(--ui)}
+.idcard dl{display:grid;grid-template-columns:auto 1fr;gap:6px 12px;font-size:13.5px}
+.idcard dt{color:#B7B9A6}
+.idcard dd{margin:0;font-weight:600}
+.idcard .qr{width:76px;height:76px;border-radius:0;background:#fff;display:grid;place-items:center;overflow:hidden}
+.idcard .qr svg{width:100%;height:100%;display:block}
+.showhide{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.showhide ul{margin:0;padding:0;list-style:none;display:grid;gap:10px;font-size:14.5px}
+.showhide li{display:flex;gap:10px;align-items:flex-start}
+@media (max-width:620px){.showhide{grid-template-columns:1fr}.idcard{grid-template-columns:1fr}.idcard .qr{justify-self:start}}
+.h2-accent{color:var(--primary-strong)}
+</style>
+</head>
+<body data-page="verify">
+
+<div id="page-loader" role="status" aria-live="polite">
+  <div class="ring-loader">
+    <img src="assets/vdrsa-logo.png" alt="" width="54" height="54" decoding="async">
+    <svg viewBox="0 0 132 132" aria-hidden="true"><circle class="track" cx="66" cy="66" r="62"/><circle class="arc" cx="66" cy="66" r="62"/></svg>
+  </div>
+  <span class="sr-only">Loading VDRSA</span>
+</div>
+
+<div id="site-header"></div>
+
+<main id="top">
+
+<section class="page-hero">
+  <div class="hero-photo" id="bannerPhoto" role="img" aria-label="Low-angle photo of a skater crouching" data-parallax="0.12" data-cursor="view" data-cursor-label="Verify"></div>
+  <div class="wrap">
+    <nav class="crumbs" aria-label="Breadcrumb" data-anim="left">
+      <a href="index.html">Home</a><span class="sep">&rsaquo;</span><span class="cur">Verify a Skater ID</span>
+    </nav>
+    <div class="page-hero-top">
+      <aside class="spec" aria-label="Public check"><span class="sp-l">Public check</span><span class="sp-n">Free</span><span class="sp-t">No login needed</span><span class="sp-t">Active · Expired · Not found</span></aside>
+      <div>
+        <span class="script">Check a skater</span>
+        <span class="kicker" data-index="01">Verification</span>
+        <h1 data-anim="up"><span class="accent-word">Verify</span> a Skater ID</h1>
+        <p class="lead" data-anim="up" data-delay="0.2">Anyone can check whether a VDRSA Skater ID is currently active — for club recognition, event entry or media coverage.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section aria-labelledby="verify-title">
+  <div class="wrap verify-wrap">
+    <h2 id="verify-title" class="sr-only">Verify a Skater ID</h2>
+    <form class="card verify-card" data-anim="zoom" id="verifyForm" novalidate>
+      <label for="sid" style="display:flex;align-items:center;gap:8px;font:700 15px var(--ui);margin-bottom:12px"><i data-lucide="shield-check" style="color:var(--primary)"></i>Skater ID</label>
+      <div class="row">
+        <input class="input" id="sid" placeholder="VDRSA-26-00123" autocomplete="off" autocapitalize="characters" autocorrect="off" spellcheck="false" enterkeyhint="search" aria-describedby="sidHint">
+        <button class="btn btn-primary" id="verifyBtn" type="submit" data-magnetic style="min-width:120px">Verify</button>
+      </div>
+      <p class="hint" id="sidHint">Format: VDRSA-YY-NNNNN. Demo IDs: VDRSA-26-00123 (active) · VDRSA-24-00456 (expired).</p>
+      <div class="v-out" id="vOut" aria-live="polite"></div>
+      <div class="idcard" id="idCard" style="display:none">
+        <div class="hd"><img src="assets/vdrsa-logo.png" alt="" width="54" height="54" decoding="async"><b>VDRSA Skater ID</b></div>
+        <dl>
+          <dt>Name</dt><dd id="ic-name"></dd>
+          <dt>Skater ID</dt><dd class="mono" id="ic-id"></dd>
+          <dt>Club</dt><dd id="ic-club"></dd>
+          <dt>Category</dt><dd id="ic-cat"></dd>
+          <dt>Valid till</dt><dd id="ic-till"></dd>
+        </dl>
+        <div class="qr" id="qrBox" role="img" aria-label="QR pattern encoding this Skater ID"></div>
+      </div>
+    </form>
+  </div>
+</section>
+
+<section class="soft" aria-labelledby="how-title">
+  <div class="wrap">
+    <div class="sec-head"><div><span class="kicker" data-index="02">How it works</span><h2 id="how-title" data-anim="up">Three <span class="h2-accent">steps</span></h2></div></div>
+    <div class="wrap grid-3 steps3" data-anim="stagger">
+      <div class="card" style="padding:22px"><span class="badge b-blue" style="margin-bottom:10px">1</span><h3 style="font-size:16.5px;margin:6px 0 6px">Enter the ID</h3><p style="color:var(--muted);font-size:14.5px">Type the Skater ID exactly as printed, in the format VDRSA-YY-NNNNN.</p></div>
+      <div class="card" style="padding:22px"><span class="badge b-blue" style="margin-bottom:10px">2</span><h3 style="font-size:16.5px;margin:6px 0 6px">We check the register</h3><p style="color:var(--muted);font-size:14.5px">The ID is matched against the district's active registration database.</p></div>
+      <div class="card" style="padding:22px"><span class="badge b-blue" style="margin-bottom:10px">3</span><h3 style="font-size:16.5px;margin:6px 0 6px">See the status</h3><p style="color:var(--muted);font-size:14.5px">Active, expired or not found — with only the details needed to confirm identity.</p></div>
+    </div>
+  </div>
+</section>
+
+<section aria-labelledby="privacy-title">
+  <div class="wrap">
+    <div class="sec-head"><div><span class="kicker" data-index="03">Privacy</span><h2 id="privacy-title" data-anim="words">What we show, and what we never show</h2></div></div>
+    <div class="card" data-anim="up" style="padding:28px">
+      <div class="showhide">
+        <div>
+          <h3 style="font-size:15px;margin-bottom:12px;color:var(--success)">We show</h3>
+          <ul>
+            <li><i data-lucide="check" style="color:var(--success)"></i>Masked athlete name (e.g. A. K****)</li>
+            <li><i data-lucide="check" style="color:var(--success)"></i>Club name</li>
+            <li><i data-lucide="check" style="color:var(--success)"></i>Discipline and category</li>
+            <li><i data-lucide="check" style="color:var(--success)"></i>Validity status and valid-till date</li>
+          </ul>
+        </div>
+        <div>
+          <h3 style="font-size:15px;margin-bottom:12px;color:var(--danger)">We never show</h3>
+          <ul>
+            <li><i data-lucide="x" style="color:var(--danger)"></i>Photograph</li>
+            <li><i data-lucide="x" style="color:var(--danger)"></i>Date of birth</li>
+            <li><i data-lucide="x" style="color:var(--danger)"></i>Phone number or address</li>
+            <li><i data-lucide="x" style="color:var(--danger)"></i>Parent or guardian details</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="soft" aria-labelledby="faq-title">
+  <div class="wrap">
+    <div class="sec-head"><div><span class="kicker" data-index="04">Questions</span><h2 id="faq-title" data-anim="words">Verification FAQ</h2></div></div>
+    <div class="faq" data-anim="up">
+      <details><summary>Who can use this verification tool?<span class="pm"></span></summary><div class="a">Anyone — clubs, event officials, schools, media and parents — can verify a Skater ID without signing in.</div></details>
+      <details><summary>Why is the athlete's name masked?<span class="pm"></span></summary><div class="a">To protect the privacy of skaters, most of whom are minors, only an initial and first letter of the surname are shown.</div></details>
+      <details><summary>What does "expired" mean?<span class="pm"></span></summary><div class="a">The ID was valid in a previous season but the club has not yet renewed the athlete's registration for the current season.</div></details>
+      <details><summary>I can't find an ID — what should I do?<span class="pm"></span></summary><div class="a">Check the format (VDRSA-YY-NNNNN). If it still doesn't verify, contact the athlete's club or the VDRSA office.</div></details>
+      <details><summary>Can I verify an ID on behalf of a club for event entry?<span class="pm"></span></summary><div class="a">Yes. Event organizers routinely verify IDs at entry checks; only the fields shown above are needed to confirm eligibility.</div></details>
+    </div>
+  </div>
+</section>
+
+<!-- ================= VELOCITY MARQUEE ================= -->
+</main>
+
+<div id="site-footer"></div>
+<div class="toast" id="toast" role="status"></div>
+
+<script src="assets/site.js"></script>
+<script>
+(function(){
+  const V=window.VDRSA;
+
+  const bp=document.getElementById("bannerPhoto");
+  if(bp)bp.style.backgroundImage=`url('${V.photo("lowangle",1600)}')`;
+
+  /* Revision v4 §4 — a deterministic QR-like pattern generated from the
+     Skater ID, not a real scannable QR code (this is a mockup). Same ID
+     always produces the same pattern; finder squares at three corners
+     make it read as "QR" at a glance. */
+  function genQR(id){
+    const N=10;
+    let h=0; for(let i=0;i<id.length;i++){h=(h*31+id.charCodeAt(i))>>>0;}
+    function rand(){h^=h<<13;h>>>=0;h^=h>>17;h^=h<<5;h>>>=0;return h/4294967295;}
+    const cells=[];
+    for(let y=0;y<N;y++){cells.push([]);for(let x=0;x<N;x++)cells[y].push(rand()<0.5?1:0);}
+    const finder=(cx,cy)=>{
+      for(let y=0;y<3;y++)for(let x=0;x<3;x++)cells[cy+y][cx+x]=1;
+      cells[cy+1][cx+1]=0;
+    };
+    finder(0,0);finder(N-3,0);finder(0,N-3);
+    let rects="";
+    for(let y=0;y<N;y++)for(let x=0;x<N;x++)if(cells[y][x])rects+=`<rect x="${x}" y="${y}" width="1" height="1"/>`;
+    return `<svg viewBox="0 0 ${N} ${N}" xmlns="http://www.w3.org/2000/svg" fill="#14150F">${rects}</svg>`;
+  }
+
+  function runVerify(id){
+    const btn=document.getElementById("verifyBtn"), out=document.getElementById("vOut"), card=document.getElementById("idCard");
+    out.className="v-out";card.style.display="none";
+    V.busy(btn,"Checking");
+    setTimeout(()=>{
+      V.idle(btn);out.classList.add("show");
+      if(id==="VDRSA-26-00123"){
+        out.classList.add("ok");
+        out.innerHTML=`<b style="color:var(--success)">Verified — active registration</b><div style="color:var(--muted);margin-top:4px">This Skater ID is currently valid.</div>`;
+        document.getElementById("ic-name").textContent="A. K****";
+        document.getElementById("ic-id").textContent=id;
+        document.getElementById("ic-club").textContent="Beach Road SC";
+        document.getElementById("ic-cat").textContent="Speed · U-14";
+        document.getElementById("ic-till").textContent="31 Mar 2027";
+        document.getElementById("qrBox").innerHTML=genQR(id);
+        card.style.display="grid";
+      }else if(id==="VDRSA-24-00456"){
+        out.classList.add("warn");
+        out.innerHTML=`<b>Registered — expired on 31 Mar 2025</b><div style="color:var(--muted);margin-top:4px">The club must renew this registration before it can be used for event entry.</div>`;
+      }else{
+        out.classList.add("bad");
+        out.innerHTML=`<b style="color:var(--danger)">No skater found with this ID</b><div style="color:var(--muted);margin-top:4px">Check the format: VDRSA-YY-NNNNN, or contact the athlete's club.</div>`;
+      }
+      V.icons();
+    },1000);
+  }
+
+  document.getElementById("verifyForm").onsubmit=function(e){
+    e.preventDefault();
+    const id=document.getElementById("sid").value.trim().toUpperCase();
+    if(!id){document.getElementById("sid").focus();V.toast("Enter a Skater ID.");return}
+    runVerify(id);
+  };
+
+  const pre=V.param("id");
+  if(pre){
+    document.getElementById("sid").value=pre.toUpperCase();
+    runVerify(pre.toUpperCase());
+  }
+
+  V.icons();
+  V.animate();
+})();
+</script>
+</body>
+</html>
