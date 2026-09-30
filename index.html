@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>VDRSA — Visakhapatnam District Roller Sports Association</title>
 <meta name="description" content="Official website of the Visakhapatnam District Roller Sports Association. Events, results, circulars, recognized clubs and Skater ID verification.">
 <link rel="canonical" href="https://vdrsa.in/">
@@ -34,6 +34,11 @@
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
 <style>
+/* responsive hero / CTA imagery: phones get an 800px rendition, tablets 1200px, desktop the full one */
+#hcPhoto{background-image:url("https://images.pexels.com/photos/30756235/pexels-photo-30756235.jpeg?auto=compress&cs=tinysrgb&w=800")}
+#ctaBg{background-image:url("https://images.pexels.com/photos/36678658/pexels-photo-36678658.jpeg?auto=compress&cs=tinysrgb&w=800")}
+@media (min-width:641px){#hcPhoto{background-image:url("https://images.pexels.com/photos/30756235/pexels-photo-30756235.jpeg?auto=compress&cs=tinysrgb&w=1200")}#ctaBg{background-image:url("https://images.pexels.com/photos/36678658/pexels-photo-36678658.jpeg?auto=compress&cs=tinysrgb&w=1200")}}
+@media (min-width:1025px){#hcPhoto{background-image:url("https://images.pexels.com/photos/30756235/pexels-photo-30756235.jpeg?auto=compress&cs=tinysrgb&w=1920")}#ctaBg{background-image:url("https://images.pexels.com/photos/36678658/pexels-photo-36678658.jpeg?auto=compress&cs=tinysrgb&w=1400")}}
 /* v4 — shorter Home on phones */
 @media (max-width:640px){
   .home-res th:nth-child(3),.home-res td:nth-child(3),.home-res th:nth-child(4),.home-res td:nth-child(4){display:none}
@@ -45,11 +50,11 @@
 /* ===== District Calendar — motion ===== */
 /* Live "Registration Open" dot with an expanding ring */
 .ev-cal-spotlight .badge .dot{position:relative}
-.ev-cal-spotlight .badge .dot::after{content:"";position:absolute;inset:-4px;border-radius:50%;border:2px solid currentColor;opacity:.6;animation:calPulse 1.8s ease-out infinite}
+.ev-cal-spotlight .badge .dot::after{content:"";position:absolute;top:-4px;right:-4px;bottom:-4px;left:-4px;inset:-4px;border-radius:50%;border:2px solid currentColor;opacity:.6;animation:calPulse 1.8s ease-out infinite}
 @keyframes calPulse{0%{transform:scale(1);opacity:.6}70%{transform:scale(2.4);opacity:0}100%{opacity:0}}
 /* Rotating lime sheen on the spotlight card border */
 .ev-cal-spotlight{position:relative;isolation:isolate}
-.ev-cal-spotlight::before{content:"";position:absolute;inset:0;border-radius:inherit;padding:1.5px;background:conic-gradient(from var(--calA,0deg),transparent 0 70%,var(--primary) 85%,transparent 100%);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;animation:calSpin 6s linear infinite;pointer-events:none;z-index:-1}
+.ev-cal-spotlight::before{content:"";position:absolute;top:0;right:0;bottom:0;left:0;inset:0;border-radius:inherit;padding:1.5px;background:conic-gradient(from var(--calA,0deg),transparent 0 70%,var(--primary) 85%,transparent 100%);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;animation:calSpin 6s linear infinite;pointer-events:none;z-index:-1}
 @property --calA{syntax:"<angle>";inherits:false;initial-value:0deg}
 @keyframes calSpin{to{--calA:360deg}}
 /* Countdown seconds "tick" pulse — reads as live */
@@ -89,7 +94,7 @@
      countdown target), drifting glass stat chips, animated scroll cue.
      Real site header (#site-header) still renders above this section. ================= -->
 <section class="hero-cine" id="heroCine" aria-label="Hero">
-  <div class="hc-photo" id="hcPhoto" data-cursor="view" data-cursor-label="Explore" style="background-image:url('https://images.pexels.com/photos/30756235/pexels-photo-30756235.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1920')"></div>
+  <div class="hc-photo" id="hcPhoto" data-cursor="view" data-cursor-label="Explore"></div>
   <div class="hc-grade"></div>
   <div class="hc-grain"></div>
 
@@ -307,7 +312,7 @@
   <div class="wrap">
     <div class="sec-head sr-only"><div><span class="kicker" data-index="05">Support</span><h2 id="pn-title">Support skating</h2></div></div>
     <div class="cta-band" data-anim="zoom">
-      <div class="bg" style="background-image:url('https://images.pexels.com/photos/36678658/pexels-photo-36678658.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1400')"></div>
+      <div class="bg" id="ctaBg"></div>
       <div class="in">
         <div><h2>Support skating in Visakhapatnam</h2><p>Sponsor equipment, school programmes or championships — and receive a clear report on the clubs, schools and athletes you reached.</p></div>
         <a class="btn btn-white" data-magnetic href="contact.html">Become a partner <i data-lucide="arrow-right"></i></a>

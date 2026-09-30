@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Events Calendar | VDRSA Visakhapatnam Roller Sports</title>
 <meta name="description" content="Browse all VDRSA district events in Visakhapatnam — championships, inter-club meets, selection trials and workshops. Filter by discipline, month and status.">
 <link rel="canonical" href="https://vdrsa.in/events.html">
@@ -39,11 +39,11 @@
 .empty[hidden]{display:none}
 .viewbar{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:18px}
 .mgrid{display:grid;grid-template-columns:repeat(7,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:var(--r-lg);overflow:hidden}
-.mgrid .dow{background:var(--bg-soft);padding:8px;text-align:center;font:700 11.5px var(--body);color:var(--muted)}
+.mgrid .dow{background:var(--bg-soft);padding:8px;text-align:center;font:700 12px var(--body);color:var(--muted)}
 .mgrid .cell{background:var(--surface);min-height:92px;padding:6px;display:flex;flex-direction:column;gap:4px}
 .mgrid .cell.pad{background:var(--bg-soft)}
-.mgrid .cell .dn{font:700 12.5px var(--display);color:var(--muted)}
-.mgrid .chip{font-size:11px;font-weight:600;padding:3px 6px;border-radius:6px;background:var(--primary-50);color:var(--primary-strong);text-align:left;cursor:pointer;border:0;line-height:1.3}
+.mgrid .cell .dn{font:700 13px var(--display);color:var(--muted)}
+.mgrid .chip{font-size:12px;font-weight:600;padding:3px 6px;border-radius:6px;background:var(--primary-50);color:var(--primary-strong);text-align:left;cursor:pointer;border:0;line-height:1.3}
 .mswitch{display:flex;align-items:center;gap:10px}
 .mswitch button{width:34px;height:34px;border-radius:8px;border:1px solid var(--border);background:var(--surface);cursor:pointer;display:grid;place-items:center}
 /* REVISION_V3 §6 — under 640px the month grid becomes an agenda list of
@@ -52,7 +52,7 @@
 .agenda-day{display:flex;gap:14px;padding:14px;border:1px solid var(--border);border-radius:var(--r-lg);background:var(--surface)}
 .agenda-day .ad-date{flex:none;width:48px;text-align:center}
 .agenda-day .ad-date b{display:block;font:800 20px var(--display)}
-.agenda-day .ad-date small{display:block;color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.06em}
+.agenda-day .ad-date small{display:block;color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.06em}
 .agenda-day .ad-events{display:flex;flex-direction:column;gap:6px;flex:1;min-width:0}
 .agenda-day .chip{white-space:normal;text-align:left}
 @media (max-width:760px){.mgrid:not(.agenda){grid-template-columns:1fr}.mgrid:not(.agenda) .dow{display:none}.mgrid:not(.agenda) .cell{min-height:auto;flex-direction:row;align-items:center;gap:8px;padding:10px}.mgrid:not(.agenda) .cell.pad{display:none}.mgrid:not(.agenda) .dn{width:26px}}

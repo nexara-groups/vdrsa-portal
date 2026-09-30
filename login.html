@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Sign In | VDRSA Visakhapatnam Roller Sports Portal</title>
 <meta name="description" content="Sign in to the VDRSA Control Room, Club Portal, Parent Hub or Coach Desk to manage registrations, results and communications with the district association.">
 <link rel="canonical" href="https://vdrsa.in/login.html">
@@ -35,9 +35,9 @@
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
 <style>
 .login-shell{margin:24px var(--gutter) 0}
-.login-split{min-height:calc(100vh - 78px - 38px - 24px);display:grid;grid-template-columns:1fr 1fr;border-radius:var(--r-xl);overflow:hidden;box-shadow:var(--shadow-lg);background:var(--surface)}
+.login-split{min-height:calc(100vh - 78px - 38px - 24px);min-height:calc(100svh - 78px - 38px - 24px);display:grid;grid-template-columns:1fr 1fr;border-radius:var(--r-xl);overflow:hidden;box-shadow:var(--shadow-lg);background:var(--surface)}
 .login-photo{position:relative;background:center/cover;color:#fff;display:flex;flex-direction:column;justify-content:flex-end;padding:48px}
-.login-photo::before{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(10,10,14,.80),rgba(10,10,14,.35) 55%,rgba(10,10,14,.15))}
+.login-photo::before{content:"";position:absolute;top:0;right:0;bottom:0;left:0;inset:0;background:linear-gradient(0deg,rgba(10,10,14,.80),rgba(10,10,14,.35) 55%,rgba(10,10,14,.15))}
 .login-photo>*{position:relative;z-index:1}
 .login-photo img{width:48px;height:48px;border-radius:50%;background:#fff;margin-bottom:20px}
 .login-photo .kicker{margin-bottom:10px;color:#FF9CC2}
@@ -50,17 +50,19 @@
 .login-box{width:100%;max-width:420px;padding:32px}
 .otp-row{display:flex;gap:8px;justify-content:space-between;margin:16px 0}
 .otp-row input{width:44px;height:52px;text-align:center;border-radius:10px;border:1px solid var(--border);background:var(--bg);color:var(--text);font:700 20px ui-monospace,Consolas,monospace}
-.otp-row input:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 3px color-mix(in srgb,var(--primary) 22%,transparent)}
+.otp-row input:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 3px rgba(200,209,50,0.22);box-shadow:0 0 0 3px color-mix(in srgb,var(--primary) 22%,transparent)}
 .login-compact{display:none;align-items:center;gap:12px;padding:24px 24px 0}
 .login-compact img{width:40px;height:40px;border-radius:50%;background:var(--ink-900)}
 .login-compact b{display:block;font:800 16px var(--display);color:var(--text)}
-.login-compact span{display:block;font-size:12.5px;color:var(--muted)}
-@media (max-width:900px){.login-split{grid-template-columns:1fr}.login-photo{display:none}.login-compact{display:flex}}
+.login-compact span{display:block;font-size:13px;color:var(--muted)}
+@media (max-width:900px){.login-split{grid-template-columns:minmax(0,1fr);min-height:0}.login-photo{display:none}.login-compact{display:flex}.login-panel{align-items:flex-start;padding-top:20px}}
 @media (max-width:620px){.login-shell{margin:16px var(--gutter) 0}.login-split{border-radius:20px}}
 .seg{display:flex;width:100%}
 .seg button{flex:1;white-space:nowrap;padding:0 8px;font-size:13px;min-height:44px}
 @media (max-width:480px){
-  .login-panel{padding:24px 16px}
+  #roleSeg{display:grid;grid-template-columns:1fr 1fr;overflow:visible;-webkit-mask-image:none;mask-image:none}
+  #roleSeg button{flex:none;white-space:normal}
+  .login-panel{padding:16px 16px 24px}
   .login-box{padding:20px}
   .otp-row{gap:6px}
   .otp-row input{width:40px;height:48px;font-size:18px}
@@ -118,21 +120,21 @@
         <form id="mobileForm" novalidate>
           <label for="mobile" style="display:block;font:600 14px var(--body);margin-bottom:6px">Mobile number</label>
           <div style="display:flex;gap:8px">
-            <input class="input" id="mobile" inputmode="numeric" maxlength="10" placeholder="98XXXXXXXX" style="font:500 15px var(--body);letter-spacing:normal" autocomplete="off" aria-describedby="mobileHint">
+            <input class="input" id="mobile" name="mobile" type="tel" inputmode="numeric" pattern="[0-9]*" autocomplete="tel-national" enterkeyhint="send" maxlength="10" placeholder="98XXXXXXXX" style="font:500 16px var(--body);letter-spacing:normal" autocomplete="off" aria-describedby="mobileHint">
             <button class="btn btn-primary" id="sendOtp" type="submit" data-magnetic style="min-width:128px">Send OTP</button>
           </div>
-          <p class="hint" id="mobileHint" style="font-size:12.5px;color:var(--muted);margin-top:8px">Demo only — no OTP is actually sent.</p>
+          <p class="hint" id="mobileHint" style="font-size:13px;color:var(--muted);margin-top:8px">Demo only — no OTP is actually sent.</p>
         </form>
 
         <form id="otpForm" novalidate style="display:none">
           <label style="display:block;font:600 14px var(--body);margin-bottom:6px">Enter the 6-digit OTP</label>
           <div class="otp-row" id="otpRow">
-            <input maxlength="1" inputmode="numeric" aria-label="OTP digit 1">
-            <input maxlength="1" inputmode="numeric" aria-label="OTP digit 2">
-            <input maxlength="1" inputmode="numeric" aria-label="OTP digit 3">
-            <input maxlength="1" inputmode="numeric" aria-label="OTP digit 4">
-            <input maxlength="1" inputmode="numeric" aria-label="OTP digit 5">
-            <input maxlength="1" inputmode="numeric" aria-label="OTP digit 6">
+            <input maxlength="1" inputmode="numeric" pattern="[0-9]*" autocomplete="one-time-code" enterkeyhint="next" aria-label="OTP digit 1">
+            <input maxlength="1" inputmode="numeric" pattern="[0-9]*" autocomplete="off" enterkeyhint="next" aria-label="OTP digit 2">
+            <input maxlength="1" inputmode="numeric" pattern="[0-9]*" autocomplete="off" enterkeyhint="next" aria-label="OTP digit 3">
+            <input maxlength="1" inputmode="numeric" pattern="[0-9]*" autocomplete="off" enterkeyhint="next" aria-label="OTP digit 4">
+            <input maxlength="1" inputmode="numeric" pattern="[0-9]*" autocomplete="off" enterkeyhint="next" aria-label="OTP digit 5">
+            <input maxlength="1" inputmode="numeric" pattern="[0-9]*" autocomplete="off" enterkeyhint="done" aria-label="OTP digit 6">
           </div>
           <button class="btn btn-primary" id="verifyOtp" type="submit" data-magnetic style="width:100%">Verify &amp; sign in</button>
           <button class="btn btn-outline" id="changeNumber" type="button" style="width:100%;margin-top:8px">Use a different number</button>

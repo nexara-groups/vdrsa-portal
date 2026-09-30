@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Verify Skater ID | VDRSA Visakhapatnam Roller Sports</title>
 <meta name="description" content="Check whether a VDRSA Skater ID is active, expired or not on record for skaters registered in Visakhapatnam. No personal contact details are ever shown.">
 <link rel="canonical" href="https://vdrsa.in/verify.html">
@@ -38,12 +38,12 @@
 .verify-wrap{max-width:640px;margin:0 auto}
 .verify-card{padding:32px}
 .verify-card .row{display:flex;gap:8px}
-.verify-card .hint{font-size:12.5px;color:var(--muted);margin-top:8px}
+.verify-card .hint{font-size:13px;color:var(--muted);margin-top:8px}
 .v-out{margin-top:18px;border-radius:12px;padding:16px 18px;font-size:14.5px;display:none}
 .v-out.show{display:block}
-.v-out.ok{background:color-mix(in srgb,var(--success) 9%,transparent);border:1px solid color-mix(in srgb,var(--success) 35%,transparent)}
-.v-out.warn{background:color-mix(in srgb,var(--gold) 10%,transparent);border:1px solid color-mix(in srgb,var(--gold) 40%,transparent)}
-.v-out.bad{background:color-mix(in srgb,var(--danger) 8%,transparent);border:1px solid color-mix(in srgb,var(--danger) 35%,transparent)}
+.v-out.ok{background:rgba(15,122,85,0.09);background:color-mix(in srgb,var(--success) 9%,transparent);border:1px solid rgba(15,122,85,0.35);border:1px solid color-mix(in srgb,var(--success) 35%,transparent)}
+.v-out.warn{background:rgba(201,146,14,0.10);background:color-mix(in srgb,var(--gold) 10%,transparent);border:1px solid rgba(201,146,14,0.40);border:1px solid color-mix(in srgb,var(--gold) 40%,transparent)}
+.v-out.bad{background:rgba(194,47,61,0.08);background:color-mix(in srgb,var(--danger) 8%,transparent);border:1px solid rgba(194,47,61,0.35);border:1px solid color-mix(in srgb,var(--danger) 35%,transparent)}
 .idcard{position:relative;overflow:hidden;margin-top:16px;border-radius:16px;background:var(--ink-900);box-shadow:0 12px 32px rgba(0,0,0,.35);color:#fff;padding:22px 22px 22px 28px;display:grid;grid-template-columns:1fr auto;gap:16px;align-items:center}
 .idcard::before{content:"";position:absolute;left:0;top:0;bottom:0;width:6px;background:var(--primary)}
 .idcard .hd{display:flex;align-items:center;gap:10px;margin-bottom:14px;grid-column:1/-1}
@@ -98,7 +98,7 @@
     <form class="card verify-card" data-anim="zoom" id="verifyForm" novalidate>
       <label for="sid" style="display:flex;align-items:center;gap:8px;font:700 15px var(--display);margin-bottom:12px"><i data-lucide="shield-check" style="color:var(--primary)"></i>Skater ID</label>
       <div class="row">
-        <input class="input" id="sid" placeholder="VDRSA-26-00123" autocomplete="off" aria-describedby="sidHint">
+        <input class="input" id="sid" name="skater-id" type="text" inputmode="text" placeholder="VDRSA-26-00123" autocomplete="off" autocapitalize="characters" autocorrect="off" spellcheck="false" enterkeyhint="go" aria-describedby="sidHint">
         <button class="btn btn-primary" id="verifyBtn" type="submit" data-magnetic style="min-width:120px">Verify</button>
       </div>
       <p class="hint" id="sidHint">Format: VDRSA-YY-NNNNN. Demo IDs: VDRSA-26-00123 (active) · VDRSA-24-00456 (expired).</p>
@@ -121,7 +121,7 @@
 <section class="soft" aria-labelledby="how-title">
   <div class="wrap">
     <div class="sec-head"><div><span class="kicker" data-index="02">How it works</span><h2 id="how-title" data-anim="up">Three <span class="h2-accent">steps</span></h2></div></div>
-    <div class="wrap grid4" data-anim="stagger" style="padding:0;grid-template-columns:repeat(3,1fr);gap:24px">
+    <div class="cols3" data-anim="stagger" style="--cg:24px">
       <div class="card" style="padding:22px"><span class="badge b-blue" style="margin-bottom:10px">1</span><h3 style="font-size:16.5px;margin:6px 0 6px">Enter the ID</h3><p style="color:var(--muted);font-size:14.5px">Type the Skater ID exactly as printed, in the format VDRSA-YY-NNNNN.</p></div>
       <div class="card" style="padding:22px"><span class="badge b-blue" style="margin-bottom:10px">2</span><h3 style="font-size:16.5px;margin:6px 0 6px">We check the register</h3><p style="color:var(--muted);font-size:14.5px">The ID is matched against the district's active registration database.</p></div>
       <div class="card" style="padding:22px"><span class="badge b-blue" style="margin-bottom:10px">3</span><h3 style="font-size:16.5px;margin:6px 0 6px">See the status</h3><p style="color:var(--muted);font-size:14.5px">Active, expired or not found — with only the details needed to confirm identity.</p></div>

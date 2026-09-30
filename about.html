@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>About VDRSA | Visakhapatnam Roller Sports Association</title>
 <meta name="description" content="Learn about VDRSA — our mission, values, affiliation to APRSA and RSFI, executive committee, governance documents and what we do for roller sports in Visakhapatnam.">
 <link rel="canonical" href="https://vdrsa.in/about.html">
@@ -46,7 +46,7 @@
 .stepper .st b{display:block;font:800 16px var(--display);margin-bottom:4px}
 .stepper .st small{color:var(--muted);font-size:13px}
 .stepper .arrow{display:flex;align-items:center;color:var(--muted);flex:0 0 auto}
-@media (max-width:760px){.stepper{flex-direction:column}.stepper .arrow{transform:rotate(90deg);align-self:center}}
+@media (max-width:760px){.stepper{flex-direction:column}.stepper .st{flex:0 0 auto;padding:14px 16px}.stepper .arrow{transform:rotate(90deg);align-self:center}}
 .do-card{padding:22px}
 .do-card .ic{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;background:var(--primary-50);color:var(--primary-strong);margin-bottom:12px}
 .do-card h3{font-size:16px;margin-bottom:6px}
@@ -54,15 +54,15 @@
 .exec-card{padding:20px;text-align:center}
 .exec-card .ic{width:56px;height:56px;border-radius:14px;background:var(--primary-50);color:var(--primary-strong);display:grid;place-items:center;margin:0 auto 12px}
 .exec-card b{display:block;font-size:14.5px}
-.exec-card small{color:var(--muted);font-size:12.5px}
+.exec-card small{color:var(--muted);font-size:13px}
 .disc-about{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
 @media (max-width:1000px){.disc-about{grid-template-columns:repeat(3,1fr)}}
 @media (max-width:620px){.disc-about{grid-template-columns:1fr 1fr}}
 .gov-row{display:flex;align-items:center;gap:14px;padding:16px 20px;border-bottom:1px solid var(--border)}
 .gov-row:last-child{border-bottom:0}
-.gov-row .ic{width:38px;height:38px;border-radius:10px;display:grid;place-items:center;background:color-mix(in srgb,var(--accent) 10%,transparent);color:var(--accent);flex:none}
+.gov-row .ic{width:38px;height:38px;border-radius:10px;display:grid;place-items:center;background:rgba(214,63,126,0.10);background:color-mix(in srgb,var(--accent) 10%,transparent);color:var(--accent);flex:none}
 .gov-row b{display:block;font-size:14.5px;font-weight:600}
-.gov-row small{color:var(--muted);font-size:12.5px}
+.gov-row small{color:var(--muted);font-size:13px}
 .gov-row .govDl{margin-left:auto}
 </style>
 </head>
@@ -114,7 +114,7 @@
 <section class="soft" aria-labelledby="mv-title">
   <div class="wrap">
     <div class="sec-head"><div><span class="kicker" data-index="03">What drives us</span><h2 id="mv-title" data-anim="words">Mission, vision &amp; values</h2></div></div>
-    <div data-anim="stagger" style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px">
+    <div data-anim="stagger" class="cols3">
       <div class="card mv-card"><span class="ic"><i data-lucide="target"></i></span><h3>Mission</h3><p>To grow roller sports across Visakhapatnam district by giving every skater a fair, safe and well-run pathway from first lesson to district champion.</p></div>
       <div class="card mv-card"><span class="ic"><i data-lucide="eye"></i></span><h3>Vision</h3><p>A district where roller sports are part of every school and neighbourhood, and where Visakhapatnam skaters compete confidently at state and national level.</p></div>
       <div class="card mv-card"><span class="ic"><i data-lucide="heart-handshake"></i></span><h3>Values</h3><p>Fair play, athlete safety, transparent selection, and clubs and coaches held to one common standard.</p></div>
@@ -142,7 +142,7 @@
 <section class="soft" aria-labelledby="do-title">
   <div class="wrap">
     <div class="sec-head"><div><span class="kicker" data-index="05">Our work</span><h2 id="do-title" data-anim="words">What we do</h2></div></div>
-    <div data-anim="stagger" style="display:grid;grid-template-columns:repeat(3,1fr);gap:18px" id="doGrid"></div>
+    <div data-anim="stagger" class="cols3" style="--cg:18px" id="doGrid"></div>
   </div>
 </section>
 
@@ -158,7 +158,7 @@
 <section id="committee" aria-labelledby="ec-title">
   <div class="wrap">
     <div class="sec-head"><div><span class="kicker" data-index="07">Governance</span><h2 id="ec-title" data-anim="words">Executive committee</h2><p data-anim="up">Roles for the 2026–27 season. Names to be confirmed after the general body meeting.</p></div></div>
-    <div data-anim="stagger" style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px" id="execGrid"></div>
+    <div data-anim="stagger" class="cols4" style="--cg:16px" id="execGrid"></div>
   </div>
 </section>
 

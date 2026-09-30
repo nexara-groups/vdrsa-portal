@@ -33,13 +33,27 @@ const PHOTOS={
   derby:1280575, derbyteam:15376038, downhill:10884818, downhillsolo:19493777,
   ramp:17121572
 };
+/* mobile-first image sizing: phones never download the 1400-1920px desktop rendition */
+function mq(q){ try{ return window.matchMedia(q) }catch(e){ return null } }
+function mqOn(q){ const m=mq(q); return !!(m&&m.matches) }
+/* matchMedia change subscription with the old-Safari addListener fallback */
+function mqListen(m,fn){ if(!m)return; if(m.addEventListener)m.addEventListener("change",fn); else if(m.addListener)m.addListener(fn); }
+function fitW(w){
+  w=w||800;
+  const vw=Math.min(window.innerWidth||1024, (window.screen&&window.screen.width)||9999);
+  if(vw<=640)return Math.min(w,800);
+  if(vw<=1024)return Math.min(w,1200);
+  return w;
+}
 function photo(key,w){
+  w=fitW(w);
   const id=PHOTOS[key];
   if(!id)return img(key,w); // not a known key — treat as a legacy Unsplash id
   return `https://images.pexels.com/photos/${id}/pexels-photo-${id}.jpeg?auto=compress&cs=tinysrgb&w=${w||800}`;
 }
 function img(id,w){
   if(PHOTOS[id])return photo(id,w);
+  w=fitW(w||600);
   return `https://images.unsplash.com/photo-${id}?w=${w||600}&q=70`;
 }
 
@@ -282,7 +296,7 @@ function renderHeader(){
 <header class="site" id="hdr">
   <div class="wrap hdr">
     <a class="brand" href="index.html" aria-label="VDRSA home">
-      <img src="assets/vdrsa-logo.png" alt="VDRSA logo">
+      <img src="assets/vdrsa-logo.png" alt="VDRSA logo" width="54" height="54" decoding="async">
       <span><b>VDRSA</b><small>Visakhapatnam District Roller Sports Association</small></span>
     </a>
     <ul class="menu">${menuHtml}</ul>
@@ -319,7 +333,7 @@ function renderFooter(){
   <div class="wrap">
     <div class="fgrid4">
       <div>
-        <a class="brand" href="index.html"><img src="assets/vdrsa-logo.png" alt=""><span><b>VDRSA</b><small>Visakhapatnam District Roller Sports Association</small></span></a>
+        <a class="brand" href="index.html"><img src="assets/vdrsa-logo.png" alt="" width="54" height="54" loading="lazy" decoding="async"><span><b>VDRSA</b><small>Visakhapatnam District Roller Sports Association</small></span></a>
         <div class="affil">
           <span><i data-lucide="badge-check"></i>Affiliated to APRSA</span>
           <span><i data-lucide="badge-check"></i>APRSA affiliated to RSFI</span>
@@ -363,7 +377,7 @@ function initLoader(){
   const hide=()=>l.classList.add("done");
   if(document.readyState==="loading") document.addEventListener("DOMContentLoaded",()=>setTimeout(hide,700));
   else setTimeout(hide,700);
-  setTimeout(hide,2500);
+  setTimeout(hide,mqOn("(max-width:900px)")?1200:2500);
 }
 
 /* ---------------------------------------------------------------------
@@ -436,6 +450,10 @@ function countObserve(root){
   // Always use a plain IntersectionObserver: the hero is pinned, which throws off
   // ScrollTrigger's computed positions and made counters finish before being seen.
   // This fires the count-up only when the number actually scrolls into view.
+  if(!("IntersectionObserver" in window)){
+    $$("[data-count]",root||document).forEach(el=>{ const n=+el.dataset.count; if(!isNaN(n))el.textContent=n.toLocaleString("en-IN")+(n>999?"+":""); });
+    return;
+  }
   if(!countIO){
     countIO=new IntersectionObserver(es=>es.forEach(en=>{
       if(!en.isIntersecting)return;
@@ -458,6 +476,7 @@ function countObserve(root){
    --------------------------------------------------------------------- */
 let io=null;
 function legacyObserve(root){
+  if(!("IntersectionObserver" in window)){ $$(".reveal:not(.in)",root||document).forEach(el=>el.classList.add("in")); countObserve(root); return; }
   if(!io){
     io=new IntersectionObserver(es=>es.forEach(en=>{
       if(!en.isIntersecting)return;
@@ -487,8 +506,9 @@ function initMotion(){
   if(reducedMotion()||!hasMotionLibs())return;
   try{
     gsap.registerPlugin(ScrollTrigger);
+    if(ScrollTrigger.config)ScrollTrigger.config({ignoreMobileResize:true});
     if(window.Lenis){
-      lenis=new Lenis({lerp:.1});
+      lenis=new Lenis({lerp:.1,syncTouch:false,smoothTouch:false,touchMultiplier:1});
       lenis.on("scroll",ScrollTrigger.update);
       gsap.ticker.add(t=>lenis.raf(t*1000));
       gsap.ticker.lagSmoothing(0);
@@ -610,7 +630,9 @@ function animate(root){
     }
   });
 
+  const lite=mqOn("(max-width:900px)")||mqOn("(hover:none)");
   $$("[data-parallax]",root).forEach(el=>{
+    if(lite)return; /* no scrubbed parallax on phones/touch: cheaper and no jank */
     if(el.dataset.parallaxDone)return; el.dataset.parallaxDone="1";
     const amt=parseFloat(el.getAttribute("data-parallax"))||.15;
     gsap.to(el,{yPercent:amt*100,ease:"none",scrollTrigger:{trigger:el.parentElement||el,start:"top bottom",end:"bottom top",scrub:true}});
@@ -762,11 +784,13 @@ function initHeroCine(root){
     .fromTo(".hc-cta",{opacity:0,y:14},{opacity:1,y:0,duration:.5},.4)
     .fromTo(".hc-chip",{opacity:0,x:20},{opacity:1,x:0,duration:.5,stagger:.12},.4);
 
-  if(photo&&window.ScrollTrigger){
+  if(photo&&window.ScrollTrigger&&!mqOn("(max-width:900px)")&&!mqOn("(hover:none)")){
     gsap.fromTo(photo,{scale:1.08,yPercent:0},{scale:1.18,yPercent:6,ease:"none",
       scrollTrigger:{trigger:hero,start:"top top",end:"bottom top",scrub:.6}});
   }
 
+  /* phones / touch: skip the parallax scrub and the endless chip drift (chips are hidden <=900px anyway) */
+  if(mqOn("(max-width:900px)")||mqOn("(hover:none)"))return;
   const chip1=$("#hcChip1",hero), chip2=$("#hcChip2",hero);
   if(chip1)gsap.to(chip1,{y:-10,duration:2.6,ease:"sine.inOut",yoyo:true,repeat:-1});
   if(chip2)gsap.to(chip2,{y:10,duration:3.1,ease:"sine.inOut",yoyo:true,repeat:-1,delay:.4});
@@ -1045,7 +1069,7 @@ function renderFloatingMenu(){
     </div>
     <form id="modalVerifyForm" novalidate>
       <div class="vdrsa-modal-input-row">
-        <input class="input" id="modalSid" placeholder="VDRSA-26-00123" autocomplete="off" aria-describedby="modalSidHint">
+        <input class="input" id="modalSid" type="text" placeholder="VDRSA-26-00123" autocomplete="off" autocapitalize="characters" autocorrect="off" spellcheck="false" enterkeyhint="go" aria-label="Skater ID" aria-describedby="modalSidHint">
         <button class="btn btn-primary" id="modalVerifyBtn" type="submit">Verify</button>
       </div>
       <p class="hint" id="modalSidHint">Demo: VDRSA-26-00123 (active) · VDRSA-24-00456 (expired)</p>
