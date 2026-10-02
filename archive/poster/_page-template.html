@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Page title — VDRSA</title>
+<meta name="description" content="One-sentence description of this page for search and social previews.">
+<link rel="icon" href="assets/vdrsa-logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&family=Caveat:wght@600&family=Noto+Sans+Telugu:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/site.css">
+<script src="https://cdn.jsdelivr.net/npm/lucide@0.469.0/dist/umd/lucide.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
+<!--
+  Copy this file to build a new page. Steps:
+  1. Set <title>, the meta description and body[data-page] (one of:
+     home, about, events, event-detail, results, circulars, clubs,
+     club-detail, news, hall-of-fame, verify, contact, login) so the
+     header marks the right menu item as active.
+  2. Fill in the .page-hero breadcrumb, H1 and intro line, and set the
+     banner photo (see MOTION_SPEC.md §2 for the key -> Pexels id table
+     and which key each page should use, e.g. about.html -> "group").
+     REVISION_V10 poster banner: paper box, hairline ink rule, Anton red H1
+     (.print texture), a Caveat `.script` label above the kicker and a
+     `.spec` box on the right (label, big Anton figure, 1-2 small lines).
+     The `.hero-photo` div is kept only so page scripts keep working; the
+     poster banner hides it. Give one H1 word `accent-word` (turns ink).
+     Add `data-magnetic` to the primary CTA in `.actions` if wanted.
+  3. Replace the example section with the page's real content, using
+     the shared classes from DESIGN_SPEC.md section 3 (.card, .filterbar,
+     .layout-side, .info-list, .faq, .pager, .empty, .tabs-line, .tbl,
+     .badge, .btn ...). Do not copy header/footer markup — site.js
+     renders #site-header and #site-footer for you. Big media (feature
+     photos, gallery tiles, discipline/club/news images the visitor would
+     "open") should carry `data-cursor="view" data-cursor-label="…"` too —
+     it is a plain attribute, not a component, so it works on any `<a>`
+     or media wrapper.
+  4. Read data from window.VDRSA.data (events, results, medalTable,
+     circulars, clubs, news, achievers, committee) and render with
+     template strings, same pattern as the script at the bottom of
+     index.html. Call VDRSA.icons() after any innerHTML change that
+     added <i data-lucide="..."> icons, and VDRSA.animate() (alias:
+     VDRSA.observe()) after adding new .reveal / data-anim elements —
+     see MOTION_SPEC.md §3 and §6 for the full attribute list and the
+     minimum motion to add per component (kicker snap + h2 "words" is
+     automatic for every .sec-head, no attribute needed). The cursor and
+     magnetic-button system is also automatic and global (initCursor() in
+     site.js, delegated on `document`) — you never need to call anything
+     to "register" new `[data-cursor]` / `[data-magnetic]` nodes a render
+     adds later; `VDRSA.cursor()` exists as a safe no-op hook if that
+     ever changes, but today calling it is optional.
+  5. Photos: use VDRSA.photo(key, width) for anything in the table in
+     MOTION_SPEC.md §2 (hotlinked Pexels, true colour, no overlays).
+     VDRSA.img(idOrKey, width) still works for the older Unsplash ids
+     already used in VDRSA.data and resolves photo keys too.
+  6. Keep any page-only CSS in a <style> block here, under 60 lines,
+     and only for things no shared class already covers.
+-->
+</head>
+<body data-page="PAGE_KEY">
+
+<!-- ================= PAGE LOADER (copy as-is) ================= -->
+<div id="page-loader" role="status" aria-live="polite">
+  <div class="ring-loader">
+    <img src="assets/vdrsa-logo.png" alt="" width="54" height="54" decoding="async">
+    <svg viewBox="0 0 132 132" aria-hidden="true"><circle class="track" cx="66" cy="66" r="62"/><circle class="arc" cx="66" cy="66" r="62"/></svg>
+  </div>
+  <span class="sr-only">Loading VDRSA</span>
+</div>
+
+<!-- Header is rendered here by assets/site.js -->
+<div id="site-header"></div>
+
+<main id="top">
+
+<!-- ================= PAGE BANNER — REVISION_V10 poster style (styled entirely from site.css) ================= -->
+<section class="page-hero">
+  <!-- Set the banner photo with VDRSA.photo() in the page script (see below), or inline for a quick static preview:
+  <div class="hero-photo" style="background-image:url('https://images.pexels.com/photos/36678658/pexels-photo-36678658.jpeg?auto=compress&cs=tinysrgb&w=1600')" role="img" aria-label="Description of the photo"></div>
+  -->
+  <div class="hero-photo" id="bannerPhoto" role="img" aria-label="Description of the photo" data-parallax="0.12" data-cursor="view" data-cursor-label="Explore"></div>
+  <div class="wrap">
+    <nav class="crumbs" aria-label="Breadcrumb" data-anim="left">
+      <a href="index.html">Home</a><span class="sep">&rsaquo;</span><span class="cur">Page name</span>
+    </nav>
+    <div class="page-hero-top">
+      <aside class="spec" aria-label="Key fact"><span class="sp-l">Label</span><span class="sp-n">00</span><span class="sp-t">Small line of text</span></aside>
+      <div>
+        <span class="script">Script label</span>
+        <span class="kicker" data-index="01">Section name</span>
+        <h1 data-anim="words">Page <span class="accent-word">heading</span></h1>
+        <p class="lead" data-anim="up" data-delay="0.2">One-line intro describing what this page contains.</p>
+      </div>
+      <!-- Optional right-side actions, e.g.: -->
+      <!-- <div class="actions"><a class="btn btn-line-white" data-magnetic href="#"><i data-lucide="download"></i>Download</a></div> -->
+    </div>
+  </div>
+</section>
+
+<!-- ================= EXAMPLE SECTION — replace with real content =================
+     .sec-head kicker + h2 get motion automatically (kicker snap runs for every
+     .sec-head .kicker; add data-anim="words" on h2 and data-anim="up" on the
+     lead paragraph, as done here, per MOTION_SPEC.md §6). -->
+<section aria-labelledby="example-title">
+  <div class="wrap">
+    <div class="sec-head">
+      <div><span class="kicker">Section kicker</span><h2 id="example-title" data-anim="words">Section heading</h2><p data-anim="up">Short supporting line.</p></div>
+    </div>
+    <!-- Single card: data-anim="up". Card grid: data-anim="stagger" on the grid wrapper.
+         Two-column text+photo block: text data-anim="left", photo wrapper data-anim="right" data-anim="img".
+         Table card: data-anim="up" on the card, data-anim="stagger" on <tbody>.
+         Sidebar card: data-anim="right". Form card: data-anim="zoom". -->
+    <div class="card" data-anim="up" style="padding:24px">
+      <p>Page content goes here. Use shared classes from site.css — see DESIGN_SPEC.md section 3 for the full list (filterbar, layout-side, info-list, faq, pager, empty, tabs-line, tbl, badges, buttons).</p>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- Footer is rendered here by assets/site.js -->
+<div id="site-footer"></div>
+<div class="toast" id="toast" role="status"></div>
+
+<script src="assets/site.js"></script>
+<script>
+(function(){
+  const V=window.VDRSA, d=V.data;
+
+  // Set the banner photo (see MOTION_SPEC.md §2 for the key per page):
+  const bp=document.getElementById("bannerPhoto");
+  if(bp)bp.style.backgroundImage=`url('${V.photo("group",1600)}')`;
+
+  // Example: render something from VDRSA.data, then:
+  // V.icons();
+  // V.animate(); // alias: V.observe() — sets up every data-anim / .reveal element added above
+
+  V.icons();
+  V.animate();
+})();
+</script>
+</body>
+</html>

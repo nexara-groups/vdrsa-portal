@@ -1,24 +1,15 @@
-# VDRSA Website — Mockups (team review)
+# VDRSA Website — Final mockup (team review)
 
-Visakhapatnam District Roller Sports Association — clickable website mockups for validation and feedback.
+Visakhapatnam District Roller Sports Association — clickable website mockup.
 
-**Live:** https://nexara-groups.github.io/vdrsa-portal/ (pick a version)
+**Live (final):** https://nexara-groups.github.io/vdrsa-portal/
 
-| Version | Link | What it is |
-|---|---|---|
-| Version 1 (v1.1) | https://nexara-groups.github.io/vdrsa-portal/v1/ | First mockup: lime and charcoal theme, photo hero, full home page, mobile-first hardening |
-| Version 2 (final) | https://nexara-groups.github.io/vdrsa-portal/v2/ | v1 lime and charcoal theme plus a new Disciplines page with an animated avatar skater for each of the eight disciplines. |
+The root is the final version: v1 lime and charcoal theme plus a Disciplines page with an animated avatar skater for each of the eight disciplines.
 
-## What to review
-Home, About, Events, Event detail, Results, Circulars, Clubs, Club detail, News, Hall of Fame, Verify Skater ID, Contact, Login — in both versions.
+## Archive
+Earlier versions are kept aside at https://nexara-groups.github.io/vdrsa-portal/archive/ :
+- `archive/v1/` — original v1.1 design (old `/v1/` link redirects here)
+- `archive/poster/` — poster layout with travelling skate (earlier "v2")
 
 Demo Skater IDs on Verify: `VDRSA-26-00123` (active), `VDRSA-24-00456` (expired).
-
-## Notes
-- All data is fictional. Photos are free Pexels placeholders. Committee names TBC.
-- Staging site: search engines are blocked (robots.txt). Canonical/SEO domain is a placeholder.
-- Old links without a version (for example `/events.html`) moved to `/v1/events.html`.
-- Give feedback as GitHub Issues (screenshot + version + page + what to change).
-
-## Updating
-Replace the files in `v1/` or `v2/` and push to `main`; GitHub Pages redeploys automatically. For a new version, add `v3/` and a card in `index.html`.
+All data is fictional. Photos are Pexels placeholders. Staging site: search engines blocked.

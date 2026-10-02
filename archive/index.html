@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>VDRSA Website Mockups</title>
+<meta name="robots" content="noindex">
+<link rel="icon" href="poster/assets/vdrsa-logo.png">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;600&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+  :root { --brand:#0069BE; --lotus:#F55B99; --paper:#F4EFE4; --ink:#0B1B2E; --muted:#4F5B6B; --bar:64px; }
+  * { box-sizing:border-box; }
+  html, body { margin:0; height:100%; }
+  body { background:var(--ink); color:var(--ink); font:16px/1.5 Inter, system-ui, sans-serif; display:flex; flex-direction:column; }
+  .top { height:var(--bar); flex:none; display:flex; align-items:center; justify-content:center; gap:14px; background:var(--paper); border-bottom:1.5px solid var(--ink); padding:0 16px; }
+  .top img { width:40px; height:40px; }
+  .top h1 { margin:0; font:400 clamp(20px, 3vw, 30px)/1 Anton, Impact, sans-serif; text-transform:uppercase; color:var(--brand); }
+  .top .k { font:500 11px 'JetBrains Mono', monospace; letter-spacing:.16em; text-transform:uppercase; color:var(--muted); }
+  .split { flex:1; display:grid; grid-template-columns:1fr 1fr; gap:3px; min-height:0; }
+  .half { position:relative; overflow:hidden; display:flex; flex-direction:column; color:inherit; text-decoration:none; background:var(--paper); }
+  .half iframe { position:absolute; top:0; left:0; border:0; transform-origin:0 0; pointer-events:none; }
+  .half .frame { position:relative; flex:1; min-height:0; overflow:hidden; }
+  .half .veil { position:absolute; inset:0; background:rgba(11,27,46,0); transition:background .25s; }
+  .half .info { flex:none; display:grid; grid-template-columns:auto 1fr auto; align-items:center; gap:4px 20px; padding:16px clamp(16px, 3vw, 32px); background:var(--ink); color:#fff; border-top:3px solid var(--lotus); }
+  .half .txt { min-width:0; }
+  .half .v { font:400 clamp(40px, 5vw, 64px)/.9 Anton, Impact, sans-serif; }
+  .half h2 { margin:0 0 2px; font:600 clamp(16px, 1.6vw, 20px)/1.3 Inter, sans-serif; }
+  .half p { margin:0; font-size:13.5px; opacity:.8; max-width:46ch; }
+  .half .go { display:inline-flex; align-items:center; min-height:44px; padding:0 20px; background:#fff; color:var(--ink); font:500 12px 'JetBrains Mono', monospace; letter-spacing:.14em; text-transform:uppercase; }
+  .half.v1 .go { background:#C8D132; color:#15170A; }
+  .half.v2 .go { background:var(--brand); color:#fff; }
+  .half:hover .veil, .half:focus-visible .veil { background:rgba(11,27,46,.12); }
+  .half:focus-visible { outline:4px solid var(--lotus); outline-offset:-4px; }
+  .tag { position:absolute; top:14px; left:14px; z-index:2; font:500 11px 'JetBrains Mono', monospace; letter-spacing:.14em; text-transform:uppercase; background:var(--ink); color:#fff; padding:6px 10px; }
+  @media (max-width:760px) {
+    .split { grid-template-columns:1fr; grid-template-rows:1fr 1fr; }
+    .top .k { display:none; }
+    .half p { display:none; }
+    .half .info { gap:4px 14px; padding:12px 16px; }
+    .half .go { padding:0 14px; }
+  }
+</style>
+</head>
+<body>
+  <header class="top">
+    <img src="poster/assets/vdrsa-logo.png" alt="VDRSA logo">
+    <div><h1>VDRSA website mockups</h1><div class="k">Compare both versions, then pick one</div></div>
+  </header>
+  <main class="split">
+    <a class="half v1" href="v1/" aria-label="Open version 1: original design">
+      <span class="frame"><span class="tag">Live preview</span>
+      <iframe src="v1/" title="Version 1 preview" tabindex="-1" loading="eager" aria-hidden="true"></iframe>
+      <span class="veil"></span></span>
+      <span class="info">
+        <span class="v">V1</span>
+        <span class="txt"><h2>Original design (v1.1)</h2><p>The first mockup the team reviewed: lime and charcoal theme, photo hero, full home page.</p></span>
+        <span class="go">Open version 1 →</span>
+      </span>
+    </a>
+    <a class="half v2" href="poster/" aria-label="Open the archived poster version">
+      <span class="frame"><span class="tag">Live preview</span>
+      <iframe src="poster/" title="Poster version preview" tabindex="-1" loading="eager" aria-hidden="true"></iframe>
+      <span class="veil"></span></span>
+      <span class="info">
+        <span class="v">P</span>
+        <span class="txt"><h2>Poster + travelling skate</h2><p>Archived: logo colours, poster layout and a travelling skate on the home page.</p></span>
+        <span class="go">Open the poster version →</span>
+      </span>
+    </a>
+  </main>
+  <script>
+    // Render each preview at a real desktop width (or phone width on small screens) and scale it down to fit its half.
+    function fit() {
+      document.querySelectorAll('.half').forEach(function (h) {
+        var f = h.querySelector('iframe'), fr = h.querySelector('.frame');
+        var w = fr.clientWidth, ht = fr.clientHeight;
+        var base = window.innerWidth <= 760 ? 390 : 1440;
+        var s = w / base;
+        f.style.width = base + 'px';
+        f.style.height = Math.ceil(ht / s) + 'px';
+        f.style.transform = 'scale(' + s + ')';
+      });
+    }
+    fit();
+    window.addEventListener('resize', fit);
+  </script>
+</body>
+</html>
