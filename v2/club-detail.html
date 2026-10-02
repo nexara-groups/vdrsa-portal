@@ -27,7 +27,7 @@
 <link rel="icon" href="assets/vdrsa-logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&family=Caveat:wght@600&family=Noto+Sans+Telugu:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&family=Noto+Sans+Telugu:wght@400;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/site.css">
 <script src="https://cdn.jsdelivr.net/npm/lucide@0.469.0/dist/umd/lucide.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
@@ -35,21 +35,21 @@
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
 <style>
   .club-hero-top{display:flex;gap:20px;align-items:center}
-  .club-mono{width:76px;height:76px;border-radius:0;background:var(--btn);display:grid;place-items:center;font:400 34px var(--display);color:#fff;flex:none;border:1.5px solid var(--rule)}
-  .club-title small{display:block;color:var(--muted);font:500 12px var(--mono);letter-spacing:.08em;text-transform:uppercase;margin-top:8px}
-  
+  .club-mono{width:76px;height:76px;border-radius:16px;background:#fff;display:grid;place-items:center;font:800 26px var(--display);color:var(--ink-900);flex:none;box-shadow:0 8px 24px rgba(0,0,0,.25)}
+  .club-title small{display:block;color:#D8D8DE;font-size:14px;margin-top:4px}
+  .club-title .kicker{display:inline-flex;margin-bottom:8px;color:#FF9CC2}
   .coach-card .av{position:relative}
   .facilities{display:grid;gap:10px;margin-top:14px;padding:0;list-style:none}
   .facilities li{display:flex;gap:10px;align-items:center;font-size:14.5px}
   .facilities .lucide{color:var(--success);width:17px;height:17px}
   .coaches4{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
   .coach-card{padding:14px;display:flex;gap:12px;align-items:center}
-  .coach-card .av{width:56px;height:56px;border-radius:0;background:var(--bg-soft) center/cover;flex:none}
-  .coach-card small{display:block;color:var(--muted);font-size:12.5px}
+  .coach-card .av{width:56px;height:56px;border-radius:12px;background:var(--bg-soft) center/cover;flex:none}
+  .coach-card small{display:block;color:var(--muted);font-size:13px}
   .medal-row{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:18px}
   .medal-row .card{flex:1;min-width:110px;padding:16px;text-align:center}
   .medal-row b{display:block;font:800 26px var(--display)}
-  .map-ph{border-radius:0;overflow:hidden;border:1px solid var(--border);height:220px}
+  .map-ph{border-radius:12px;overflow:hidden;border:1px solid var(--border);height:220px}
   .map-ph iframe{width:100%;height:100%;border:0;display:block}
   @media (max-width:620px){.coaches4{grid-template-columns:1fr}}
 </style>
@@ -58,7 +58,7 @@
 
 <div id="page-loader" role="status" aria-live="polite">
   <div class="ring-loader">
-    <img src="assets/vdrsa-logo.png" alt="" width="54" height="54" decoding="async">
+    <img src="assets/vdrsa-logo.png" alt="">
     <svg viewBox="0 0 132 132" aria-hidden="true"><circle class="track" cx="66" cy="66" r="62"/><circle class="arc" cx="66" cy="66" r="62"/></svg>
   </div>
   <span class="sr-only">Loading VDRSA</span>
@@ -75,12 +75,10 @@
       <a href="index.html">Home</a><span class="sep">&rsaquo;</span><a href="clubs.html">Clubs</a><span class="sep">&rsaquo;</span><span class="cur" id="crumbName">Club</span>
     </nav>
     <div class="page-hero-top">
-      <aside class="spec" aria-label="Recognized till"><span class="sp-l">Recognized till</span><span class="sp-n" id="specBig">--</span><span class="sp-t" id="specTxt"></span></aside>
       <div class="club-hero-top" data-anim="up">
         <div class="club-mono" id="clubMono">BR</div>
         <div class="club-title">
-          <span class="script">Club</span>
-        <span class="kicker" data-index="01">Club profile</span>
+          <span class="kicker" data-index="01">Club profile</span>
           <h1 id="clubName" data-anim="up">Club name</h1>
           <small id="clubArea">Area</small>
         </div>
@@ -199,8 +197,6 @@
   const nameWords=club.name.split(" ");
   document.getElementById("clubName").innerHTML=`<span class="accent-word">${V.esc(nameWords[0])}</span> ${V.esc(nameWords.slice(1).join(" "))}`;
   document.getElementById("clubArea").textContent=club.area+" · Recognized since "+club.since;
-  document.getElementById("specBig").textContent=new Date(club.recognizedTill).toLocaleDateString("en-GB",{month:"short",year:"numeric"});
-  document.getElementById("specTxt").textContent=club.area;
   document.getElementById("recBadge").innerHTML=`<i data-lucide="badge-check"></i>Recognized till ${new Date(club.recognizedTill).toLocaleDateString("en-GB",{day:"2-digit",month:"short",year:"numeric"})}`;
 
   document.getElementById("aboutText").textContent=`${club.name} is a VDRSA recognized club based in ${club.area}, training skaters in ${club.disciplines.join(" and ")} since ${club.since}. The club fields ${club.coaches} certified coaches for ${club.skaters} registered skaters across age categories, and regularly enters district and inter-club events.`;

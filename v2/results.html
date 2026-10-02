@@ -28,7 +28,7 @@
 <link rel="icon" href="assets/vdrsa-logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&family=Caveat:wght@600&family=Noto+Sans+Telugu:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&family=Noto+Sans+Telugu:wght@400;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/site.css">
 <script src="https://cdn.jsdelivr.net/npm/lucide@0.469.0/dist/umd/lucide.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
@@ -38,16 +38,16 @@
 .lifecycle{display:grid;gap:0}
 .lc-step{display:flex;gap:12px;padding:12px 0;border-bottom:1px dashed var(--border)}
 .lc-step:last-child{border-bottom:0}
-.lc-step .n{width:26px;height:26px;border-radius:50%;background:var(--primary-50);color:var(--primary-strong);display:grid;place-items:center;font:800 12px var(--ui);flex:none}
+.lc-step .n{width:26px;height:26px;border-radius:50%;background:var(--primary-50);color:var(--primary-strong);display:grid;place-items:center;font:800 12px var(--display);flex:none}
 .lc-step b{display:block;font-size:14px}
-.lc-step small{color:var(--muted);font-size:12.5px}
+.lc-step small{color:var(--muted);font-size:13px}
 </style>
 </head>
 <body data-page="results">
 
 <div id="page-loader" role="status" aria-live="polite">
   <div class="ring-loader">
-    <img src="assets/vdrsa-logo.png" alt="" width="54" height="54" decoding="async">
+    <img src="assets/vdrsa-logo.png" alt="">
     <svg viewBox="0 0 132 132" aria-hidden="true"><circle class="track" cx="66" cy="66" r="62"/><circle class="arc" cx="66" cy="66" r="62"/></svg>
   </div>
   <span class="sr-only">Loading VDRSA</span>
@@ -64,9 +64,7 @@
       <a href="index.html">Home</a><span class="sep">&rsaquo;</span><span class="cur">Results</span>
     </nav>
     <div class="page-hero-top">
-      <aside class="spec" aria-label="Publishing"><span class="sp-l">Publishing</span><span class="sp-n">4 steps</span><span class="sp-t">Entered · Reviewed</span><span class="sp-t">Validated · Published</span></aside>
       <div>
-        <span class="script">Fresh off the rink</span>
         <span class="kicker" data-index="01">Official results</span>
         <h1 data-anim="up">Official <span class="accent-word">results</span></h1>
         <p class="lead" data-anim="up" data-delay="0.2">Every result is entered, reviewed and validated by the VDRSA technical committee before publication.</p>

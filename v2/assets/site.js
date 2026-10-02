@@ -33,24 +33,28 @@ const PHOTOS={
   derby:1280575, derbyteam:15376038, downhill:10884818, downhillsolo:19493777,
   ramp:17121572
 };
-/* Phones never need 1600px photos: cap requested width by viewport (REVISION_V10_RESPONSIVE §2.6). */
-function capW(w){
+/* mobile-first image sizing: phones never download the 1400-1920px desktop rendition */
+function mq(q){ try{ return window.matchMedia(q) }catch(e){ return null } }
+function mqOn(q){ const m=mq(q); return !!(m&&m.matches) }
+/* matchMedia change subscription with the old-Safari addListener fallback */
+function mqListen(m,fn){ if(!m)return; if(m.addEventListener)m.addEventListener("change",fn); else if(m.addListener)m.addListener(fn); }
+function fitW(w){
   w=w||800;
-  try{
-    const vw=Math.min(window.innerWidth||9999,(window.screen&&screen.width)||9999);
-    if(vw<=760)return Math.min(w,800);
-    if(vw<=1100)return Math.min(w,1200);
-  }catch(e){}
+  const vw=Math.min(window.innerWidth||1024, (window.screen&&window.screen.width)||9999);
+  if(vw<=640)return Math.min(w,800);
+  if(vw<=1024)return Math.min(w,1200);
   return w;
 }
 function photo(key,w){
+  w=fitW(w);
   const id=PHOTOS[key];
   if(!id)return img(key,w); // not a known key — treat as a legacy Unsplash id
-  return `https://images.pexels.com/photos/${id}/pexels-photo-${id}.jpeg?auto=compress&cs=tinysrgb&w=${capW(w)}`;
+  return `https://images.pexels.com/photos/${id}/pexels-photo-${id}.jpeg?auto=compress&cs=tinysrgb&w=${w||800}`;
 }
 function img(id,w){
   if(PHOTOS[id])return photo(id,w);
-  return `https://images.unsplash.com/photo-${id}?w=${capW(w||600)}&q=70`;
+  w=fitW(w||600);
+  return `https://images.unsplash.com/photo-${id}?w=${w||600}&q=70`;
 }
 
 /* ---------------------------------------------------------------------
@@ -259,6 +263,7 @@ const disciplines=[
 const MENU=[
   {key:"home",href:"index.html",title:"Home"},
   {key:"about",href:"about.html",title:"About"},
+  {key:"disciplines",href:"disciplines.html",title:"Disciplines"},
   {key:"events",href:"events.html",title:"Events"},
   {key:"results",href:"results.html",title:"Results"},
   {key:"circulars",href:"circulars.html",title:"Circulars"},
@@ -266,31 +271,33 @@ const MENU=[
   {key:"news",href:"news.html",title:"News"},
   {key:"contact",href:"contact.html",title:"Contact"}
 ];
+const MENU_TE={home:"హోమ్",about:"గురించి",disciplines:"విభాగాలు",events:"ఈవెంట్లు",results:"ఫలితాలు",circulars:"సర్క్యులర్లు",clubs:"క్లబ్బులు",news:"వార్తలు",contact:"సంప్రదించండి"};
+function getLang(){let l="en";try{l=localStorage.getItem("vdrsa-lang")||"en"}catch(e){}return l==="te"?"te":"en";}
+function menuLabel(m){return getLang()==="te"&&MENU_TE[m.key]?MENU_TE[m.key]:m.title;}
 const ACTIVE_MAP={"event-detail":"events","club-detail":"clubs"};
 
 function activeKey(){const p=document.body&&document.body.dataset.page;return ACTIVE_MAP[p]||p;}
-
-/* Telugu menu labels for the language toggle (elements with .en / .te are switched too) */
-const MENU_TE={home:"హోమ్",about:"గురించి",events:"ఈవెంట్లు",results:"ఫలితాలు",circulars:"సర్క్యులర్లు",clubs:"క్లబ్బులు",news:"వార్తలు",contact:"సంప్రదించండి"};
-function getLang(){let l="en";try{l=localStorage.getItem("vdrsa-lang")||"en"}catch(e){}return l==="te"?"te":"en";}
-function menuLabel(m){return getLang()==="te"&&MENU_TE[m.key]?MENU_TE[m.key]:m.title;}
 
 function renderHeader(){
   const host=$("#site-header");
   if(!host)return;
   const ak=activeKey();
   const menuHtml=MENU.map(m=>`<li><a${m.key===ak?' class="active" aria-current="page"':""} href="${m.href}" data-mkey="${m.key}">${menuLabel(m)}</a></li>`).join("");
-  const drawerHtml=MENU.map(m=>`<a class="dr-item" href="${m.href}" data-close data-mkey="${m.key}"${m.key===ak?' aria-current="page"':""}>${menuLabel(m)}</a>`).join("")+`<a class="dr-item" href="verify.html" data-close>Verify ID</a>`;
+  const drawerHtml=MENU.map(m=>`<a href="${m.href}" data-close data-mkey="${m.key}">${menuLabel(m)}</a>`).join("")+`<a href="verify.html" data-close>Verify Skater ID</a>`;
   host.innerHTML=`
-<aside class="rail" aria-label="Site tools">
-  <button class="rail-btn" id="railBurger" type="button" aria-label="Open menu" aria-haspopup="dialog" aria-controls="drawer" aria-expanded="false"><i data-lucide="menu"></i></button>
-  <button class="rail-btn" id="railSearch" type="button" aria-label="Search events"><i data-lucide="search"></i></button>
-  <span class="rail-text" aria-hidden="true">VDRSA · EST. DISTRICT BODY</span>
-  <span class="rail-sp" aria-hidden="true"></span>
-  <span class="rail-hair" aria-hidden="true"></span>
-  <button class="rail-btn" data-theme-toggle type="button" aria-label="Toggle dark mode"><i data-lucide="moon"></i></button>
-  <button class="rail-btn" data-lang-toggle type="button" aria-label="Switch language to Telugu">తె</button>
-</aside>
+<div class="topbar">
+  <div class="wrap">
+    <div class="l">
+      <span class="it"><i data-lucide="badge-check"></i>Affiliated to APRSA · RSFI</span>
+      <a class="it hide-md" href="contact.html"><i data-lucide="mail"></i>office@vdrsa.in</a>
+    </div>
+    <div class="r">
+      <a class="it hide-md" href="contact.html?type=grievance"><i data-lucide="message-square-warning"></i>Grievance desk</a>
+      <button class="tb-btn tb-lang" data-lang-toggle type="button" aria-label="Switch language to Telugu">తె</button>
+      <button class="tb-btn" id="themeBtn" aria-label="Toggle dark mode"><i data-lucide="moon"></i></button>
+    </div>
+  </div>
+</div>
 <header class="site" id="hdr">
   <div class="wrap hdr">
     <a class="brand" href="index.html" aria-label="VDRSA home">
@@ -299,9 +306,9 @@ function renderHeader(){
     </a>
     <ul class="menu">${menuHtml}</ul>
     <div class="hdr-cta">
-      <a class="vlink" href="verify.html">Verify ID<i data-lucide="arrow-up-right"></i></a>
+      <a class="btn btn-outline btn-sm" data-magnetic href="verify.html"><i data-lucide="shield-check"></i>Verify ID</a>
       <div class="login" id="login">
-        <button class="btn btn-primary btn-sm" id="loginBtn" aria-haspopup="true" aria-expanded="false"><i data-lucide="log-in"></i>Login<i data-lucide="chevron-down"></i></button>
+        <button class="btn btn-primary btn-sm" data-magnetic id="loginBtn" aria-haspopup="true" aria-expanded="false"><i data-lucide="log-in"></i>Login<i data-lucide="chevron-down"></i></button>
         <div class="login-menu" role="menu">
           <a href="login.html?role=control" role="menuitem"><span class="ic"><i data-lucide="layout-dashboard"></i></span><span><b>Control Room</b><small>Committee and administrators</small></span></a>
           <a href="login.html?role=club" role="menuitem"><span class="ic"><i data-lucide="building-2"></i></span><span><b>Club Portal</b><small>Athletes, entries and documents</small></span></a>
@@ -309,24 +316,16 @@ function renderHeader(){
           <a href="login.html?role=coach" role="menuitem"><span class="ic"><i data-lucide="clipboard-check"></i></span><span><b>Coach Desk</b><small>Attendance, notes and selection</small></span></a>
         </div>
       </div>
-      <button class="burger" id="burger" aria-label="Open menu" aria-haspopup="dialog" aria-controls="drawer" aria-expanded="false"><i data-lucide="menu"></i></button>
+      <button class="burger" id="burger" aria-label="Open menu"><i data-lucide="menu"></i></button>
     </div>
   </div>
 </header>
 <div class="drawer" id="drawer">
   <div class="scrim" data-close></div>
-  <nav role="dialog" aria-modal="true" aria-label="Menu">
-    <div class="dr-top"><span>VDRSA · Menu</span><button class="burger" style="display:grid" data-close id="drawerClose" aria-label="Close menu"><i data-lucide="x"></i></button></div>
+  <nav aria-label="Mobile menu">
+    <button class="burger" style="display:grid;align-self:flex-end" data-close aria-label="Close menu"><i data-lucide="x"></i></button>
     ${drawerHtml}
-    <a class="dr-item" href="login.html" data-close>Login</a>
-    <div class="dr-foot">
-      <div class="dr-tools">
-        <button class="rail-btn" data-theme-toggle type="button" aria-label="Toggle dark mode"><i data-lucide="moon"></i></button>
-        <button class="rail-btn" data-lang-toggle type="button" aria-label="Switch language to Telugu">తె</button>
-      </div>
-      <span>Affiliated to APRSA · RSFI</span>
-      <a href="mailto:office@vdrsa.in">office@vdrsa.in</a>
-    </div>
+    <a href="login.html" data-close>Login</a>
   </nav>
 </div>`;
 }
@@ -339,15 +338,11 @@ function renderFooter(){
   <div class="wrap">
     <div class="fgrid4">
       <div>
-        <a class="brand" href="index.html"><img src="assets/vdrsa-logo.png" alt="" width="54" height="54" decoding="async"><span><b>VDRSA</b><small>Visakhapatnam District Roller Sports Association</small></span></a>
+        <a class="brand" href="index.html"><img src="assets/vdrsa-logo.png" alt="" width="54" height="54" loading="lazy" decoding="async"><span><b>VDRSA</b><small>Visakhapatnam District Roller Sports Association</small></span></a>
         <div class="affil">
-          <span><i data-lucide="badge-check"></i>Affiliated to APRSA · RSFI</span>
+          <span><i data-lucide="badge-check"></i>Affiliated to APRSA</span>
           <span><i data-lucide="badge-check"></i>APRSA affiliated to RSFI</span>
           <span><i data-lucide="badge-check"></i>RSFI recognized by Govt. of India &amp; IOA</span>
-        </div>
-        <div class="f-contact">
-          <a href="mailto:office@vdrsa.in">office@vdrsa.in</a>
-          <a href="contact.html?type=grievance">Grievance desk</a>
         </div>
       </div>
       <div><h4>Association</h4><ul>
@@ -357,6 +352,7 @@ function renderFooter(){
         <li><a href="hall-of-fame.html">Hall of Fame</a></li>
       </ul></div>
       <div><h4>Skaters</h4><ul>
+        <li><a href="disciplines.html">Disciplines</a></li>
         <li><a href="events.html">Events calendar</a></li>
         <li><a href="results.html">Results archive</a></li>
         <li><a href="verify.html">Verify Skater ID</a></li>
@@ -371,7 +367,6 @@ function renderFooter(){
     </div>
     <div class="fbottom"><span>© 2026 Visakhapatnam District Roller Sports Association</span><span>Design &amp; development by Nexara</span></div>
   </div>
-  <div class="f-mark" aria-hidden="true">VDRSA</div>
 </footer>`;
 }
 
@@ -388,93 +383,65 @@ function initLoader(){
   const hide=()=>l.classList.add("done");
   if(document.readyState==="loading") document.addEventListener("DOMContentLoaded",()=>setTimeout(hide,700));
   else setTimeout(hide,700);
-  setTimeout(hide,1400);
+  setTimeout(hide,mqOn("(max-width:900px)")?1200:2500);
 }
 
 /* ---------------------------------------------------------------------
    THEME
    --------------------------------------------------------------------- */
-function applyLang(l){
-  const r=document.documentElement; r.lang=l==="te"?"te":"en";
-  $$("[data-mkey]").forEach(a=>{const m=MENU.find(x=>x.key===a.dataset.mkey);if(m)a.textContent=menuLabel(m);});
-  $$("[data-lang-toggle]").forEach(b=>{b.textContent=l==="te"?"EN":"తె";b.setAttribute("aria-label",l==="te"?"Switch language to English":"Switch language to Telugu");});
-}
 function initThemeLang(){
-  try{const t=localStorage.getItem("vdrsa-theme");if(t)document.documentElement.dataset.theme=t}catch(e){}
+  try{const t=localStorage.getItem("vdrsa-theme");document.documentElement.dataset.theme=t||"dark"}catch(e){document.documentElement.dataset.theme="dark"}
+  function applyLang(l){
+    document.documentElement.lang=l==="te"?"te":"en";
+    $$("[data-mkey]").forEach(a=>{const m=MENU.find(x=>x.key===a.dataset.mkey);if(m)a.textContent=menuLabel(m);});
+    $$("[data-lang-toggle]").forEach(b=>{b.textContent=l==="te"?"EN":"తె";b.setAttribute("aria-label",l==="te"?"Switch language to English":"Switch language to Telugu");});
+  }
   document.addEventListener("click",e=>{
-    if(e.target.closest("[data-theme-toggle]")){
-      const r=document.documentElement;
-      const dark=r.dataset.theme?r.dataset.theme==="dark":matchMedia("(prefers-color-scheme:dark)").matches;
-      r.dataset.theme=dark?"light":"dark";
-      try{localStorage.setItem("vdrsa-theme",r.dataset.theme)}catch(err){}
-    }
     if(e.target.closest("[data-lang-toggle]")){
       const l=getLang()==="te"?"en":"te";
       try{localStorage.setItem("vdrsa-lang",l)}catch(err){}
       applyLang(l);
+    }
+    if(e.target.closest("#themeBtn")){
+      const r=document.documentElement;
+      const dark=r.dataset.theme?r.dataset.theme==="dark":matchMedia("(prefers-color-scheme:dark)").matches;
+      r.dataset.theme=dark?"light":"dark";
+      try{localStorage.setItem("vdrsa-theme",r.dataset.theme)}catch(err){}
     }
   });
   applyLang(getLang());
 }
 
 /* ---------------------------------------------------------------------
-   HEADER BEHAVIOUR: login dropdown, full-height menu panel, rail search, esc
+   HEADER BEHAVIOUR: scroll shadow, login dropdown, mobile drawer, esc
    --------------------------------------------------------------------- */
 function initHeaderBehaviour(){
-  let opener=null;
-  const drawer=()=>$("#drawer");
-  function openDrawer(from){
-    const d=drawer(); if(!d)return;
-    opener=from||null; d.classList.add("open");
-    $$("[aria-controls='drawer']").forEach(b=>b.setAttribute("aria-expanded","true"));
-    const c=$("#drawerClose"); c&&setTimeout(()=>c.focus(),50);
-  }
-  function closeDrawer(){
-    const d=drawer(); if(!d||!d.classList.contains("open"))return;
-    d.classList.remove("open");
-    $$("[aria-controls='drawer']").forEach(b=>b.setAttribute("aria-expanded","false"));
-    if(opener&&opener.offsetParent!==null)opener.focus(); opener=null;
-  }
+  addEventListener("scroll",()=>{const h=$("#hdr");h&&h.classList.toggle("scrolled",scrollY>10)},{passive:true});
   document.addEventListener("click",e=>{
     const login=$("#login");
-    if(login){
-      if(e.target.closest("#loginBtn")){
-        e.stopPropagation();
-        const o=login.classList.toggle("open");
-        $("#loginBtn").setAttribute("aria-expanded",o);
-      }else if(!e.target.closest(".login-menu")){
-        login.classList.remove("open");
-        const btn=$("#loginBtn");btn&&btn.setAttribute("aria-expanded","false");
-      }
+    if(!login)return;
+    if(e.target.closest("#loginBtn")){
+      e.stopPropagation();
+      const o=login.classList.toggle("open");
+      $("#loginBtn").setAttribute("aria-expanded",o);
+      return;
     }
-    const bg=e.target.closest("#burger,#railBurger");
-    if(bg){ openDrawer(bg); return; }
-    if(e.target.closest("[data-close]"))closeDrawer();
-    if(e.target.closest("#railSearch")){
-      const inp=$(".search input")||$("input[type=search]");
-      if(inp){ inp.scrollIntoView({behavior:"smooth",block:"center"}); inp.focus(); }
-      else location.href="events.html?focus=search";
+    if(!e.target.closest(".login-menu")){
+      login.classList.remove("open");
+      const btn=$("#loginBtn");btn&&btn.setAttribute("aria-expanded","false");
     }
+  });
+  document.addEventListener("click",e=>{
+    if(e.target.closest("#burger"))$("#drawer").classList.add("open");
+    if(e.target.closest("[data-close]"))$("#drawer").classList.remove("open");
   });
   document.addEventListener("keydown",e=>{
     if(e.key==="Escape"){
       const login=$("#login");login&&login.classList.remove("open");
       const btn=$("#loginBtn");btn&&btn.setAttribute("aria-expanded","false");
-      closeDrawer();
-    }
-    if(e.key==="Tab"){
-      const d=drawer(); if(!d||!d.classList.contains("open"))return;
-      const f=$$("a[href],button",d).filter(x=>x.offsetParent!==null);
-      if(!f.length)return;
-      const first=f[0], last=f[f.length-1];
-      if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus();}
-      else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus();}
+      const drawer=$("#drawer");drawer&&drawer.classList.remove("open");
     }
   });
-  if(param("focus")==="search"){
-    const go=()=>{const inp=$(".search input");inp&&inp.focus();};
-    if(document.readyState==="complete")setTimeout(go,300); else addEventListener("load",()=>setTimeout(go,300),{once:true});
-  }
 }
 
 /* ---------------------------------------------------------------------
@@ -500,6 +467,10 @@ function countObserve(root){
   // Always use a plain IntersectionObserver: the hero is pinned, which throws off
   // ScrollTrigger's computed positions and made counters finish before being seen.
   // This fires the count-up only when the number actually scrolls into view.
+  if(!("IntersectionObserver" in window)){
+    $$("[data-count]",root||document).forEach(el=>{ const n=+el.dataset.count; if(!isNaN(n))el.textContent=n.toLocaleString("en-IN")+(n>999?"+":""); });
+    return;
+  }
   if(!countIO){
     countIO=new IntersectionObserver(es=>es.forEach(en=>{
       if(!en.isIntersecting)return;
@@ -522,6 +493,7 @@ function countObserve(root){
    --------------------------------------------------------------------- */
 let io=null;
 function legacyObserve(root){
+  if(!("IntersectionObserver" in window)){ $$(".reveal:not(.in)",root||document).forEach(el=>el.classList.add("in")); countObserve(root); return; }
   if(!io){
     io=new IntersectionObserver(es=>es.forEach(en=>{
       if(!en.isIntersecting)return;
@@ -551,10 +523,9 @@ function initMotion(){
   if(reducedMotion()||!hasMotionLibs())return;
   try{
     gsap.registerPlugin(ScrollTrigger);
+    if(ScrollTrigger.config)ScrollTrigger.config({ignoreMobileResize:true});
     if(window.Lenis){
-      // Native touch scrolling on phones/tablets (iOS momentum); Lenis only smooths wheel/trackpad.
-      lenis=new Lenis({lerp:.1,smoothWheel:true,syncTouch:false,touchMultiplier:1});
-      try{ if(matchMedia("(hover:none)").matches) document.documentElement.classList.add("touch-native"); }catch(e){}
+      lenis=new Lenis({lerp:.1,syncTouch:false,smoothTouch:false,touchMultiplier:1});
       lenis.on("scroll",ScrollTrigger.update);
       gsap.ticker.add(t=>lenis.raf(t*1000));
       gsap.ticker.lagSmoothing(0);
@@ -606,8 +577,6 @@ function tables(root){
   });
 }
 
-/* LITE = phones / touch-only devices: skip scrubbed parallax + zoom (REVISION_V10_RESPONSIVE §2.6) */
-const LITE=(function(){try{return matchMedia("(max-width:900px)").matches||matchMedia("(hover:none)").matches}catch(e){return false}})();
 function animate(root){
   root=root||document;
   tables(root);
@@ -648,10 +617,10 @@ function animate(root){
         gsap.fromTo(el,{y:60,opacity:0},{y:0,opacity:1,duration:.9,delay,ease:"back.out(1.7)",scrollTrigger:{trigger:el,...base}});
         break;
       case "left":
-        gsap.fromTo(el,LITE?{y:40,opacity:0}:{x:-90,opacity:0},{x:0,y:0,opacity:1,duration:.9,delay,ease:"back.out(1.7)",scrollTrigger:{trigger:el,...base}});
+        gsap.fromTo(el,{x:-90,opacity:0},{x:0,opacity:1,duration:.9,delay,ease:"back.out(1.7)",scrollTrigger:{trigger:el,...base}});
         break;
       case "right":
-        gsap.fromTo(el,LITE?{y:40,opacity:0}:{x:90,opacity:0},{x:0,y:0,opacity:1,duration:.9,delay,ease:"back.out(1.7)",scrollTrigger:{trigger:el,...base}});
+        gsap.fromTo(el,{x:90,opacity:0},{x:0,opacity:1,duration:.9,delay,ease:"back.out(1.7)",scrollTrigger:{trigger:el,...base}});
         break;
       case "zoom":
         gsap.fromTo(el,{scale:.86,opacity:0},{scale:1,opacity:1,duration:.9,delay,ease:"back.out(1.4)",scrollTrigger:{trigger:el,...base}});
@@ -673,14 +642,15 @@ function animate(root){
           .to(inner,{scale:1,duration:1.2,ease:"expo.out"},"<");
         break;}
       case "scrub-zoom":
-        if(LITE)break; // no scrubbed transforms on phones (perf) — CSS shows the plain image
         gsap.fromTo(el,{scale:.84,borderRadius:36},{scale:1,borderRadius:16,ease:"none",scrollTrigger:{trigger:el,start:"top bottom",end:"bottom top",scrub:true}});
         break;
     }
   });
 
+  const lite=mqOn("(max-width:900px)")||mqOn("(hover:none)");
   $$("[data-parallax]",root).forEach(el=>{
-    if(LITE||el.dataset.parallaxDone)return; el.dataset.parallaxDone="1";
+    if(lite)return; /* no scrubbed parallax on phones/touch: cheaper and no jank */
+    if(el.dataset.parallaxDone)return; el.dataset.parallaxDone="1";
     const amt=parseFloat(el.getAttribute("data-parallax"))||.15;
     gsap.to(el,{yPercent:amt*100,ease:"none",scrollTrigger:{trigger:el.parentElement||el,start:"top bottom",end:"bottom top",scrub:true}});
   });
@@ -802,36 +772,274 @@ function initDeck(root){
 }
 
 /* ---------------------------------------------------------------------
-   HERO POSTER — REVISION_V10 §4. Headline lines rise from a mask, the
-   tilted print drops in (back.out), lower blocks fade up, stamp spins in.
-   Idle float is CSS; mouse parallax (max 10px) is added after the entrance.
-   No-ops when #heroPoster is absent. Reduced motion: fully static.
-   --------------------------------------------------------------------- */
-function initHeroPoster(root){
-  const hero=$("#heroPoster",root||document);
-  if(!hero||hero.dataset.hpInit)return; hero.dataset.hpInit="1";
-  /* keep the floating action button off the poster corner while the hero is on screen */
-  if("IntersectionObserver" in window){
-    new IntersectionObserver(es=>es.forEach(en=>document.body.classList.toggle("hero-in",en.isIntersecting)),{threshold:0}).observe(hero);
+   HERO CINE — Immersive Cinematic hero, ported from mockups/hero-proto/b.html.
+   Full-bleed graded photo, slow Ken-Burns/parallax on scroll (GSAP +
+   ScrollTrigger, already registered by initMotion()), drifting glass stat
+   chips, entrance timeline, and a floating countdown pill that reads the
+   same district-championship target as the countdown() helper below.
+   No-ops cleanly when #heroCine / .hero-cine is absent. Reduced-motion:
+   no parallax/drift — static graded photo, text visible via base CSS. ------ */
+function initHeroCine(root){
+  const hero=$(".hero-cine",root||document);
+  if(!hero||hero.dataset.hcInit)return; hero.dataset.hcInit="1";
+  const photo=$(".hc-photo",hero);
+
+  /* floating "N days to go" pill — same target date as the main countdown() call */
+  const daysEl=$("#hcCdDays",hero);
+  if(daysEl){
+    const target=new Date("2026-10-26T08:00:00+05:30").getTime();
+    const tick=()=>{ daysEl.textContent=String(Math.max(0,Math.ceil((target-Date.now())/86400000))); };
+    tick();setInterval(tick,60000);
   }
+
   if(reducedMotion()||!motionReady||!window.gsap)return;
-  const lines=$$(".hp-line>span",hero), obj=null, stamp=$(".hp-stamp",hero);
-  const blocks=$$(".hp-left>*,.hp-spec,.hp-meta",hero);
-  gsap.set(lines,{yPercent:115});
-  gsap.set(blocks,{opacity:0,y:18});
-  if(stamp)gsap.set(stamp,{scale:.4,rotation:-140,opacity:0});
-  const tl=gsap.timeline({delay:.15,defaults:{ease:"power3.out"}});
-  tl.to(lines,{yPercent:0,duration:.6,stagger:.08},0)
-    .to(blocks,{opacity:1,y:0,duration:.5,stagger:.06},.55)
-    .to(stamp||{},{scale:1,rotation:0,opacity:1,duration:.7,ease:"back.out(1.6)"},.5);
-  tl.eventCallback("onComplete",()=>{
-    if(!obj||!matchMedia("(pointer:fine)").matches)return;
-    const qx=gsap.quickTo(obj,"x",{duration:.6,ease:"power2.out"}), qy=gsap.quickTo(obj,"y",{duration:.6,ease:"power2.out"});
-    hero.addEventListener("mousemove",e=>{
-      const r=hero.getBoundingClientRect();
-      qx(((e.clientX-r.left)/r.width-.5)*20); qy(((e.clientY-r.top)/r.height-.5)*20);
-    },{passive:true});
-  });
+
+  gsap.timeline({delay:.1})
+    .fromTo(".hc-kicker",{opacity:0,y:12},{opacity:1,y:0,duration:.5})
+    .fromTo(".hc-title",{opacity:0,y:22},{opacity:1,y:0,duration:.7},.1)
+    .fromTo(".hc-sub",{opacity:0,y:18},{opacity:1,y:0,duration:.6},.28)
+    .fromTo(".hc-cta",{opacity:0,y:14},{opacity:1,y:0,duration:.5},.4)
+    .fromTo(".hc-chip",{opacity:0,x:20},{opacity:1,x:0,duration:.5,stagger:.12},.4);
+
+  if(photo&&window.ScrollTrigger&&!mqOn("(max-width:900px)")&&!mqOn("(hover:none)")){
+    gsap.fromTo(photo,{scale:1.08,yPercent:0},{scale:1.18,yPercent:6,ease:"none",
+      scrollTrigger:{trigger:hero,start:"top top",end:"bottom top",scrub:.6}});
+  }
+
+  /* phones / touch: skip the parallax scrub and the endless chip drift (chips are hidden <=900px anyway) */
+  if(mqOn("(max-width:900px)")||mqOn("(hover:none)"))return;
+  const chip1=$("#hcChip1",hero), chip2=$("#hcChip2",hero);
+  if(chip1)gsap.to(chip1,{y:-10,duration:2.6,ease:"sine.inOut",yoyo:true,repeat:-1});
+  if(chip2)gsap.to(chip2,{y:10,duration:3.1,ease:"sine.inOut",yoyo:true,repeat:-1,delay:.4});
+}
+
+/* ---------------------------------------------------------------------
+   DISCIPLINES SINGLE-CARD SHOWCASE (Req 9)
+   Displays one discipline card at a time with rich info, photo,
+   categories, key venues, event counts, deep shadow, and navigation.
+   --------------------------------------------------------------------- */
+function initDiscShowcase(root){
+  const el = $("#discShowcase", root || document);
+  if(!el) return;
+  const list = disciplines;
+  let curIdx = 0;
+  const N = list.length;
+
+  function render(idx, animDir){
+    const d = list[idx];
+    const cnt = events.filter(e => e.discipline.includes(d.slug)).length;
+    
+    const cardHtml = `
+      <article class="disc-single-card" id="discCardActive">
+        <div class="disc-single-media">
+          <div class="disc-single-photo" style="background-image:url('${photo(d.key, 900)}')" role="img" aria-label="${esc(d.name)}"></div>
+          <span class="disc-single-chip"><i data-lucide="${d.icon}"></i> ${esc(d.name)}</span>
+        </div>
+        <div class="disc-single-body">
+          <div class="disc-single-top">
+            <span class="kicker"><i data-lucide="${d.icon}"></i> RSFI Discipline 0${idx+1}</span>
+            <div class="disc-nav-counter"><span class="cur">0${idx+1}</span> / <span class="total">0${N}</span></div>
+          </div>
+          <h3 class="disc-single-title">${esc(d.name)}</h3>
+          <p class="disc-single-sub">${esc(d.subtitle)}</p>
+          <p class="disc-single-desc">${esc(d.desc)}</p>
+          
+          <div class="disc-single-details">
+            <div class="detail-row">
+              <span class="detail-label"><i data-lucide="map-pin"></i> Key Venues:</span>
+              <span class="detail-val">${esc(d.highlights)}</span>
+            </div>
+            <div class="detail-row">
+              <span class="detail-label"><i data-lucide="users"></i> Categories:</span>
+              <span class="detail-val">${esc(d.categories)}</span>
+            </div>
+            <div class="detail-row">
+              <span class="detail-label"><i data-lucide="calendar"></i> District Events:</span>
+              <span class="detail-val"><b>${cnt} upcoming event${cnt===1?'':'s'}</b> this season</span>
+            </div>
+          </div>
+
+          <div class="disc-single-actions">
+            <a class="btn btn-primary" href="events.html?d=${encodeURIComponent(d.slug)}" data-magnetic>
+              Explore ${esc(d.name)} Events <i data-lucide="arrow-right"></i>
+            </a>
+            <div class="disc-single-arrows">
+              <button class="disc-single-arrow" id="discPrev" type="button" aria-label="Previous discipline"><i data-lucide="chevron-left"></i></button>
+              <button class="disc-single-arrow" id="discNext" type="button" aria-label="Next discipline"><i data-lucide="chevron-right"></i></button>
+            </div>
+          </div>
+        </div>
+      </article>
+    `;
+
+    el.innerHTML = cardHtml;
+    icons();
+
+    // Update tab pills
+    $$(".disc-pill-tab").forEach((tab, i)=>{
+      tab.classList.toggle("active", i === idx);
+      tab.setAttribute("aria-selected", String(i === idx));
+    });
+
+    if(animDir && motionReady && !reducedMotion()){
+      gsap.fromTo("#discCardActive", 
+        { opacity: 0, x: animDir > 0 ? 40 : -40 },
+        { opacity: 1, x: 0, duration: 0.45, ease: "power3.out" }
+      );
+    }
+
+    $("#discPrev").addEventListener("click", ()=>goStep(-1));
+    $("#discNext").addEventListener("click", ()=>goStep(1));
+  }
+
+  function goStep(dir){
+    curIdx = (curIdx + dir + N) % N;
+    render(curIdx, dir);
+  }
+
+  // Generate tab pills
+  const tabsContainer = $("#discPillTabs");
+  if(tabsContainer){
+    tabsContainer.innerHTML = list.map((d, i)=>`
+      <button class="disc-pill-tab${i===0?' active':''}" type="button" data-idx="${i}" aria-selected="${i===0}">
+        <i data-lucide="${d.icon}"></i> ${esc(d.name)}
+      </button>
+    `).join("");
+    icons();
+    $$(".disc-pill-tab", tabsContainer).forEach(btn=>{
+      btn.addEventListener("click", ()=>{
+        const target = +btn.dataset.idx;
+        if(target === curIdx) return;
+        const dir = target > curIdx ? 1 : -1;
+        curIdx = target;
+        render(curIdx, dir);
+      });
+    });
+  }
+
+  render(0, 0);
+}
+
+function initDiscCarousel(root){
+  if($("#discShowcase", root || document)){
+    initDiscShowcase(root);
+  }
+}
+
+/* ---------------------------------------------------------------------
+   CLUB MEDAL STANDINGS WITH SLOT MACHINE REELS (Req 11)
+   Replaces athlete results table with recognized clubs and spinning
+   slot machine tumbler reels for Gold, Silver, and Bronze medals.
+   --------------------------------------------------------------------- */
+function initMedalSlotMachine(root){
+  const board = $("#clubMedalBoard", root || document);
+  if(!board) return;
+  const clubsList = medalTable;
+
+  function buildReelHtml(targetNum, type){
+    const reelItems = [];
+    const count = 16;
+    for(let i = 0; i < count - 1; i++){
+      reelItems.push((i * 3 + targetNum + 2) % 20);
+    }
+    reelItems.push(targetNum);
+
+    const itemsHtml = reelItems.map(n => `<span class="slot-num">${n}</span>`).join("");
+    return `
+      <div class="slot-tumbler slot-${type}" data-target="${targetNum}">
+        <div class="slot-reel" data-len="${count}">
+          ${itemsHtml}
+        </div>
+      </div>
+    `;
+  }
+
+  board.innerHTML = `
+    <div class="slot-table">
+      <div class="slot-thead">
+        <span class="col-rank">Rank</span>
+        <span class="col-club">Recognized Club</span>
+        <span class="col-medal gold"><span class="m-badge gold">🥇</span> Gold</span>
+        <span class="col-medal silver"><span class="m-badge silver">🥈</span> Silver</span>
+        <span class="col-medal bronze"><span class="m-badge bronze">🥉</span> Bronze</span>
+        <span class="col-total">Total Medals</span>
+      </div>
+      <div class="slot-tbody">
+        ${clubsList.map((c, i)=>{
+          const total = c.gold + c.silver + c.bronze;
+          const initials = c.club.split(" ").map(w=>w[0]).slice(0,2).join("");
+          return `
+            <div class="slot-row" data-rank="${i+1}">
+              <div class="col-rank">
+                <span class="rank-badge rank-${i+1}">#0${i+1}</span>
+              </div>
+              <div class="col-club">
+                <span class="club-badge">${initials}</span>
+                <div>
+                  <b class="club-name">${esc(c.club)}</b>
+                  <small class="club-meta">Affiliated Club · Visakhapatnam District</small>
+                </div>
+              </div>
+              <div class="col-medal gold">
+                ${buildReelHtml(c.gold, "gold")}
+              </div>
+              <div class="col-medal silver">
+                ${buildReelHtml(c.silver, "silver")}
+              </div>
+              <div class="col-medal bronze">
+                ${buildReelHtml(c.bronze, "bronze")}
+              </div>
+              <div class="col-total">
+                <span class="total-pill">${total}</span>
+              </div>
+            </div>
+          `;
+        }).join("")}
+      </div>
+    </div>
+  `;
+
+  function spinAllReels(){
+    const reels = $$(".slot-reel", board);
+    const itemHeight = 36;
+    reels.forEach((reel, idx)=>{
+      const len = +reel.dataset.len || 16;
+      const targetY = -(len - 1) * itemHeight;
+      const tumbler = reel.closest(".slot-tumbler");
+      tumbler && tumbler.classList.add("spinning");
+
+      if(motionReady && !reducedMotion()){
+        gsap.set(reel, { y: 0 });
+        gsap.to(reel, {
+          y: targetY,
+          duration: 1.4 + (idx % 3) * 0.3 + Math.floor(idx / 3) * 0.1,
+          ease: "back.out(1.2)",
+          onComplete: ()=>{
+            tumbler && tumbler.classList.remove("spinning");
+          }
+        });
+      } else {
+        reel.style.transform = `translateY(${targetY}px)`;
+        tumbler && tumbler.classList.remove("spinning");
+      }
+    });
+  }
+
+  if(motionReady && !reducedMotion()){
+    ScrollTrigger.create({
+      trigger: board,
+      start: "top 80%",
+      once: true,
+      onEnter: ()=> spinAllReels()
+    });
+  } else {
+    spinAllReels();
+  }
+
+  const spinBtn = $("#spinMedalsBtn");
+  if(spinBtn){
+    spinBtn.addEventListener("click", ()=> spinAllReels());
+  }
 }
 
 /* ---------------------------------------------------------------------
@@ -878,7 +1086,7 @@ function renderFloatingMenu(){
     </div>
     <form id="modalVerifyForm" novalidate>
       <div class="vdrsa-modal-input-row">
-        <input class="input" id="modalSid" placeholder="VDRSA-26-00123" autocomplete="off" autocapitalize="characters" autocorrect="off" spellcheck="false" enterkeyhint="search" aria-describedby="modalSidHint">
+        <input class="input" id="modalSid" type="text" placeholder="VDRSA-26-00123" autocomplete="off" autocapitalize="characters" autocorrect="off" spellcheck="false" enterkeyhint="go" aria-label="Skater ID" aria-describedby="modalSidHint">
         <button class="btn btn-primary" id="modalVerifyBtn" type="submit">Verify</button>
       </div>
       <p class="hint" id="modalSidHint">Demo: VDRSA-26-00123 (active) · VDRSA-24-00456 (expired)</p>
@@ -1086,7 +1294,6 @@ function idle(btn){if(!btn)return;btn.disabled=false;btn.innerHTML=btn.dataset.l
 function countdown(prefix,targetIso){
   const target=new Date(targetIso).getTime();
   function tick(){
-    if(document.hidden)return; // pause work while the tab is in the background
     let d=Math.max(0,target-Date.now())/1000;
     [86400,3600,60,1].forEach((s,i)=>{
       const v=Math.floor(d/s);d-=v*s;
@@ -1112,18 +1319,132 @@ function boot(){
   icons();
   animate(document);
   initDeck(document);
-  initHeroPoster(document);
+  initHeroCine(document);
+  initDiscShowcase(document);
+  initMedalSlotMachine(document);
 }
 if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",boot);
 else boot();
 
+/* ---------------------------------------------------------------------
+   JOURNEY TIMELINE (horizontal) — a sideways track of stops on a dashed
+   route. The track scrolls inside its own overflow-x container (snap,
+   drag/swipe, arrows, trackpad) — the page never scrolls sideways and is
+   never pinned. The lime segment of the route (an SVG mask whose
+   dashoffset follows the scroll position) reaches the stop nearest the
+   track centre; the rest stays faint. Reduced motion: static, fully lime.
+   --------------------------------------------------------------------- */
+function journey(root){
+  if(!root||root.dataset.jtInit)return; root.dataset.jtInit="1";
+  const track=$(".jt-track",root), rail=$(".jt-rail",root), svg=$(".jt-svg",root);
+  const base=$("#jtTrack",root), line=$("#jtLine",root), mask=$("#jtMaskPath",root);
+  const prev=$('[data-jt="prev"]',root), next=$('[data-jt="next"]',root);
+  if(!track||!rail||!svg||!base||!line||!mask)return;
+  const still=reducedMotion();
+  let xs=[], nodes=[], len=0, prog=still?1:0;
+
+  function apply(){ mask.style.strokeDashoffset=String(len*(1-prog)); }
+  function update(){
+    const max=track.scrollWidth-track.clientWidth, sl=track.scrollLeft;
+    if(prev)prev.disabled=sl<=2; if(next)next.disabled=sl>=max-2;
+    if(!xs.length)return;
+    const x0=xs[0], xN=xs[xs.length-1];
+    let anchor=sl+track.clientWidth/2;
+    if(sl>=max-2)anchor=xN;
+    anchor=Math.max(x0,Math.min(xN,anchor));
+    let act=0;
+    xs.forEach((x,i)=>{ if(Math.abs(x-anchor)<Math.abs(xs[act]-anchor))act=i; });
+    nodes.forEach((n,i)=>{
+      n.classList.toggle("is-on",still||xs[i]<=anchor+6);
+      n.classList.toggle("is-active",!still&&i===act);
+    });
+    if(!still){ prog=(anchor-x0)/Math.max(1,xN-x0); apply(); }
+  }
+  function build(){
+    const stops=$$("[data-stop]",root);
+    /* equalise the above/below rows so every node sits on one horizontal line */
+    rail.style.removeProperty("--ah"); rail.style.removeProperty("--bh");
+    let ah=0,bh=0;
+    stops.forEach(s=>{
+      const c=$(".jt-card",s); if(!c)return;
+      const g=parseFloat(getComputedStyle(c).marginTop)+parseFloat(getComputedStyle(c).marginBottom);
+      if(s.classList.contains("jt-up"))ah=Math.max(ah,c.offsetHeight+g); else bh=Math.max(bh,c.offsetHeight+g);
+    });
+    rail.style.setProperty("--ah",ah+"px"); rail.style.setProperty("--bh",bh+"px");
+    const R=rail.getBoundingClientRect(), W=rail.offsetWidth, H=rail.offsetHeight;
+    nodes=stops.map(s=>$(".jt-node",s));
+    const pts=nodes.map(n=>{const b=n.getBoundingClientRect();return{x:b.left-R.left+b.width/2,y:b.top-R.top+b.height/2}});
+    xs=pts.map(p=>p.x);
+    if(pts.length<2)return;
+    /* gentle wave between nodes; nodes themselves stay on the line */
+    const amp=9, all=[pts[0]];
+    for(let i=0;i<pts.length-1;i++){
+      all.push({x:(pts[i].x+pts[i+1].x)/2,y:(pts[i].y+pts[i+1].y)/2+(i%2?-amp:amp)});
+      all.push(pts[i+1]);
+    }
+    const f=v=>v.toFixed(1), k=.2;
+    let d="M"+f(all[0].x)+" "+f(all[0].y);
+    for(let i=0;i<all.length-1;i++){
+      const p0=all[i-1]||all[i], p1=all[i], p2=all[i+1], p3=all[i+2]||p2;
+      d+=" C"+f(p1.x+(p2.x-p0.x)*k)+" "+f(p1.y+(p2.y-p0.y)*k)+","+
+        f(p2.x-(p3.x-p1.x)*k)+" "+f(p2.y-(p3.y-p1.y)*k)+","+f(p2.x)+" "+f(p2.y);
+    }
+    svg.setAttribute("viewBox","0 0 "+W+" "+H); svg.setAttribute("width",W); svg.setAttribute("height",H);
+    [base,line,mask].forEach(p=>p.setAttribute("d",d));
+    len=mask.getTotalLength(); mask.style.strokeDasharray=len+" "+len;
+    apply(); update();
+  }
+
+  /* arrows: move to the previous / next stop */
+  function go(dir){
+    const c=track.scrollLeft+track.clientWidth/2;
+    let t=null;
+    if(dir>0)t=xs.find(x=>x>c+8); else for(let i=xs.length-1;i>=0;i--){ if(xs[i]<c-8){t=xs[i];break} }
+    if(t==null)return;
+    track.scrollTo({left:t-track.clientWidth/2,behavior:still?"auto":"smooth"});
+  }
+  if(prev)prev.addEventListener("click",()=>go(-1));
+  if(next)next.addEventListener("click",()=>go(1));
+
+  /* mouse drag (touch and trackpads scroll natively) */
+  let dragging=false,sx=0,sl0=0,moved=0;
+  track.addEventListener("pointerdown",e=>{
+    if(e.pointerType!=="mouse"||e.button!==0)return;
+    dragging=true;moved=0;sx=e.clientX;sl0=track.scrollLeft;
+  });
+  addEventListener("pointermove",e=>{
+    if(!dragging)return;
+    const dx=e.clientX-sx; moved=Math.max(moved,Math.abs(dx));
+    if(moved>5)track.classList.add("is-drag");
+    track.scrollLeft=sl0-dx;
+  });
+  function endDrag(){
+    if(!dragging)return; dragging=false;
+    if(!track.classList.contains("is-drag"))return;
+    /* re-enable snap and glide to the nearest stop */
+    const c=track.scrollLeft+track.clientWidth/2;
+    let t=xs[0]; xs.forEach(x=>{ if(Math.abs(x-c)<Math.abs(t-c))t=x; });
+    track.classList.remove("is-drag");
+    track.scrollTo({left:t-track.clientWidth/2,behavior:still?"auto":"smooth"});
+  }
+  addEventListener("pointerup",endDrag); addEventListener("pointercancel",endDrag);
+  track.addEventListener("click",e=>{ if(moved>5){e.preventDefault();e.stopPropagation();moved=0} },true);
+
+  track.addEventListener("scroll",()=>requestAnimationFrame(update),{passive:true});
+  let raf=0;
+  const rebuild=()=>{cancelAnimationFrame(raf);raf=requestAnimationFrame(build)};
+  addEventListener("resize",rebuild);
+  if(window.ResizeObserver)new ResizeObserver(rebuild).observe(rail);
+  addEventListener("load",()=>setTimeout(rebuild,350),{once:true});
+  build();
+}
 
 /* ---------------------------------------------------------------------
    SKATE ART — REVISION_V11 §2. Flat sticker-style inline SVG, drawn in code.
    skateSVG(): inline speed skate, 380x250 viewBox, facing right, 4 spinning
    wheels (<g class="sk-wheel" data-cx data-cy>). kitSVG(name): companion
    line-up art (quad | stick | board | helmet), 220x200 viewBox.
-   Colours: logo blue #0069BE + lotus pink #F55B99; outlines/ink via CSS vars.
+   Colours: V1 lime (--primary) + pink (--accent); outlines/ink via CSS vars.
    --------------------------------------------------------------------- */
 let _skN=0;
 function _wheel(cx,cy,r,cls){
@@ -1131,6 +1452,26 @@ function _wheel(cx,cy,r,cls){
   const sa=-70*Math.PI/180,sb=-20*Math.PI/180,R=r*.8;
   const shine=`M${(cx+Math.cos(sa)*R).toFixed(1)},${(cy+Math.sin(sa)*R).toFixed(1)} A${R.toFixed(1)},${R.toFixed(1)} 0 0 1 ${(cx+Math.cos(sb)*R).toFixed(1)},${(cy+Math.sin(sb)*R).toFixed(1)}`;
   return `<g class="sk-wheel ${cls||""}" data-cx="${cx}" data-cy="${cy}"><circle cx="${cx}" cy="${cy}" r="${r}" class="sk-tire sk-o"/><path d="${shine}" class="sk-shine"/><circle cx="${cx}" cy="${cy}" r="${(r*.6).toFixed(1)}" class="sk-hub sk-o"/>${spokes}<circle cx="${cx}" cy="${cy}" r="${(r*.13).toFixed(1)}" class="sk-bolt"/></g>`;
+}
+/* ---- ink-splat blobs (moved from story.js; deterministic) ---- */
+function rng(seed){let s=seed%2147483647;if(s<=0)s+=2147483646;return()=>((s=s*16807%2147483647)-1)/2147483646;}
+function blob(seed){
+  const r=rng(seed),n=15,pts=[];
+  for(let i=0;i<n;i++){
+    const a=i/n*Math.PI*2+ (r()-.5)*.12;
+    const spike=r()<.34;
+    const rad=spike?(.93+r()*.15):(.66+r()*.24);
+    pts.push([50+Math.cos(a)*rad*46,50+Math.sin(a)*rad*46]);
+  }
+  let d="M"+pts[0].map(v=>v.toFixed(1)).join(",");
+  for(let i=0;i<n;i++){
+    const p0=pts[(i-1+n)%n],p1=pts[i],p2=pts[(i+1)%n],p3=pts[(i+2)%n];
+    const c1=[p1[0]+(p2[0]-p0[0])/6,p1[1]+(p2[1]-p0[1])/6],c2=[p2[0]-(p3[0]-p1[0])/6,p2[1]-(p3[1]-p1[1])/6];
+    d+=`C${c1[0].toFixed(1)},${c1[1].toFixed(1)} ${c2[0].toFixed(1)},${c2[1].toFixed(1)} ${p2[0].toFixed(1)},${p2[1].toFixed(1)}`;
+  }
+  let drops="";
+  for(let k=0;k<4;k++){const a=r()*Math.PI*2,rad=50+r()*8,s=1.6+r()*3.2;drops+=`<circle class="dr" cx="${(50+Math.cos(a)*rad).toFixed(1)}" cy="${(50+Math.sin(a)*rad).toFixed(1)}" r="${s.toFixed(1)}"/>`;}
+  return `<svg class="blob" viewBox="-8 -8 116 116" aria-hidden="true" focusable="false"><path class="b" d="${d}Z"/>${drops}</svg>`;
 }
 function skateSVG(){
   const id="skc"+(++_skN);
@@ -1175,11 +1516,11 @@ ${W(70,166,20)}${W(150,166,20)}
   }
   if(name==="stick"){
     return head+`"Hockey stick and puck"><ellipse cx="110" cy="190" rx="84" ry="5" class="sk-shadow"/>
-<path d="M150,16 L166,20 L96,150 L60,170 C52,174 46,166 54,160 L82,142 Z" class="sk-stick sk-o"/>
+<g class="kit-stick-g"><path d="M150,16 L166,20 L96,150 L60,170 C52,174 46,166 54,160 L82,142 Z" class="sk-stick sk-o"/>
 <path d="M150,16 L166,20 L160,34 L146,30 Z" class="sk-pink sk-o"/>
 <path d="M52,166 C56,176 80,180 96,172 L104,166 L86,150 L60,162 Z" class="sk-blue sk-o"/>
-<path d="M130,60 L142,64 M116,88 L128,92" class="sk-tape"/>
-<ellipse cx="160" cy="176" rx="26" ry="9" class="sk-puck-bot sk-o"/><path d="M134,176 L134,168 A26,9 0 0 1 186,168 L186,176 A26,9 0 0 1 134,176 Z" class="sk-puck sk-o"/><ellipse cx="160" cy="168" rx="26" ry="9" class="sk-puck-top sk-o"/></svg>`;
+<path d="M130,60 L142,64 M116,88 L128,92" class="sk-tape"/></g>
+<g class="kit-puck-g"><ellipse cx="160" cy="176" rx="26" ry="9" class="sk-puck-bot sk-o"/><path d="M134,176 L134,168 A26,9 0 0 1 186,168 L186,176 A26,9 0 0 1 134,176 Z" class="sk-puck sk-o"/><ellipse cx="160" cy="168" rx="26" ry="9" class="sk-puck-top sk-o"/></g></svg>`;
   }
   if(name==="board"){
     return head+`"Skateboard"><ellipse cx="110" cy="188" rx="88" ry="5" class="sk-shadow"/>
@@ -1188,6 +1529,33 @@ ${W(70,166,20)}${W(150,166,20)}
 <circle cx="110" cy="130.5" r="0"/><text x="110" y="133.4" text-anchor="middle" class="sk-word sk-word-xs">VDRSA</text>
 <rect x="56" y="138" width="22" height="10" class="sk-frame sk-o"/><rect x="142" y="138" width="22" height="10" class="sk-frame sk-o"/>
 ${W(67,162,20)}${W(153,162,20)}</svg>`;
+  }
+  if(name==="rink"){
+    return head+`"Rink hockey stick and ball"><ellipse cx="110" cy="190" rx="84" ry="5" class="sk-shadow"/>
+<g class="kit-stick-g"><path d="M156,14 L172,18 L112,132 C104,148 92,160 74,164 C62,167 56,160 64,154 C82,148 90,142 96,130 Z" class="sk-stick sk-o"/>
+<path d="M156,14 L172,18 L166,32 L152,28 Z" class="sk-pink sk-o"/><path d="M136,60 L148,64 M122,88 L134,92" class="sk-tape"/>
+<path d="M56,168 C60,178 84,180 98,170 L96,160 L66,160 Z" class="sk-blue sk-o"/></g>
+<g class="kit-ball-g"><circle cx="150" cy="168" r="17" class="sk-pink sk-o"/><path d="M138,160 C146,156 156,156 162,160 M136,172 C146,176 158,176 164,170" class="sk-tape"/></g></svg>`;
+  }
+  if(name==="cones"){
+    const cone=(x,i)=>`<g class="kit-cone kit-cone-${i}"><path d="M${x-16},170 L${x},96 L${x+16},170 Z" class="sk-pink sk-o"/><rect x="${x-22}" y="168" width="44" height="10" rx="2" class="sk-boot sk-o"/><path d="M${x-9},140 L${x+9},140" class="sk-tape"/></g>`;
+    return head+`"Slalom cones"><ellipse cx="110" cy="188" rx="96" ry="5" class="sk-shadow"/><path d="M8,180 L212,180" class="sk-line"/>${cone(34,0)}${cone(80,1)}${cone(126,2)}${cone(172,3)}</svg>`;
+  }
+  if(name==="derby"){
+    return head+`"Roller derby helmet with jammer star"><ellipse cx="110" cy="188" rx="72" ry="5" class="sk-shadow"/>
+<path d="M36,138 C30,84 62,44 112,42 C160,42 190,82 184,138 Z" class="sk-boot sk-o"/>
+<path d="M36,138 L184,138 L182,150 C160,158 60,158 38,150 Z" class="sk-pink sk-o"/>
+<g class="kit-star"><path d="M110,64 L119,86 L142,87 L124,101 L130,124 L110,111 L90,124 L96,101 L78,87 L101,86 Z" class="sk-blue sk-o"/></g>
+<path d="M112,42 C160,42 190,82 184,138 L150,138 C154,96 140,60 112,42 Z" class="sk-shine2"/>
+<path d="M62,150 C66,176 84,184 96,178 M158,150 C154,176 136,184 124,178" class="sk-vent"/>
+<rect x="100" y="172" width="20" height="14" rx="2" class="sk-buckle sk-o"/></svg>`;
+  }
+  if(name==="aero"){
+    return head+`"Aero downhill helmet"><ellipse cx="110" cy="188" rx="78" ry="5" class="sk-shadow"/>
+<g class="kit-speedlines"><path d="M6,84 L50,84 M0,104 L44,104 M10,124 L46,124" class="sk-tape"/></g>
+<g class="kit-aero-g"><path d="M50,138 C44,92 74,54 118,50 C168,48 206,84 212,128 L214,138 Q150,176 96,150 Z" class="sk-blue sk-o"/>
+<path d="M50,138 L214,138 L210,150 C170,166 96,166 54,150 Z" class="sk-pink sk-o"/>
+<path d="M126,70 C152,70 176,92 186,122 L128,122 Z" class="sk-shine2"/><path d="M118,50 C104,76 100,106 106,138" class="sk-vent"/></g></svg>`;
   }
   /* helmet */
   return head+`"Safety helmet"><ellipse cx="110" cy="188" rx="72" ry="5" class="sk-shadow"/>
@@ -1203,9 +1571,6 @@ ${W(67,162,20)}${W(153,162,20)}</svg>`;
    PUBLIC API
    --------------------------------------------------------------------- */
 window.VDRSA={
-  skateSVG,
-  kitSVG,
-  reducedMotion,
   data,
   disciplines,
   icons,
@@ -1214,14 +1579,22 @@ window.VDRSA={
   idle,
   observe,
   animate,
+  initDiscShowcase,
+  initDiscCarousel,
+  initMedalSlotMachine,
   renderFloatingMenu,
   tables,
   esc,
   img,
   photo,
+  skateSVG,
+  kitSVG,
+  blob,
+  reducedMotion,
   photos:PHOTOS,
   param,
   countdown,
+  journey,
   /* REVISION_V5 §2 — no-op hook kept for pages that re-render big media/
      buttons: hover/media/magnetic states are all delegated on `document`
      inside initCursor(), so newly-added [data-cursor]/[data-magnetic]

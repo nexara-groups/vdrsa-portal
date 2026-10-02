@@ -7,7 +7,7 @@ Visakhapatnam District Roller Sports Association — clickable website mockups f
 | Version | Link | What it is |
 |---|---|---|
 | Version 1 (v1.1) | https://nexara-groups.github.io/vdrsa-portal/v1/ | First mockup: lime and charcoal theme, photo hero, full home page, mobile-first hardening |
-| Version 2 | https://nexara-groups.github.io/vdrsa-portal/v2/ | Poster layout in the logo colours (blue, lotus pink, yellow), with a travelling inline skate that moves through the home page as you scroll (desktop and mobile). Shorter home page. |
+| Version 2 (final) | https://nexara-groups.github.io/vdrsa-portal/v2/ | v1 lime and charcoal theme plus a new Disciplines page with an animated avatar skater for each of the eight disciplines. |
 
 ## What to review
 Home, About, Events, Event detail, Results, Circulars, Clubs, Club detail, News, Hall of Fame, Verify Skater ID, Contact, Login — in both versions.

@@ -7,7 +7,7 @@
 <meta name="description" content="Official website of the Visakhapatnam District Roller Sports Association. Events, results, circulars, recognized clubs and Skater ID verification.">
 <link rel="canonical" href="https://vdrsa.in/">
 <meta name="robots" content="index,follow">
-<meta name="theme-color" content="#0069BE">
+<meta name="theme-color" content="#14150F">
 <meta name="keywords" content="VDRSA, Visakhapatnam District Roller Sports Association, roller skating Visakhapatnam, district roller sports, speed skating, artistic skating, inline hockey, rink hockey, skateboarding, roller derby, APRSA, RSFI, skater ID, district championship, roller skating clubs Andhra Pradesh">
 <meta name="author" content="VDRSA">
 <meta name="publisher" content="VDRSA">
@@ -27,13 +27,18 @@
 <link rel="icon" href="assets/vdrsa-logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&family=Caveat:wght@600&family=Noto+Sans+Telugu:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&family=Noto+Sans+Telugu:wght@400;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/site.css">
 <script src="https://cdn.jsdelivr.net/npm/lucide@0.469.0/dist/umd/lucide.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
 <style>
+/* responsive hero / CTA imagery: phones get an 800px rendition, tablets 1200px, desktop the full one */
+#hcPhoto{background-image:url("https://images.pexels.com/photos/30756235/pexels-photo-30756235.jpeg?auto=compress&cs=tinysrgb&w=800")}
+#ctaBg{background-image:url("https://images.pexels.com/photos/36678658/pexels-photo-36678658.jpeg?auto=compress&cs=tinysrgb&w=800")}
+@media (min-width:641px){#hcPhoto{background-image:url("https://images.pexels.com/photos/30756235/pexels-photo-30756235.jpeg?auto=compress&cs=tinysrgb&w=1200")}#ctaBg{background-image:url("https://images.pexels.com/photos/36678658/pexels-photo-36678658.jpeg?auto=compress&cs=tinysrgb&w=1200")}}
+@media (min-width:1025px){#hcPhoto{background-image:url("https://images.pexels.com/photos/30756235/pexels-photo-30756235.jpeg?auto=compress&cs=tinysrgb&w=1920")}#ctaBg{background-image:url("https://images.pexels.com/photos/36678658/pexels-photo-36678658.jpeg?auto=compress&cs=tinysrgb&w=1400")}}
 /* v4 — shorter Home on phones */
 @media (max-width:640px){
   .home-res th:nth-child(3),.home-res td:nth-child(3),.home-res th:nth-child(4),.home-res td:nth-child(4){display:none}
@@ -45,20 +50,25 @@
 /* ===== District Calendar — motion ===== */
 /* Live "Registration Open" dot with an expanding ring */
 .ev-cal-spotlight .badge .dot{position:relative}
-.ev-cal-spotlight .badge .dot::after{content:"";position:absolute;inset:-4px;border-radius:50%;border:2px solid currentColor;opacity:.6;animation:calPulse 1.8s ease-out infinite}
+.ev-cal-spotlight .badge .dot::after{content:"";position:absolute;top:-4px;right:-4px;bottom:-4px;left:-4px;inset:-4px;border-radius:50%;border:2px solid currentColor;opacity:.6;animation:calPulse 1.8s ease-out infinite}
 @keyframes calPulse{0%{transform:scale(1);opacity:.6}70%{transform:scale(2.4);opacity:0}100%{opacity:0}}
+/* Rotating lime sheen on the spotlight card border */
+.ev-cal-spotlight{position:relative;isolation:isolate}
+.ev-cal-spotlight::before{content:"";position:absolute;top:0;right:0;bottom:0;left:0;inset:0;border-radius:inherit;padding:1.5px;background:conic-gradient(from var(--calA,0deg),transparent 0 70%,var(--primary) 85%,transparent 100%);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;animation:calSpin 6s linear infinite;pointer-events:none;z-index:-1}
+@property --calA{syntax:"<angle>";inherits:false;initial-value:0deg}
+@keyframes calSpin{to{--calA:360deg}}
 /* Countdown seconds "tick" pulse — reads as live */
 .ev-cal-spotlight .cd div:last-child b{display:block;width:max-content;margin:0 auto;animation:calTick 1s steps(1) infinite}
 @keyframes calTick{0%,60%{transform:scale(1)}62%{transform:scale(1.18)}100%{transform:scale(1)}}
-/* Schedule cards: hover lift + growing red accent bar */
+/* Schedule cards: hover lift + growing lime accent bar */
 .ev-cal-card{position:relative;overflow:hidden;transition:transform .3s ease,box-shadow .3s ease}
 .ev-cal-card::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--primary);transform:scaleY(0);transform-origin:top;transition:transform .35s ease}
-.ev-cal-card:hover{transform:translate(-4px,-4px);box-shadow:4px 4px 0 var(--primary)}
+.ev-cal-card:hover{transform:translateY(-4px);box-shadow:var(--shadow)}
 .ev-cal-card:hover::before{transform:scaleY(1)}
 .ev-cal-card:hover .ev-cal-datebox{transform:scale(1.05)}
 .ev-cal-datebox{transition:transform .3s ease}
 @media (prefers-reduced-motion:reduce){
-  .ev-cal-spotlight .badge .dot::after,.ev-cal-spotlight .cd div:last-child b{animation:none}
+  .ev-cal-spotlight .badge .dot::after,.ev-cal-spotlight::before,.ev-cal-spotlight .cd div:last-child b{animation:none}
   .ev-cal-card,.ev-cal-card::before,.ev-cal-datebox{transition:none}
 }
 </style>
@@ -68,7 +78,7 @@
 <!-- ================= PAGE LOADER ================= -->
 <div id="page-loader" role="status" aria-live="polite">
   <div class="ring-loader">
-    <img src="assets/vdrsa-logo.png" alt="" width="54" height="54" decoding="async">
+    <img src="assets/vdrsa-logo.png" alt="">
     <svg viewBox="0 0 132 132" aria-hidden="true"><circle class="track" cx="66" cy="66" r="62"/><circle class="arc" cx="66" cy="66" r="62"/></svg>
   </div>
   <span class="sr-only">Loading VDRSA</span>
@@ -77,128 +87,100 @@
 <div id="site-header"></div>
 
 <main id="top">
-<!-- ================= v11 TRAVELLING SKATE STORY — A hero · B who we are · C giant word · D splats · E gear-up line-up · F race day.
-     One fixed .skate-rig (built by assets/story.js) travels through A–E and lands in the empty line-up slot. ================= -->
-<section class="hero-poster" id="heroPoster" aria-labelledby="heroH1">
-  <h1 class="sr-only" id="heroH1">Visakhapatnam District Roller Sports Association — official district body</h1>
-  <div class="hp-box">
-    <span class="hp-meta" aria-hidden="true"><i></i>VOL. 2026 / SEASON OPEN</span>
-    <div class="hp-stamp" aria-hidden="true">
-      <svg viewBox="0 0 104 104"><defs><path id="stampPath" d="M52,52 m-41,0 a41,41 0 1,1 82,0 a41,41 0 1,1 -82,0"/></defs><circle cx="52" cy="52" r="50" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="52" cy="52" r="29" fill="none" stroke="currentColor" stroke-width="1"/><text><textPath href="#stampPath" textLength="252">VISAKHAPATNAM · ROLLER SPORTS ·</textPath></text></svg>
-      <img src="assets/vdrsa-logo.png" alt="">
+<!-- ================= HERO CINE — Immersive Cinematic hero (ported from
+     mockups/hero-proto/b.html). Full-bleed graded action photo, slow
+     Ken-Burns/parallax on scroll, lower-left statement, lime + outline
+     CTAs, floating lime countdown pill (wired to the live championship
+     countdown target), drifting glass stat chips, animated scroll cue.
+     Real site header (#site-header) still renders above this section. ================= -->
+<section class="hero-cine" id="heroCine" aria-label="Hero">
+  <div class="hc-photo" id="hcPhoto" data-cursor="view" data-cursor-label="Explore"></div>
+  <div class="hc-grade"></div>
+  <div class="hc-grain"></div>
+
+  <div class="hc-cd-pill" id="hcCdPill">
+    <i data-lucide="calendar-clock"></i>
+    <span>District Championship · <b id="hcCdDays">--</b> days to go</span>
+  </div>
+
+  <div class="hc-chips" aria-hidden="true">
+    <div class="hc-chip" id="hcChip1"><i data-lucide="layers"></i><span><b>8</b><small>Disciplines</small></span></div>
+    <div class="hc-chip" id="hcChip2"><i data-lucide="shield-check"></i><span><b>APRSA · RSFI</b><small>Affiliated to</small></span></div>
+  </div>
+
+  <div class="hc-content">
+    <span class="hc-kicker"><i data-lucide="shield-check"></i>Official District Association · APRSA / RSFI</span>
+    <h1 class="hc-title">Visakhapatnam's <span class="accent-word">roller sports</span> district body.</h1>
+    <p class="hc-sub">Governing speed, artistic, inline hockey, freestyle and skateboarding across the district — the recognized authority behind every affiliated club and every verified Skater ID.</p>
+    <div class="hc-cta">
+      <a class="hc-pill" data-magnetic href="verify.html">Verify a Skater ID<i data-lucide="arrow-right"></i></a>
+      <a class="hc-outline" data-magnetic href="events.html">Explore events</a>
     </div>
-    <div class="hp-stage">
-      <div class="hp-head print" aria-hidden="true">
-        <span class="hp-line"><span>SKATE THE</span></span>
-        <span class="hp-line"><span>DISTRICT</span></span>
+  </div>
+
+  <div class="hc-cue" aria-hidden="true"><span>Scroll</span><span class="hc-cue-line"></span></div>
+</section>
+
+<!-- ================= 1. REGISTERED SKATER COUNTER SECTION ================= -->
+<div class="wrap skater-ribbon-wrap" data-anim="up">
+  <div class="skater-counter-board">
+    <div class="skater-counter-col">
+      <div class="counter-header">
+        <span class="counter-ic"><i data-lucide="users"></i></span>
+        <span class="counter-tag">Athletes</span>
       </div>
-      <div class="hp-mark" id="mkA" aria-hidden="true"></div>
-      <div class="sk-static sk-static-a" data-rot="-12" aria-hidden="true"></div>
-    </div>
-    <div class="hp-left">
-      <span class="script">Official district body</span>
-      <p class="hp-block" aria-hidden="true"><span>Roller</span><span>Sports</span></p>
-      <p>Apex body for roller sports in Visakhapatnam, affiliated to APRSA &amp; RSFI.</p>
-      <div class="hp-cta">
-        <a class="btn btn-primary" href="verify.html">Verify a Skater ID</a>
-        <a class="ulink" href="events.html">Explore events &rarr;</a>
+      <div class="counter-box">
+        <b class="counter-val" data-count="1240">0</b>
+      </div>
+      <div class="counter-desc">
+        <b>Registered Skaters</b>
+        <small>Active in Visakhapatnam</small>
       </div>
     </div>
-    <aside class="hp-spec" aria-label="Next event">
-      <span class="sp-l">Next event</span>
-      <span class="hp-num">26–27 Oct</span>
-      <span class="sp-t">District Championship 2026 · Port Stadium Rink</span>
-      <span class="hp-cd" aria-label="Countdown to District Championship"><span id="hp-d">00</span>d <span id="hp-h">00</span>h <span id="hp-m">00</span>m <span id="hp-s">00</span>s</span>
-      <a href="event-detail.html?id=dist-champ-2026">Register &rarr;</a>
-    </aside>
-  </div>
-</section>
 
-<!-- B. WHO WE ARE -->
-<section class="st st-b" id="stB" aria-labelledby="stB-h">
-  <div class="wrap st-grid st-b-grid">
-    <div class="st-text">
-      <span class="kicker" data-index="01">Who we are</span>
-      <h2 id="stB-h" class="st-h">Roller<br>Sports<br><span class="accent-word">Authority</span></h2>
-      <p>The apex body for roller sports in Visakhapatnam &mdash; recognising clubs, registering skaters and running the district calendar. Affiliated to APRSA &amp; RSFI.</p>
-      <a class="link" href="about.html">About VDRSA <i data-lucide="arrow-right"></i></a>
+    <div class="skater-counter-col">
+      <div class="counter-header">
+        <span class="counter-ic"><i data-lucide="building-2"></i></span>
+        <span class="counter-tag">Academies</span>
+      </div>
+      <div class="counter-box">
+        <b class="counter-val" data-count="10">0</b>
+      </div>
+      <div class="counter-desc">
+        <b>Recognized Clubs</b>
+        <small>Affiliated to VDRSA</small>
+      </div>
     </div>
-    <div class="st-mid" id="mkB"><div class="sk-static" data-rot="0" aria-hidden="true"></div></div>
-    <div class="st-specs">
-      <div class="spec-r"><b class="num" data-count="1240">1,240+</b><span>Skaters</span></div>
-      <div class="spec-r"><b class="num" data-count="10">10</b><span>Recognised clubs</span></div>
-      <div class="spec-r"><b class="num" data-count="72">72</b><span>Certified coaches</span></div>
-      <div class="spec-r"><b class="num" data-fill="disc">8</b><span>Disciplines</span></div>
-      <p class="spec-aff mono">APRSA &middot; RSFI affiliated</p>
-    </div>
-  </div>
-</section>
 
-<!-- C. GIANT WORD -->
-<section class="st st-c" id="stC" aria-labelledby="stC-h">
-  <div class="c-word print" aria-hidden="true">SPEED<i class="c-mark" id="mkCm"></i></div>
-  <div class="wrap st-grid st-c-grid">
-    <figure class="c-card">
-      <img src="https://images.pexels.com/photos/4584509/pexels-photo-4584509.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=900" srcset="https://images.pexels.com/photos/4584509/pexels-photo-4584509.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=600 600w, https://images.pexels.com/photos/4584509/pexels-photo-4584509.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=900 900w" sizes="(max-width:700px) 92vw, 40vw" decoding="async" alt="Inline racers in a tight pack during an event" loading="lazy">
-      <figcaption class="mono">Fig. 01 &mdash; Sprint pack, district meet</figcaption>
-    </figure>
-    <div class="st-mid" id="mkC"><div class="sk-static" data-rot="6" aria-hidden="true"></div></div>
-    <div class="st-text">
-      <span class="kicker" data-index="02">Compete</span>
-      <h2 id="stC-h" class="st-h st-h-m">Built for<br>speed</h2>
-      <p>The District Championship opens the season. Selection trials pick our skaters for state and national teams &mdash; every result validated by the technical committee.</p>
-      <a class="link" href="events.html">See the calendar <i data-lucide="arrow-right"></i></a>
+    <div class="skater-counter-col">
+      <div class="counter-header">
+        <span class="counter-ic"><i data-lucide="award"></i></span>
+        <span class="counter-tag">Mentors</span>
+      </div>
+      <div class="counter-box">
+        <b class="counter-val" data-count="72">0</b>
+      </div>
+      <div class="counter-desc">
+        <b>Certified Coaches</b>
+        <small>RSFI Level 1 &amp; 2</small>
+      </div>
+    </div>
+
+    <div class="skater-counter-col">
+      <div class="counter-header">
+        <span class="counter-ic"><i data-lucide="calendar"></i></span>
+        <span class="counter-tag">Tournaments</span>
+      </div>
+      <div class="counter-box">
+        <b class="counter-val" data-count="16">0</b>
+      </div>
+      <div class="counter-desc">
+        <b>District Events</b>
+        <small>2026–27 Season</small>
+      </div>
     </div>
   </div>
-</section>
-
-<!-- D. DISCIPLINE SPLATS -->
-<section class="st st-d" id="stD" aria-labelledby="stD-h">
-  <div class="wrap">
-    <div class="sec-head"><div><span class="kicker" data-index="03">Disciplines</span><h2 id="stD-h">Pick your lane</h2></div></div>
-    <div class="d-arena" id="mkD">
-      <div class="sk-static" data-rot="0" aria-hidden="true"></div>
-      <ul class="splats">
-        <li class="d-gap" id="mkDg" aria-hidden="true"></li>
-        <li class="splat sp1" data-tone="pink"><a href="events.html?d=Speed"><small>01 &middot; Speed skating</small><b>Fast &amp; flat out</b></a></li>
-        <li class="splat sp2" data-tone="navy"><a href="events.html?d=Artistic"><small>02 &middot; Artistic</small><b>Spins, jumps, style</b></a></li>
-        <li class="splat sp3" data-tone="navy"><a href="events.html?d=Inline%20Hockey"><small>03 &middot; Inline hockey</small><b>Contact on wheels</b></a></li>
-        <li class="splat sp4" data-tone="pink"><a href="events.html?d=Freestyle"><small>04 &middot; Freestyle</small><b>Slalom &amp; tricks</b></a></li>
-        <li class="splat sp5" data-tone="pink"><a href="events.html?d=Skateboarding"><small>05 &middot; Skateboarding</small><b>Street &amp; park</b></a></li>
-      </ul>
-    </div>
-  </div>
-</section>
-
-<!-- E. GEAR UP LINE-UP -->
-<section class="st st-e" id="stE" aria-labelledby="stE-h">
-  <div class="wrap">
-    <div class="sec-head"><div><span class="kicker" data-index="04">Year round</span><h2 id="stE-h">Gear up</h2><p>Five disciplines. One district.</p></div><a class="link" href="events.html">All events <i data-lucide="arrow-right"></i></a></div>
-    <ul class="lineup" id="lineup">
-      <li class="lu"><a href="events.html?d=Artistic"><span class="lu-art" data-kit="quad"></span><span class="lu-cap"><b>Artistic</b><small>Quad skates &middot; solo &amp; pairs</small></span></a></li>
-      <li class="lu lu-skate"><a href="events.html?d=Speed"><span class="lu-art"><span class="slot-skate" id="slotSkate"><span class="sk-static sk-slot" data-rot="0" aria-hidden="true"></span></span></span><span class="lu-cap"><b>Speed</b><small>Inline &middot; sprints to marathons</small></span></a></li>
-      <li class="lu"><a href="events.html?d=Inline%20Hockey"><span class="lu-art" data-kit="stick"></span><span class="lu-cap"><b>Inline hockey</b><small>Sticks, pucks &amp; pace</small></span></a></li>
-      <li class="lu"><a href="events.html?d=Skateboarding"><span class="lu-art" data-kit="board"></span><span class="lu-cap"><b>Skateboarding</b><small>Street &amp; park</small></span></a></li>
-      <li class="lu"><a href="events.html?d=Freestyle"><span class="lu-art" data-kit="helmet"></span><span class="lu-cap"><b>Freestyle</b><small>Slalom &middot; helmets on</small></span></a></li>
-    </ul>
-  </div>
-</section>
-
-<!-- F. RACE DAY -->
-<section class="st st-f" id="stF" aria-labelledby="stF-h">
-  <div class="wrap st-f-grid">
-    <figure class="f-photo"><img src="https://images.pexels.com/photos/13673048/pexels-photo-13673048.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1100" srcset="https://images.pexels.com/photos/13673048/pexels-photo-13673048.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=640 640w, https://images.pexels.com/photos/13673048/pexels-photo-13673048.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1100 1100w" sizes="(max-width:899px) 92vw, 50vw" decoding="async" alt="A young competitive skater in mid-stride" loading="lazy"><figcaption class="mono">Fig. 02 &mdash; Port Stadium Rink</figcaption></figure>
-    <div class="f-text">
-      <span class="script">Mark the date</span>
-      <h2 id="stF-h" class="st-h">Race day.<br><span class="accent-word">Hearts pound.</span></h2>
-      <p>VDRSA District Championship 2026 &middot; 26&ndash;27 October &middot; Port Stadium Rink. Speed, artistic, inline hockey and freestyle &mdash; U-10 to Senior.</p>
-      <div class="f-cd" aria-label="Countdown to District Championship"><div><b id="cdf-d">00</b><small>Days</small></div><div><b id="cdf-h">00</b><small>Hrs</small></div><div><b id="cdf-m">00</b><small>Min</small></div><div><b id="cdf-s">00</b><small>Sec</small></div></div>
-      <div class="hp-cta"><a class="btn btn-primary" href="event-detail.html?id=dist-champ-2026">Register online</a><a class="ulink" href="events.html">All events &rarr;</a></div>
-    </div>
-  </div>
-</section>
-
-<div class="ticker" aria-hidden="true"><div class="tk-track"><span>DISTRICT CHAMPIONSHIP 2026 · 26–27 OCT · REGISTRATIONS OPEN · DISTRICT CHAMPIONSHIP 2026 · 26–27 OCT · REGISTRATIONS OPEN · DISTRICT CHAMPIONSHIP 2026 · 26–27 OCT · REGISTRATIONS OPEN ·&nbsp;</span><span class="tk-dup">DISTRICT CHAMPIONSHIP 2026 · 26–27 OCT · REGISTRATIONS OPEN · DISTRICT CHAMPIONSHIP 2026 · 26–27 OCT · REGISTRATIONS OPEN · DISTRICT CHAMPIONSHIP 2026 · 26–27 OCT · REGISTRATIONS OPEN ·&nbsp;</span></div></div>
+</div>
 
 <!-- ================= 2. LATEST FROM VDRSA SECTION — MOVED TO TOP (Req 10) ================= -->
 <section aria-labelledby="news-title">
@@ -216,25 +198,112 @@
 </section>
 
 
-<!-- ================= DISTRICT CALENDAR (next 3) ================= -->
-<section class="soft ev-calendar-section ev-mini" aria-labelledby="ev-title">
+<!-- ================= 5. DISTRICT EVENT CALENDAR (Req 8) ================= -->
+<section class="soft ev-calendar-section" aria-labelledby="ev-title">
   <div class="wrap">
     <div class="sec-head">
-      <div><span class="kicker" data-index="02">District Calendar</span><h2 id="ev-title">Next up</h2></div>
-      <a class="link" href="events.html">Full calendar <i data-lucide="arrow-right"></i></a>
+      <div>
+        <span class="kicker" data-index="02">District Calendar</span>
+        <h2 id="ev-title" data-anim="words">Upcoming events</h2>
+        <p data-anim="up">Official schedule, venues, and registration windows for district championships and inter-club meets.</p>
+      </div>
+      <a class="link" href="events.html">Full season calendar <i data-lucide="arrow-right"></i></a>
     </div>
-    <div class="ev-rows" id="evRows"></div>
+
+    <!-- Horizontal journey timeline: spotlight = stop 1, other stops rendered by JS -->
+    <div class="jt" id="evJourney">
+      <div class="jt-nav">
+        <span class="jt-hint"><i data-lucide="move-horizontal"></i> Drag, swipe or use the arrows</span>
+        <button class="jt-btn" type="button" data-jt="prev" aria-label="Previous event" data-magnetic><i data-lucide="arrow-left"></i></button>
+        <button class="jt-btn" type="button" data-jt="next" aria-label="Next event" data-magnetic><i data-lucide="arrow-right"></i></button>
+      </div>
+      <div class="jt-track" tabindex="0" role="region" aria-label="Upcoming events journey, scrolls sideways" data-lenis-prevent>
+        <div class="jt-rail">
+          <svg class="jt-svg" aria-hidden="true" focusable="false">
+            <defs><mask id="jtMask" maskUnits="userSpaceOnUse"><path id="jtMaskPath" fill="none" stroke="#fff" stroke-width="10" stroke-linecap="round"/></mask></defs>
+            <path id="jtTrack" class="jt-track-line" fill="none"/>
+            <path id="jtLine" class="jt-line" fill="none" mask="url(#jtMask)"/>
+          </svg>
+
+          <div class="jt-stop jt-stop--start jt-up" data-stop>
+            <span class="jt-node" aria-hidden="true"><i data-lucide="flag"></i></span>
+        <div class="ev-cal-spotlight jt-card">
+            <span class="badge"><span class="dot"></span> Registration Open</span>
+            <div>
+              <h3>VDRSA District Championship 2026</h3>
+              <div class="meta">
+                <span><i data-lucide="calendar"></i> 26–27 October 2026</span>
+                <span><i data-lucide="map-pin"></i> Port Stadium Rink, Visakhapatnam</span>
+                <span><i data-lucide="layers"></i> Speed · Artistic · Inline Hockey · Freestyle</span>
+              </div>
+            </div>
+            <div class="cd" aria-label="Countdown to District Championship">
+              <div><b id="cd-d">00</b><small>Days</small></div>
+              <div><b id="cd-h">00</b><small>Hrs</small></div>
+              <div><b id="cd-m">00</b><small>Min</small></div>
+              <div><b id="cd-s">00</b><small>Sec</small></div>
+            </div>
+            <a class="btn btn-primary" href="event-detail.html?id=dist-champ-2026" data-magnetic style="background:var(--ink-900);color:#fff">
+              Register Online <i data-lucide="arrow-right"></i>
+            </a>
+          </div>
+          </div>
+
+          <div id="evStops" class="jt-stops"><!-- Rendered via JS --></div>
+
+          <div class="jt-stop jt-stop--end jt-up" data-stop>
+            <span class="jt-node jt-node--end" aria-hidden="true"><i data-lucide="calendar-days"></i></span>
+            <div class="jt-card jt-card--end">
+              <h4>The full season</h4>
+              <p class="meta">Every district event, venue and registration window.</p>
+              <a class="btn btn-outline btn-sm" href="events.html" data-magnetic>Full season calendar <i data-lucide="arrow-right"></i></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 
-<!-- ================= MEDAL TALLY (top 3) ================= -->
+<!-- ================= 6. CLUB MEDALS STANDINGS WITH SLOT MACHINE (Req 11) ================= -->
 <section class="club-medals-section" aria-labelledby="rs-title">
   <div class="wrap">
     <div class="sec-head">
-      <div><span class="kicker" data-index="03">Official Standings</span><h2 id="rs-title">Club medal tally</h2></div>
-      <a class="link" href="results.html">Full standings <i data-lucide="arrow-right"></i></a>
+      <div>
+        <span class="kicker" data-index="03">Official Standings</span>
+        <h2 id="rs-title" data-anim="words">Club Medal Tally</h2>
+        <p data-anim="up">District championship medal count across all recognized clubs in Visakhapatnam.</p>
+      </div>
+      <div style="display:flex;align-items:center;gap:12px">
+        <button class="btn btn-outline btn-sm" id="spinMedalsBtn" type="button" data-magnetic>
+          <i data-lucide="rotate-cw"></i> Spin Standings
+        </button>
+        <a class="link" href="results.html">Results archive <i data-lucide="arrow-right"></i></a>
+      </div>
     </div>
-    <ol class="medal-strip" id="medalStrip"></ol>
+
+    <!-- The animated slot-machine board -->
+    <div class="slot-board" id="clubMedalBoard" data-anim="up"></div>
+  </div>
+</section>
+
+<!-- ================= 4. DISCIPLINES — ONE CARD AT A TIME WITH SHADOW EFFECT (Req 9) ================= -->
+<section aria-labelledby="dc-title">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <span class="kicker" data-index="04">Disciplines</span>
+        <h2 id="dc-title" data-anim="words">Eight disciplines, one association</h2>
+        <p data-anim="up">Explore all eight official RSFI roller sports disciplines governed and developed by VDRSA.</p>
+      </div>
+      <a class="link" href="events.html">View all discipline events <i data-lucide="arrow-right"></i></a>
+    </div>
+
+    <!-- Tab selector pills -->
+    <div class="disc-pill-tabs" id="discPillTabs" role="tablist" aria-label="Discipline selector"></div>
+
+    <!-- One card at a time showcase container with deep shadow effect -->
+    <div class="disc-showcase-section" id="discShowcase" data-anim="zoom"></div>
   </div>
 </section>
 
@@ -243,7 +312,7 @@
   <div class="wrap">
     <div class="sec-head sr-only"><div><span class="kicker" data-index="05">Support</span><h2 id="pn-title">Support skating</h2></div></div>
     <div class="cta-band" data-anim="zoom">
-      <div class="bg" style="background-image:url('https://images.pexels.com/photos/36678658/pexels-photo-36678658.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1400')"></div>
+      <div class="bg" id="ctaBg"></div>
       <div class="in">
         <div><h2>Support skating in Visakhapatnam</h2><p>Sponsor equipment, school programmes or championships — and receive a clear report on the clubs, schools and athletes you reached.</p></div>
         <a class="btn btn-white" data-magnetic href="contact.html">Become a partner <i data-lucide="arrow-right"></i></a>
@@ -257,16 +326,12 @@
 <div class="toast" id="toast" role="status"></div>
 
 <script src="assets/site.js"></script>
-<script src="assets/story.js"></script>
 <script>
 (function(){
   const V=window.VDRSA, d=V.data;
 
   /* countdown to the district championship */
-  V.countdown("hp","2026-10-26T08:00:00+05:30");
-  V.countdown("cdf","2026-10-26T08:00:00+05:30");
-  document.querySelectorAll("[data-fill=disc]").forEach(e=>e.textContent=(V.disciplines||[]).length||8);
-  document.querySelectorAll("[data-fill=clubs]").forEach(e=>e.textContent=d.clubs.length);
+  V.countdown("cd","2026-10-26T08:00:00+05:30");
 
   /* news — 3 cards (Latest from VDRSA at the top) */
   const TAGB={Results:"b-blue",Coaching:"b-amber",Schools:"b-green",Announcements:"b-grey"};
@@ -283,28 +348,37 @@
       </article>`).join("");
   }
 
-  /* next 3 events */
+  /* upcoming events calendar representation */
   const ST={open:["b-green","Registration open"],soon:["b-blue","Opens soon"],closed:["b-grey","Registration closed"],completed:["b-grey","Completed"]};
-  const rowsEl=document.getElementById("evRows");
-  if(rowsEl){
-    const nxt=d.events.filter(e=>(e.status==="open"||e.status==="soon")&&e.id!=="dist-champ-2026")
-      .sort((x,y)=>new Date(x.start)-new Date(y.start)).slice(0,3);
-    rowsEl.innerHTML=nxt.map(e=>{
-      const dt=new Date(e.start);
-      return `<article class="ev-row">
-        <div class="ev-date"><b>${dt.getDate()}</b><small>${dt.toLocaleDateString("en-GB",{month:"short"})}</small></div>
-        <div class="ev-info"><h3>${V.esc(e.title)}</h3><span class="ev-venue"><i data-lucide="map-pin"></i> ${V.esc(e.venue)}</span></div>
-        <span class="badge ${ST[e.status][0]}">${ST[e.status][1]}</span>
-        <a class="link" href="event-detail.html?id=${e.id}">Details <i data-lucide="arrow-right"></i></a>
-      </article>`;}).join("");
+  const upcoming=d.events.filter(e=>(e.status==="open"||e.status==="soon")&&e.id!=="dist-champ-2026")
+    .sort((x,y)=>new Date(x.start)-new Date(y.start)).slice(0,5);
+  const stopsEl=document.getElementById("evStops");
+  if(stopsEl){
+    const fmt=(dt,o)=>dt.toLocaleDateString("en-GB",o);
+    stopsEl.innerHTML=upcoming.map((e,i)=>{
+      const dt=new Date(e.start), en=new Date(e.end);
+      const range=e.end!==e.start?`${dt.getDate()}–${fmt(en,{day:"numeric",month:"short",year:"numeric"})}`:fmt(dt,{day:"numeric",month:"short",year:"numeric"});
+      return `
+        <div class="jt-stop ${i%2?"jt-up":"jt-down"}" data-stop>
+          <span class="jt-node" aria-hidden="true"><span class="jt-in"><b>${dt.getDate()}</b><small>${fmt(dt,{month:"short"})}</small></span></span>
+          <article class="jt-card">
+            <span class="jt-date"><i data-lucide="calendar"></i> ${range}</span>
+            <span class="badge ${ST[e.status][0]}">${ST[e.status][1]}</span>
+            <h4>${V.esc(e.title)}</h4>
+            <div class="meta">
+              <span><i data-lucide="map-pin"></i> ${V.esc(e.venue)}</span>
+              <span><i data-lucide="layers"></i> ${e.discipline.join(" · ")}</span>
+              <span><i data-lucide="tag"></i> Entry: ${V.esc(e.fee)}</span>
+            </div>
+            <div class="act">
+              <a class="btn btn-outline btn-sm" data-magnetic href="event-detail.html?id=${e.id}">Details</a>
+              ${e.status==="open"?`<a class="btn btn-primary btn-sm" data-magnetic href="event-detail.html?id=${e.id}">Register</a>`:""}
+            </div>
+          </article>
+        </div>`;
+    }).join("");
   }
-  /* medal tally: top 3 */
-  const ms=document.getElementById("medalStrip");
-  if(ms){
-    ms.innerHTML=d.medalTable.slice().sort((a,b)=>b.gold-a.gold||b.silver-a.silver||b.bronze-a.bronze).slice(0,3).map((c,i)=>`
-      <li class="ms-item"><span class="ms-pos">${i+1}</span><b class="ms-club">${V.esc(c.club)}</b>
-        <span class="ms-m" title="Gold"><i class="md g"></i>${c.gold}</span><span class="ms-m" title="Silver"><i class="md s"></i>${c.silver}</span><span class="ms-m" title="Bronze"><i class="md b"></i>${c.bronze}</span></li>`).join("");
-  }
+  V.journey(document.getElementById("evJourney"));
 
   V.icons();V.observe();
 })();

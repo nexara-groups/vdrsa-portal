@@ -28,7 +28,7 @@
 <link rel="icon" href="assets/vdrsa-logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&family=Caveat:wght@600&family=Noto+Sans+Telugu:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&family=Noto+Sans+Telugu:wght@400;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/site.css">
 <script src="https://cdn.jsdelivr.net/npm/lucide@0.469.0/dist/umd/lucide.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
@@ -42,10 +42,10 @@
 .mgrid .dow{background:var(--bg-soft);padding:8px;text-align:center;font:700 12px var(--body);color:var(--muted)}
 .mgrid .cell{background:var(--surface);min-height:92px;padding:6px;display:flex;flex-direction:column;gap:4px}
 .mgrid .cell.pad{background:var(--bg-soft)}
-.mgrid .cell .dn{font:700 12.5px var(--ui);color:var(--muted)}
-.mgrid .chip{font-size:12px;font-weight:600;padding:3px 6px;border-radius:0;background:var(--primary-50);color:var(--primary-strong);text-align:left;cursor:pointer;border:0;line-height:1.3}
+.mgrid .cell .dn{font:700 13px var(--display);color:var(--muted)}
+.mgrid .chip{font-size:12px;font-weight:600;padding:3px 6px;border-radius:6px;background:var(--primary-50);color:var(--primary-strong);text-align:left;cursor:pointer;border:0;line-height:1.3}
 .mswitch{display:flex;align-items:center;gap:10px}
-.mswitch button{width:34px;height:34px;border-radius:0;border:1px solid var(--border);background:var(--surface);cursor:pointer;display:grid;place-items:center}
+.mswitch button{width:34px;height:34px;border-radius:8px;border:1px solid var(--border);background:var(--surface);cursor:pointer;display:grid;place-items:center}
 /* REVISION_V3 §6 — under 640px the month grid becomes an agenda list of
    just the days that have events, not a squeezed 42-cell grid. */
 .mgrid.agenda{display:grid;grid-template-columns:1fr;gap:10px;background:none;border:0;border-radius:0;overflow:visible}
@@ -62,7 +62,7 @@
 
 <div id="page-loader" role="status" aria-live="polite">
   <div class="ring-loader">
-    <img src="assets/vdrsa-logo.png" alt="" width="54" height="54" decoding="async">
+    <img src="assets/vdrsa-logo.png" alt="">
     <svg viewBox="0 0 132 132" aria-hidden="true"><circle class="track" cx="66" cy="66" r="62"/><circle class="arc" cx="66" cy="66" r="62"/></svg>
   </div>
   <span class="sr-only">Loading VDRSA</span>
@@ -79,9 +79,7 @@
       <a href="index.html">Home</a><span class="sep">&rsaquo;</span><span class="cur">Events</span>
     </nav>
     <div class="page-hero-top">
-      <aside class="spec" aria-label="Season 2026–27"><span class="sp-l">Season 2026–27</span><span class="sp-n">16</span><span class="sp-t">District events</span><span class="sp-t">Next: 26 Oct 2026</span></aside>
       <div>
-        <span class="script">Mark your calendar</span>
         <span class="kicker" data-index="01">District calendar</span>
         <h1 data-anim="up">Events <span class="accent-word">calendar</span></h1>
         <p class="lead" data-anim="up" data-delay="0.2">Championships, inter-club meets, selection trials and workshops across Visakhapatnam district.</p>
@@ -125,7 +123,7 @@
     <div id="monthView" hidden>
       <div class="mswitch" style="margin-bottom:14px">
         <button type="button" id="mPrev" aria-label="Previous month"><i data-lucide="chevron-left"></i></button>
-        <b id="mLabel" style="font:700 16px var(--ui)"></b>
+        <b id="mLabel" style="font:700 16px var(--display)"></b>
         <button type="button" id="mNext" aria-label="Next month"><i data-lucide="chevron-right"></i></button>
       </div>
       <div class="mgrid" id="mGrid" role="grid" aria-label="Month view"></div>

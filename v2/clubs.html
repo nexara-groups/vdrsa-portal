@@ -28,7 +28,7 @@
 <link rel="icon" href="assets/vdrsa-logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&family=Caveat:wght@600&family=Noto+Sans+Telugu:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&family=Noto+Sans+Telugu:wght@400;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/site.css">
 <script src="https://cdn.jsdelivr.net/npm/lucide@0.469.0/dist/umd/lucide.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
@@ -36,11 +36,11 @@
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
 <style>
   .hero-chips{display:flex;gap:10px;flex-wrap:wrap;margin-top:6px}
-  .hero-chips span{display:inline-flex;align-items:center;gap:8px;background:transparent;border:1px solid var(--rule);border-radius:0;padding:6px 12px;font:500 12px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--text)}
-  .hero-chips b{font-family:var(--ui)}
+  .hero-chips span{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.25);border-radius:999px;padding:6px 14px;font-size:13.5px;color:#fff}
+  .hero-chips b{font-family:var(--display)}
   .start-club{display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:24px;align-items:center;padding:28px}
   .start-club .steps{display:grid;gap:6px}
-  .start-club .steps b{display:block;font-family:var(--ui);color:var(--primary-strong)}
+  .start-club .steps b{display:block;font-family:var(--display);color:var(--primary-strong)}
   .start-club .steps small{color:var(--muted);font-size:13px}
   @media (max-width:900px){.start-club{grid-template-columns:1fr 1fr;text-align:left}}
   @media (max-width:600px){.start-club{grid-template-columns:1fr}}
@@ -50,7 +50,7 @@
 
 <div id="page-loader" role="status" aria-live="polite">
   <div class="ring-loader">
-    <img src="assets/vdrsa-logo.png" alt="" width="54" height="54" decoding="async">
+    <img src="assets/vdrsa-logo.png" alt="">
     <svg viewBox="0 0 132 132" aria-hidden="true"><circle class="track" cx="66" cy="66" r="62"/><circle class="arc" cx="66" cy="66" r="62"/></svg>
   </div>
   <span class="sr-only">Loading VDRSA</span>
@@ -67,9 +67,7 @@
       <a href="index.html">Home</a><span class="sep">&rsaquo;</span><span class="cur">Clubs</span>
     </nav>
     <div class="page-hero-top">
-      <aside class="spec" aria-label="Recognized"><span class="sp-l">Recognized</span><span class="sp-n">10</span><span class="sp-t">Clubs · 72 coaches</span><span class="sp-t">1,240 registered skaters</span></aside>
       <div>
-        <span class="script">Find your crew</span>
         <span class="kicker" data-index="01">District directory</span>
         <h1 data-anim="up">Recognized <span class="accent-word">clubs</span></h1>
         <p class="lead" data-anim="up" data-delay="0.2">Every club listed here is currently recognized by VDRSA and eligible to enter district events.</p>

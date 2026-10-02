@@ -27,7 +27,7 @@
 <link rel="icon" href="assets/vdrsa-logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&family=Caveat:wght@600&family=Noto+Sans+Telugu:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&family=Noto+Sans+Telugu:wght@400;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/site.css">
 <script src="https://cdn.jsdelivr.net/npm/lucide@0.469.0/dist/umd/lucide.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
@@ -35,33 +35,34 @@
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
 <style>
 .login-shell{margin:24px var(--gutter) 0}
-.login-split{min-height:calc(100svh - 2*var(--frame) - 64px - 24px);display:grid;grid-template-columns:1fr 1fr;border-radius:0;overflow:hidden;border:1.5px solid var(--rule);background:var(--surface)}
-.login-photo{position:relative;background:var(--btn)!important;color:#F4EFE4;display:flex;flex-direction:column;justify-content:flex-end;padding:48px}
-.login-photo::before{content:"Members only";position:absolute;right:28px;top:22px;font:600 34px var(--script);color:#F4EFE4;transform:rotate(-5deg)}
+.login-split{min-height:calc(100vh - 78px - 38px - 24px);min-height:calc(100svh - 78px - 38px - 24px);display:grid;grid-template-columns:1fr 1fr;border-radius:var(--r-xl);overflow:hidden;box-shadow:var(--shadow-lg);background:var(--surface)}
+.login-photo{position:relative;background:center/cover;color:#fff;display:flex;flex-direction:column;justify-content:flex-end;padding:48px}
+.login-photo::before{content:"";position:absolute;top:0;right:0;bottom:0;left:0;inset:0;background:linear-gradient(0deg,rgba(10,10,14,.80),rgba(10,10,14,.35) 55%,rgba(10,10,14,.15))}
 .login-photo>*{position:relative;z-index:1}
-.login-photo img{width:48px;height:48px;border-radius:50%;background:#fff;border:1.5px solid #0B1B2E;margin-bottom:20px}
-.login-photo .kicker{margin-bottom:10px;color:#F4EFE4}.login-photo .kicker::before{background:#F4EFE4}.login-photo .kicker::after{color:#F4EFE4}
-
-.login-photo h2{font-size:clamp(34px,4vw,56px);max-width:520px;color:#F4EFE4;line-height:.95}.login-photo .accent-word{color:#0B1B2E}
+.login-photo img{width:48px;height:48px;border-radius:50%;background:#fff;margin-bottom:20px}
+.login-photo .kicker{margin-bottom:10px;color:#FF9CC2}
+.login-photo .kicker[data-index]::before{color:rgba(255,255,255,.55)}
+.login-photo h2{font-size:clamp(24px,2.6vw,32px);max-width:420px}
 .login-photo ul{list-style:none;margin:22px 0 0;padding:0;display:grid;gap:12px;max-width:400px}
-.login-photo li{display:flex;gap:10px;align-items:flex-start;color:#F4EFE4;font-size:14.5px}
-.login-photo li .lucide{color:#0B1B2E;flex:none;margin-top:2px}
+.login-photo li{display:flex;gap:10px;align-items:flex-start;color:#D8D8DE;font-size:14.5px}
+.login-photo li .lucide{color:var(--primary);flex:none;margin-top:2px}
 .login-panel{display:flex;align-items:center;justify-content:center;padding:40px 24px}
 .login-box{width:100%;max-width:420px;padding:32px}
 .otp-row{display:flex;gap:8px;justify-content:space-between;margin:16px 0}
-.otp-row input{width:44px;height:52px;text-align:center;border-radius:0;border:1px solid var(--border);background:var(--bg);color:var(--text);font:700 20px ui-monospace,Consolas,monospace}
-.otp-row input:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 3px color-mix(in srgb,var(--primary) 22%,transparent)}
+.otp-row input{width:44px;height:52px;text-align:center;border-radius:10px;border:1px solid var(--border);background:var(--bg);color:var(--text);font:700 20px ui-monospace,Consolas,monospace}
+.otp-row input:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 3px rgba(200,209,50,0.22);box-shadow:0 0 0 3px color-mix(in srgb,var(--primary) 22%,transparent)}
 .login-compact{display:none;align-items:center;gap:12px;padding:24px 24px 0}
 .login-compact img{width:40px;height:40px;border-radius:50%;background:var(--ink-900)}
-.login-compact b{display:block;font:800 16px var(--ui);color:var(--text)}
-.login-compact span{display:block;font-size:12.5px;color:var(--muted)}
-@media (max-width:900px){.login-split{grid-template-columns:minmax(0,1fr)}.login-photo{display:none}.login-compact{display:flex}}
-@media (max-width:620px){.login-shell{margin:16px var(--gutter) 0}.login-split{border-radius:0}}
+.login-compact b{display:block;font:800 16px var(--display);color:var(--text)}
+.login-compact span{display:block;font-size:13px;color:var(--muted)}
+@media (max-width:900px){.login-split{grid-template-columns:minmax(0,1fr);min-height:0}.login-photo{display:none}.login-compact{display:flex}.login-panel{align-items:flex-start;padding-top:20px}}
+@media (max-width:620px){.login-shell{margin:16px var(--gutter) 0}.login-split{border-radius:20px}}
 .seg{display:flex;width:100%}
-.seg button{flex:1;white-space:normal;padding:0 4px;font-size:12px;letter-spacing:.04em;min-height:44px}
-.login-split>*,.login-box{min-width:0}
+.seg button{flex:1;white-space:nowrap;padding:0 8px;font-size:13px;min-height:44px}
 @media (max-width:480px){
-  .login-panel{padding:24px 16px}
+  #roleSeg{display:grid;grid-template-columns:1fr 1fr;overflow:visible;-webkit-mask-image:none;mask-image:none}
+  #roleSeg button{flex:none;white-space:normal}
+  .login-panel{padding:16px 16px 24px}
   .login-box{padding:20px}
   .otp-row{gap:6px}
   .otp-row input{width:40px;height:48px;font-size:18px}
@@ -76,7 +77,7 @@
 
 <div id="page-loader" role="status" aria-live="polite">
   <div class="ring-loader">
-    <img src="assets/vdrsa-logo.png" alt="" width="54" height="54" decoding="async">
+    <img src="assets/vdrsa-logo.png" alt="">
     <svg viewBox="0 0 132 132" aria-hidden="true"><circle class="track" cx="66" cy="66" r="62"/><circle class="arc" cx="66" cy="66" r="62"/></svg>
   </div>
   <span class="sr-only">Loading VDRSA</span>
@@ -88,9 +89,9 @@
 <section class="login-shell" style="padding:0">
   <div class="login-split">
     <div class="login-photo" id="loginPhoto" role="img" aria-label="Skater performing on an indoor artistic skating rink" data-cursor="view" data-cursor-label="Explore">
-      <img src="assets/vdrsa-logo.png" alt="" width="54" height="54" decoding="async">
+      <img src="assets/vdrsa-logo.png" alt="">
       <span class="kicker" data-index="01">Sign in</span>
-      <span class="tag" data-anim="left" style="display:inline-flex;align-items:center;gap:10px;font:600 15px var(--body);margin-bottom:10px"><i style="width:28px;height:2px;background:var(--primary);display:inline-block"></i>One Skater. One ID. One Journey.</span>
+      <span class="tag" data-anim="left" style="display:inline-flex;align-items:center;gap:10px;font:600 15px var(--body);margin-bottom:10px"><i style="width:28px;height:2px;background:#FF7AAE;display:inline-block"></i>One Skater. One ID. One Journey.</span>
       <h2 data-anim="up">One sign-in for every <span class="accent-word">role</span> in district roller sports.</h2>
       <ul data-anim="stagger">
         <li><i data-lucide="check"></i>Clubs register skaters and submit event entries in one place.</li>
@@ -100,14 +101,13 @@
     </div>
 
     <div class="login-compact">
-      <img src="assets/vdrsa-logo.png" alt="" width="54" height="54" decoding="async">
+      <img src="assets/vdrsa-logo.png" alt="">
       <div><b>VDRSA</b><span>One Skater. One ID. One Journey.</span></div>
     </div>
 
     <div class="login-panel">
       <div class="card login-box" data-anim="zoom">
-        <span class="script">Members only</span>
-        <h1 style="font-size:clamp(40px,6vw,56px);margin-bottom:8px;color:var(--primary)" class="print">Sign in</h1>
+        <h1 style="font-size:22px;margin-bottom:4px">Sign in</h1>
         <p style="color:var(--muted);font-size:14.5px;margin-bottom:18px">Choose your role, then verify with an OTP sent to your registered mobile number.</p>
 
         <div class="seg" role="tablist" aria-label="Role" id="roleSeg" style="width:100%;margin-bottom:20px">
@@ -120,10 +120,10 @@
         <form id="mobileForm" novalidate>
           <label for="mobile" style="display:block;font:600 14px var(--body);margin-bottom:6px">Mobile number</label>
           <div style="display:flex;gap:8px">
-            <input class="input" id="mobile" type="tel" inputmode="numeric" pattern="[0-9]*" enterkeyhint="go" maxlength="10" placeholder="98XXXXXXXX" style="font:500 16px var(--body);letter-spacing:normal" autocomplete="tel-national" aria-describedby="mobileHint">
+            <input class="input" id="mobile" name="mobile" type="tel" inputmode="numeric" pattern="[0-9]*" autocomplete="tel-national" enterkeyhint="send" maxlength="10" placeholder="98XXXXXXXX" style="font:500 16px var(--body);letter-spacing:normal" autocomplete="off" aria-describedby="mobileHint">
             <button class="btn btn-primary" id="sendOtp" type="submit" data-magnetic style="min-width:128px">Send OTP</button>
           </div>
-          <p class="hint" id="mobileHint" style="font-size:12.5px;color:var(--muted);margin-top:8px">Demo only — no OTP is actually sent.</p>
+          <p class="hint" id="mobileHint" style="font-size:13px;color:var(--muted);margin-top:8px">Demo only — no OTP is actually sent.</p>
         </form>
 
         <form id="otpForm" novalidate style="display:none">
